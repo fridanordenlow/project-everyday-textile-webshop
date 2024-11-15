@@ -1,34 +1,34 @@
 // Skapa en array med objekt för alla produkter
 const products = [
-    {
-        id: 0,
-        name: 'Wool Skein',
-        price: 50,
-        rating: 3,
-        amount: 0,
-        category: 'wool',
-        /*img: {
+  {
+    id: 0,
+    name: 'Wool Skein',
+    price: 50,
+    rating: 3,
+    amount: 0,
+    category: 'wool',
+    /*img: {
             url:,
             alt:
             width:,
             height:
         }*/
-    },
-    {
-        id: 1,
-        name: 'Silk Skein',
-        price: 65,
-        rating: 4,
-        amount: 0,
-        category: 'silk',
-        /*img: {
+  },
+  {
+    id: 1,
+    name: 'Silk Skein',
+    price: 65,
+    rating: 4,
+    amount: 0,
+    category: 'silk',
+    /*img: {
             url:,
             alt:
             width:,
             height:
         }*/
-    }
-   /*{
+  },
+  /*{
         id: 1,
         name:,
         price:,
@@ -42,7 +42,7 @@ const products = [
             height:
         }
     }*/
-]
+];
 
 // ----------------------------
 // --- HTML ELEMENTS ----------
@@ -51,8 +51,8 @@ const productListContainer = document.querySelector('#product-list');
 
 // Skapa en funktion som skapar html-element för all produkter
 function printProductList() {
-    products.forEach(product => {
-        productListContainer.innerHTML += `
+  products.forEach(product => {
+    productListContainer.innerHTML += `
             <article>
               <img>
                 <h3>${product.name}</h3>
@@ -66,7 +66,7 @@ function printProductList() {
                 </div>
             </article>
         `;
-    });
+  });
 }
 
 printProductList();
