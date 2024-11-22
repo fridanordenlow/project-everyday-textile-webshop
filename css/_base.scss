@@ -1,3 +1,16 @@
 body {
   background-color: pink;
+  height: 100%;
+}
+
+main {
+  display: flex; /* Aktiverar Flexbox */
+  flex-direction: column; /* Låter elementen staplas i kolumner */
+  justify-content: center; /* Centrerar vertikalt */
+  align-items: center; /* Centrerar horisontellt */
+  height: 100vh; /* Gör main lika hög som viewporten */
+}
+
+header {
+  display: flex;
 }
