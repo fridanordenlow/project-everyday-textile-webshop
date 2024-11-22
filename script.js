@@ -44,16 +44,20 @@ const products = [
   },
 ];
 
+// ----
+
 // ----------------------------
 // --- HTML ELEMENTS ----------
 // ----------------------------
 const productListContainer = document.querySelector('#product-list');
+const cart = document.querySelector('#cart-summary');
 
-// Create a function that prints html-element for each of all products
+// A function that prints a html-element for each product
 function printProductList() {
+  productListContainer.innerHTML = ''; // Empty container of current products to update the products when they change
   products.forEach(product => {
     productListContainer.innerHTML += `
-            <article>
+            <article class="single-product">
               <img>
                 <h3>${product.name}</h3>
                 <p>${product.price} kr</p>
@@ -62,13 +66,22 @@ function printProductList() {
                     <button class="decrease" id="decrease-${product.id}">-</button>
                     <input type="number" min="0" value="${product.amount}" id="input-${product.id}">
                     <button class="increase" id="increase-${product.id}">+</button>
-                    <p>Test</p>
                 </div>
             </article>
         `;
   });
+  // Create functions to make the - and + buttons to adjust the chosen amount of each product
+  // Have an add button that updates the amount chosen?
+  // Increase button function
+  const increaseButtons = document.querySelectorAll('button.increase');
+  increaseButtons.forEach(button => {
+    button.addEventListener('click', increaseProductAmount);
+  });
+  const decreaseButtons = document.querySelectorAll('button.decrease');
+  decreaseButtons.forEach(button => {
+    button.addEventListener('click', decreaseProductAmount);
+  });
 }
-
 printProductList();
 
 /**
@@ -77,6 +90,64 @@ printProductList();
  * - How much the total sum of each product
  * - Total sum of all products
  * */
+
+// A function that updates and increases product amount
+function increaseProductAmount(e) {
+  const productId = Number(e.target.id.replace('increase-', ''));
+  console.log('clicked on button with id', productId);
+  // Find product in array with correct id
+  const foundProductIndex = products.findIndex(product => product.id === productId);
+  // Message if product does not exist
+  if (foundProductIndex === -1) {
+    console.error('Det finns ingen sådan produkt i listan. kolla att id:t är rätt');
+    return;
+  }
+
+  // Increase amount with +1
+  products[foundProductIndex].amount += 1;
+
+  printProductList();
+  updateAndPrintCart();
+}
+
+// A function that updates and decreases product amount
+function decreaseProductAmount(e) {
+  const productId = Number(e.target.id.replace('decrease-', ''));
+  console.log('clicked on button with id', productId);
+  // Find product in array with correct id
+  const foundProductIndex = products.findIndex(product => product.id === productId);
+  // Message if product does not exist
+  if (foundProductIndex === -1) {
+    console.error('Det finns ingen sådan produkt i listan. kolla att id:t är rätt');
+    return;
+  }
+
+  // Increase amount with +1
+  products[foundProductIndex].amount -= 1;
+
+  printProductList();
+  updateAndPrintCart();
+}
+
+// A function that prints chosen products
+function updateAndPrintCart() {
+  // Create a variable that stores chosen products
+  const chosenProducts = products.filter(product => product.amount > 0);
+  console.log(chosenProducts);
+
+  // Print products in cart
+  cart.innerHTML = ''; // Empty element from current content
+  // Loop through chosen products
+  chosenProducts.forEach(product => {
+    cart.innerHTML += `
+    <div> 
+      ${product.name}: ${product.amount} st - ${product.amount * product.price} kr
+    </div>
+    `;
+  });
+}
+
+updateAndPrintCart();
 
 /**
  * Create functions (connected to buttons) that sorts products based on:
