@@ -1,12 +1,12 @@
-// Skapa en array med objekt för alla produkter
+// Create an array for all products as objects
 const products = [
   {
     id: 0,
-    name: 'Wool Skein',
-    price: 50,
-    rating: 3,
+    name: 'Kitchen Towel',
+    price: 250,
+    rating: 5,
     amount: 0,
-    category: 'wool',
+    category: 'kitchen',
     /*img: {
             url:,
             alt:
@@ -16,11 +16,11 @@ const products = [
   },
   {
     id: 1,
-    name: 'Silk Skein',
-    price: 65,
+    name: 'Bath Towel',
+    price: 375,
     rating: 4,
     amount: 0,
-    category: 'silk',
+    category: 'bathroom',
     /*img: {
             url:,
             alt:
@@ -28,20 +28,20 @@ const products = [
             height:
         }*/
   },
-  /*{
-        id: 1,
-        name:,
-        price:,
-        rating:,
-        amount:,
-        category:,
-        img: {
+  {
+    id: 2,
+    name: 'Hand Towel',
+    price: 265,
+    rating: 3,
+    amount: 0,
+    category: 'bathroom',
+    /*img: {
             url:,
             alt:
             width:,
             height:
-        }
-    }*/
+        }*/
+  },
 ];
 
 // ----------------------------
@@ -49,7 +49,7 @@ const products = [
 // ----------------------------
 const productListContainer = document.querySelector('#product-list');
 
-// Skapa en funktion som skapar html-element för all produkter
+// Create a function that prints html-element for each of all products
 function printProductList() {
   products.forEach(product => {
     productListContainer.innerHTML += `
@@ -70,3 +70,23 @@ function printProductList() {
 }
 
 printProductList();
+
+/**
+ * Create a shopping cart that displays all chosen products:
+ * - How many of each product
+ * - How much the total sum of each product
+ * - Total sum of all products
+ * */
+
+/**
+ * Create functions (connected to buttons) that sorts products based on:
+ * - Name
+ * - Price
+ * - Category
+ * - Rating
+ */
+
+/**
+ * Create an order form
+ * - Connect to DOM-elements
+ */
