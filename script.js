@@ -70,9 +70,18 @@ function printProductList() {
             </article>
         `;
   });
-  // Create functions to make the - and + buttons to adjust the chosen amount of each product
+  // Create functions to make the - and + buttons adjust the chosen amount of each product
   // Have an add button that updates the amount chosen?
   // Increase button function
+  const increaseButtons = document.querySelectorAll('button.increase');
+  increaseButtons.forEach(button => {
+    button.addEventListener('click', e => updateProductAmount(e, true));
+  });
+  const decreaseButtons = document.querySelectorAll('button.decrease');
+  decreaseButtons.forEach(button => {
+    button.addEventListener('click', e => updateProductAmount(e, false));
+  });
+  /*
   const increaseButtons = document.querySelectorAll('button.increase');
   increaseButtons.forEach(button => {
     button.addEventListener('click', increaseProductAmount);
@@ -81,6 +90,7 @@ function printProductList() {
   decreaseButtons.forEach(button => {
     button.addEventListener('click', decreaseProductAmount);
   });
+  */
 }
 printProductList();
 
@@ -92,6 +102,31 @@ printProductList();
  * */
 
 // A function that updates and increases product amount
+function updateProductAmount(e, isIncrease) {
+  const action = isIncrease ? 'increase' : 'decrease';
+  const productId = Number(e.target.id.replace(`${action}-`, ''));
+  console.log('clicked on button with id', productId);
+
+  // Find product in array with correct id
+  const foundProductIndex = products.findIndex(product => product.id === productId);
+  // Message if product does not exist
+  if (foundProductIndex === -1) {
+    console.error('Det finns ingen sådan produkt i listan. kolla att id:t är rätt');
+    return;
+  }
+
+  // Update product amount
+  const product = products[foundProductIndex];
+  product.amount += isIncrease ? 1 : -1;
+
+  // Ensure amount does not go below zero
+  product.amount = Math.max(product.amount, 0);
+
+  printProductList();
+  updateAndPrintCart();
+}
+
+/*
 function increaseProductAmount(e) {
   const productId = Number(e.target.id.replace('increase-', ''));
   console.log('clicked on button with id', productId);
@@ -128,6 +163,9 @@ function decreaseProductAmount(e) {
   printProductList();
   updateAndPrintCart();
 }
+*/
+// ------------------------
+// ------------------------
 
 // A function that prints chosen products
 function updateAndPrintCart() {
