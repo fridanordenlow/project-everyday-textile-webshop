@@ -4,13 +4,33 @@ body {
 }
 
 main {
-  display: flex; /* Aktiverar Flexbox */
-  flex-direction: column; /* Låter elementen staplas i kolumner */
-  justify-content: center; /* Centrerar vertikalt */
-  align-items: center; /* Centrerar horisontellt */
-  height: 100vh; /* Gör main lika hög som viewporten */
+  display: flex;
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center; 
+  height: 100vh; 
 }
 
 header {
   display: flex;
+}
+
+.product-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.single-product {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: lightblue;
+  width: 200px;
+  padding: 10px;
+  margin: 10px;
+
+  input {
+    width: 40px;
+  }
 }
