@@ -3,13 +3,29 @@ import products from './products.js';
 
 const productListContainer = document.querySelector('#productList');
 const cart = document.querySelector('#cartSummary');
-const sortByNameButton = document.querySelector('#sortByNameButton');
+const sortByNameElement = document.querySelector('#sortByName');
+const sortByPriceElement = document.querySelector('#sortByPrice');
+const sortByCategoryElement = document.querySelector('#sortByCategory');
+const sortByRatingElement = document.querySelector('#sortByRating');
 
-function sortByName(){
+/**
+ * Sort/filter by:
+ * x Name
+ * - Price 
+ * - Category 
+ * - Rating
+ */
+function sortByName() {
   products.sort((a, b) => a.name.localeCompare(b.name, 'sv'));
   printProductList()
 }
-sortByNameButton.addEventListener('click', sortByName);
+sortByNameElement.addEventListener('click', sortByName);
+
+function sortByPrice() {
+  products.sort((a, b) => a.price - b.price);
+  printProductList()
+}
+sortByPriceElement.addEventListener('click', sortByPrice);
 
 
 // Get rating for each product
