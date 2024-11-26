@@ -4,6 +4,25 @@ import products from './products.js';
 const productListContainer = document.querySelector('#product-list');
 const cart = document.querySelector('#cart-summary');
 
+// Get rating for each product
+function getRatingStars(rating) {
+  const fullStars = Math.floor(rating);
+  const halfStars = (rating % 1 === 0.5) ? 1 : 0; 
+  const emptyStars = 5 - fullStars - halfStars; 
+
+  let html = '';
+  for (let i = 0; i < fullStars; i++) {
+    html += `<span>🌕</span>`
+  }
+  if (halfStars) {
+    html += `<span>🌗</span>`
+  }
+  for (let i = 0; i < emptyStars; i++) {
+    html += `<span>🌑</span>`;
+  }
+  return html;
+}
+
 // A function that prints a html-element for each product
 function printProductList() {
   productListContainer.innerHTML = ''; // Empty container of current products to update the products when they change
@@ -13,7 +32,7 @@ function printProductList() {
               <img>
                 <h3>${product.name}</h3>
                 <p>${product.price} kr</p>
-                <p>Rating: ${product.rating} out of 5</p>
+                <p>Rating: ${getRatingStars(product.rating)}</p>
                 <div>
                     <button class="decrease" id="decrease-${product.id}">-</button>
                     <input type="number" min="0" value="${product.amount}" id="input-${product.id}">

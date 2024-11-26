@@ -17,7 +17,7 @@ const products = [
     id: 1,
     name: 'Bath Towel',
     price: 375,
-    rating: 4,
+    rating: 3.5,
     amount: 0,
     category: 'bathroom',
     /*img: {
@@ -59,7 +59,7 @@ const products = [
     id: 4,
     name: 'Small Towel',
     price: 175,
-    rating: 3,
+    rating: 2.5,
     amount: 0,
     category: 'bathroom',
     /*img: {
@@ -73,7 +73,7 @@ const products = [
     id: 5,
     name: 'Kitchen Towel 2',
     price: 260,
-    rating: 4,
+    rating: 4.5,
     amount: 0,
     category: 'kitchen',
     /*img: {
