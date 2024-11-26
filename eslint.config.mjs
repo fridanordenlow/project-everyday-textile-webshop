@@ -2,6 +2,7 @@ import globals from 'globals';
 import pluginJs from '@eslint/js';
 import prettierPlugin from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
+import templatePlugin from 'eslint-plugin-template';
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
@@ -11,6 +12,7 @@ export default [
     },
     plugins: {
       prettier: prettierPlugin,
+      template: templatePlugin,
     },
     rules: {
       'arrow-spacing': ['error', { before: true, after: true }], // Enforce spacing around arrow functions
@@ -34,6 +36,9 @@ export default [
       'quotes': ['error', 'single'], // Enforce single quotes
       'semi': ['error', 'always'], // Require semicolons
       'space-before-blocks': ['error', 'always'], // Enforce spacing before blocks
+      'template/no-duplicate-attributes': 'error', // Förhindra duplicerade attribut i HTML
+      'template/html-self-closing': 'warn', // Varning om taggar inte är självstängande där det är relevant (t.ex. <img>)
+      'template/no-invalid-html': 'error', // Förhindra ogiltig HTML-struktur
     },
   },
   pluginJs.configs.recommended, // Recommended ESLint rules

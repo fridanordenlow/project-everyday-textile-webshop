@@ -1,9 +1,5 @@
 import products from './products.js';
 
-console.log(products);
-
-// Create an array for all products as objects
-// const products = [
 //   {
 //     id: 0,
 //     name: 'Kitchen Towel',
@@ -215,7 +211,11 @@ function decreaseProductAmount(e) {
 function updateAndPrintCart() {
   // Create a variable that stores chosen products
   const chosenProducts = products.filter(product => product.amount > 0);
-  console.log(chosenProducts);
+  // Calculate the total sum of chosen products
+  const totalCartSum = chosenProducts.reduce((sum, product) => {
+    return sum + (product.amount * product.price);
+  }, 0);
+  console.log(chosenProducts, totalCartSum);
 
   // Print products in cart
   cart.innerHTML = ''; // Empty element from current content
@@ -227,6 +227,11 @@ function updateAndPrintCart() {
     </div>
     `;
   });
+  cart.innerHTML += `
+  <div>
+  Total sum: ${totalCartSum} kr
+  </div>
+  `
 }
 
 updateAndPrintCart();
