@@ -1,94 +1,6 @@
 import products from './products.js';
 
-//   {
-//     id: 0,
-//     name: 'Kitchen Towel',
-//     price: 250,
-//     rating: 5,
-//     amount: 0,
-//     category: 'kitchen',
-//     /*img: {
-//             url:,
-//             alt:
-//             width:,
-//             height:
-//         }*/
-//   },
-//   {
-//     id: 1,
-//     name: 'Bath Towel',
-//     price: 375,
-//     rating: 4,
-//     amount: 0,
-//     category: 'bathroom',
-//     /*img: {
-//             url:,
-//             alt:
-//             width:,
-//             height:
-//         }*/
-//   },
-//   {
-//     id: 2,
-//     name: 'Hand Towel',
-//     price: 265,
-//     rating: 3,
-//     amount: 0,
-//     category: 'bathroom',
-//     /*img: {
-//             url:,
-//             alt:
-//             width:,
-//             height:
-//         }*/
-//   },
-//   {
-//     id: 3,
-//     name: 'Hand Towel 2',
-//     price: 275,
-//     rating: 3,
-//     amount: 0,
-//     category: 'bathroom',
-//     /*img: {
-//             url:,
-//             alt:
-//             width:,
-//             height:
-//         }*/
-//   },
-//   {
-//     id: 4,
-//     name: 'Small Towel',
-//     price: 175,
-//     rating: 3,
-//     amount: 0,
-//     category: 'bathroom',
-//     /*img: {
-//             url:,
-//             alt:
-//             width:,
-//             height:
-//         }*/
-//   },
-//   {
-//     id: 5,
-//     name: 'Kitchen Towel 2',
-//     price: 260,
-//     rating: 4,
-//     amount: 0,
-//     category: 'kitchen',
-//     /*img: {
-//             url:,
-//             alt:
-//             width:,
-//             height:
-//         }*/
-//   },
-// ];
 
-// ----------------------------
-// --- HTML ELEMENTS ----------
-// ----------------------------
 const productListContainer = document.querySelector('#product-list');
 const cart = document.querySelector('#cart-summary');
 
@@ -121,24 +33,14 @@ function printProductList() {
   decreaseButtons.forEach(button => {
     button.addEventListener('click', e => updateProductAmount(e, false));
   });
-  /*
-  const increaseButtons = document.querySelectorAll('button.increase');
-  increaseButtons.forEach(button => {
-    button.addEventListener('click', increaseProductAmount);
-  });
-  const decreaseButtons = document.querySelectorAll('button.decrease');
-  decreaseButtons.forEach(button => {
-    button.addEventListener('click', decreaseProductAmount);
-  });
-  */
 }
 printProductList();
 
 /**
  * Create a shopping cart that displays all chosen products:
- * - How many of each product
- * - How much the total sum of each product
- * - Total sum of all products
+ * x How many of each product
+ * x How much the total sum of each product
+ * x Total sum of all products
  * */
 
 // A function that updates and increases product amount
@@ -151,7 +53,7 @@ function updateProductAmount(e, isIncrease) {
   const foundProductIndex = products.findIndex(product => product.id === productId);
   // Message if product does not exist
   if (foundProductIndex === -1) {
-    console.error('Det finns ingen sådan produkt i listan. kolla att id:t är rätt');
+    console.error('No such product exists. Check that product-ID is correct.');
     return;
   }
 
@@ -159,14 +61,75 @@ function updateProductAmount(e, isIncrease) {
   const product = products[foundProductIndex];
   product.amount += isIncrease ? 1 : -1;
 
-  // Ensure amount does not go below zero
+  // Ensure product amount does not go below zero
   product.amount = Math.max(product.amount, 0);
 
   printProductList();
   updateAndPrintCart();
 }
+// ------------------------
+// ------------------------
 
+// A function that prints chosen products
+function updateAndPrintCart() {
+  // Create a variable that stores chosen products
+  const chosenProducts = products.filter(product => product.amount > 0);
+  // Calculate the total sum of chosen products
+  const totalCartSum = chosenProducts.reduce((sum, product) => {
+    return sum + (product.amount * product.price);
+  }, 0);
+  console.log(chosenProducts, totalCartSum);
+
+  // Print products in cart
+  cart.innerHTML = ''; // Empty element from current content
+  // Loop through and print chosen products
+  chosenProducts.forEach(product => {
+    cart.innerHTML += `
+    <div> 
+      ${product.name}: ${product.amount} st - ${product.amount * product.price} kr
+    </div>
+    `;
+  });
+  cart.innerHTML += `
+  <div>
+  Total sum: ${totalCartSum} kr
+  </div>
+  `
+}
+
+updateAndPrintCart();
+
+/**
+ * Create functions (connected to buttons) that sorts products based on:
+ * - Name
+ * - Price
+ * - Category
+ * - Rating
+ */
+
+/**
+ * Create an order form
+ * - Connect to DOM-elements
+ */
+
+
+
+
+
+// ------------------------------------------------
+// ------------------------------------------------
+// ------------------------------------------------
 /*
+Första versionen av implementering av + och - funktionen på knapparna
+const increaseButtons = document.querySelectorAll('button.increase');
+  increaseButtons.forEach(button => {
+    button.addEventListener('click', increaseProductAmount);
+  });
+  const decreaseButtons = document.querySelectorAll('button.decrease');
+  decreaseButtons.forEach(button => {
+    button.addEventListener('click', decreaseProductAmount);
+  });
+
 function increaseProductAmount(e) {
   const productId = Number(e.target.id.replace('increase-', ''));
   console.log('clicked on button with id', productId);
@@ -204,47 +167,3 @@ function decreaseProductAmount(e) {
   updateAndPrintCart();
 }
 */
-// ------------------------
-// ------------------------
-
-// A function that prints chosen products
-function updateAndPrintCart() {
-  // Create a variable that stores chosen products
-  const chosenProducts = products.filter(product => product.amount > 0);
-  // Calculate the total sum of chosen products
-  const totalCartSum = chosenProducts.reduce((sum, product) => {
-    return sum + (product.amount * product.price);
-  }, 0);
-  console.log(chosenProducts, totalCartSum);
-
-  // Print products in cart
-  cart.innerHTML = ''; // Empty element from current content
-  // Loop through chosen products
-  chosenProducts.forEach(product => {
-    cart.innerHTML += `
-    <div> 
-      ${product.name}: ${product.amount} st - ${product.amount * product.price} kr
-    </div>
-    `;
-  });
-  cart.innerHTML += `
-  <div>
-  Total sum: ${totalCartSum} kr
-  </div>
-  `
-}
-
-updateAndPrintCart();
-
-/**
- * Create functions (connected to buttons) that sorts products based on:
- * - Name
- * - Price
- * - Category
- * - Rating
- */
-
-/**
- * Create an order form
- * - Connect to DOM-elements
- */
