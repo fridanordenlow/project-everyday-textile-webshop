@@ -1,8 +1,16 @@
 import products from './products.js';
 
 
-const productListContainer = document.querySelector('#product-list');
-const cart = document.querySelector('#cart-summary');
+const productListContainer = document.querySelector('#productList');
+const cart = document.querySelector('#cartSummary');
+const sortByNameButton = document.querySelector('#sortByNameButton');
+
+function sortByName(){
+  products.sort((a, b) => a.name.localeCompare(b.name, 'sv'));
+  printProductList()
+}
+sortByNameButton.addEventListener('click', sortByName);
+
 
 // Get rating for each product
 function getRatingStars(rating) {
@@ -29,7 +37,6 @@ function printProductList() {
   products.forEach(product => {
     productListContainer.innerHTML += `
             <article class="single-product">
-              <img>
                 <h3>${product.name}</h3>
                 <p>${product.price} kr</p>
                 <p>Rating: ${getRatingStars(product.rating)}</p>
