@@ -9,7 +9,7 @@
   <body>
     <main>
       <header>
-        <h1>Everyday Textile Memories</h1>
+        <h1>Everyday Textile Webshop</h1>
         <div>Varukorgsikon</div>
       </header>
       <section class="product-section">
@@ -17,18 +17,23 @@
         <div class="sorting-and-filtering-container">Sortera produkterna efter:
           <!-- Gör om detta till någon form av drop-down? -->
           <!-- En drop-down för sortering och en för filter? -->
-          <button id="sortByName">Name</button>
-          <button id="sortByPrice">Price</button>
-          <button id="sortByRating">Rating</button>
-          <button id="resetBtn">Reset</button>
+          <div id="sortingDropdown" class="dropdown">
+            <button id="sortingDropdownBtn" class="dropdown-button">Sort by: 🔽</button>
+            <div class="dropdown-content">
+              <button id="sortByName">Name</button>
+              <button id="sortByPrice">Price</button>
+              <button id="sortByRating">Rating</button>
+            </div>
+          </div>
           <div id="categoryDropdown" class="dropdown">
-            <button id="categoryDropdownBtn" class="category-dropdown-button">Filter by category 🔽</button>
+            <button id="categoryDropdownBtn" class="dropdown-button">Filter by category: 🔽</button>
             <div class="dropdown-content">
               <button id="filterBathroom">Bathroom</button>
               <button id="filterBedroom">Bedroom</button>
               <button id="filterKitchen">Kitchen</button>
             </div>
           </div>
+          <button id="resetBtn">Reset</button>
         </div>
         <div>
           <!-- Sortera efter det ena eller det andra -->

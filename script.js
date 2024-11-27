@@ -7,6 +7,8 @@ const sortByPriceElement = document.querySelector('#sortByPrice');
 const sortByRatingElement = document.querySelector('#sortByRating');
 const categoryDropdown = document.querySelector('#categoryDropdown');
 const categoryDropdownBtn = document.querySelector('#categoryDropdownBtn');
+const sortingDropdown = document.querySelector('#sortingDropdown');
+const sortingDropdownBtn = document.querySelector('#sortingDropdownBtn');
 const filterBathroom = document.querySelector('#filterBathroom');
 const filterBedroom = document.querySelector('#filterBedroom');
 const filterKitchen = document.querySelector('#filterKitchen');
@@ -64,29 +66,51 @@ printProductList();
  * x Have button for clearing filters/sorting
  */
 
+categoryDropdownBtn.addEventListener('click', () => {
+  categoryDropdown.classList.toggle('show');
+})
+
+// Closes the dropdown after you chose an option
+function closeDropdown(dropdown) {
+  dropdown.classList.remove('show');
+}
+
+/**
+ * - Remake into loop?
+ */
 function sortByName() {
   products.sort((a, b) => a.name.localeCompare(b.name, 'sv'));
   printProductList();
 }
-sortByNameElement.addEventListener('click', sortByName);
+sortByNameElement.addEventListener('click', () => {
+  sortByName();
+  closeDropdown(sortingDropdown); 
+});
 
 function sortByPrice() {
   products.sort((a, b) => a.price - b.price);
   printProductList();
 }
-sortByPriceElement.addEventListener('click', sortByPrice);
+sortByPriceElement.addEventListener('click', () => {
+  sortByPrice();
+  closeDropdown(sortingDropdown);
+});
 
 function sortByRating() {
   products.sort((a, b) => a.rating - b.rating);
   printProductList();
 }
-sortByRatingElement.addEventListener('click', sortByRating);
+sortByRatingElement.addEventListener('click', () => {
+  sortByRating();
+  closeDropdown(sortingDropdown);
+});
 
-categoryDropdownBtn.addEventListener('click', () => {
-  categoryDropdown.classList.toggle('show');
-})
 
 // Filter products by category
+sortingDropdownBtn.addEventListener('click', () => {
+  sortingDropdown.classList.toggle('show');
+})
+
 let chosenCategory = null;
 
 function filterByCategory(category) {
@@ -98,10 +122,23 @@ function filterByCategory(category) {
 }
 
 // Byt eventuellt till en for-each-loop
-filterBathroom.addEventListener('click', () => filterByCategory('Bathroom'));
-filterBedroom.addEventListener('click', () => filterByCategory('Bedroom'));
-filterKitchen.addEventListener('click', () => filterByCategory('Kitchen'));
+filterBathroom.addEventListener('click', () => {
+  filterByCategory('Bathroom');
+  closeDropdown(categoryDropdown); 
+});
+filterBedroom.addEventListener('click', () => {
+  filterByCategory('Bedroom');
+  closeDropdown(categoryDropdown); 
+});
+filterKitchen.addEventListener('click', () => {
+  filterByCategory('Kitchen');
+  closeDropdown(categoryDropdown); 
+});
 
+
+// filterBathroom.addEventListener('click', () => filterByCategory('Bathroom'));
+// filterBedroom.addEventListener('click', () => filterByCategory('Bedroom'));
+// filterKitchen.addEventListener('click', () => filterByCategory('Kitchen'));
 
 // const bathroomProducts = productList.filter(prod => prod.category === 'Bathroom');
 // console.log(bathroomProducts)
