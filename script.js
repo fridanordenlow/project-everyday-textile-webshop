@@ -12,32 +12,73 @@ const filterBedroom = document.querySelector('#filterBedroom');
 const filterKitchen = document.querySelector('#filterKitchen');
 const resetBtn = document.querySelector('#resetBtn');
 
+
+// ------------------------------------------------------------------------------------
+// --- PRODUCTS -----------------------------------------------------------------------
+// ------------------------------------------------------------------------------------
+
+let products = [...productList]
+
+// A function that prints an html-element for each product
+function printProductList() {
+  productListContainer.innerHTML = ''; // Empty container of current products to update the products when they change
+  products.forEach(product => {
+    productListContainer.innerHTML += `
+            <article class="single-product">
+                <h3>${product.name}</h3>
+                <p>${product.price} kr</p>
+                <p>Rating: ${getRatingStars(product.rating)}</p>
+                <div>
+                    <button class="decrease" id="decrease-${product.id}">-</button>
+                    <input type="number" min="0" value="${product.amount}" id="input-${product.id}">
+                    <button class="increase" id="increase-${product.id}">+</button>
+                </div>
+            </article>
+        `;
+  });
+
+  /**
+   * - Have an add button that updates the amount chosen instead of immediate update of cart? 
+   */
+  const increaseButtons = document.querySelectorAll('button.increase');
+  increaseButtons.forEach(button => {
+    button.addEventListener('click', e => updateProductAmount(e, true));
+  });
+  const decreaseButtons = document.querySelectorAll('button.decrease');
+  decreaseButtons.forEach(button => {
+    button.addEventListener('click', e => updateProductAmount(e, false));
+  });
+}
+printProductList();
+
+
+// ------------------------------------------------------------------------------------
+// --- SORTING AND FILTERS ------------------------------------------------------------
+// ------------------------------------------------------------------------------------
 /**
  * Sort/filter by:
  * x Name
  * x Price 
  * x Rating 
- * - Category 
+ * x Category 
  * x Have button for clearing filters/sorting
  */
 
-let products = [...productList]
-
 function sortByName() {
   products.sort((a, b) => a.name.localeCompare(b.name, 'sv'));
-  printProductList()
+  printProductList();
 }
 sortByNameElement.addEventListener('click', sortByName);
 
 function sortByPrice() {
   products.sort((a, b) => a.price - b.price);
-  printProductList()
+  printProductList();
 }
 sortByPriceElement.addEventListener('click', sortByPrice);
 
 function sortByRating() {
   products.sort((a, b) => a.rating - b.rating);
-  printProductList()
+  printProductList();
 }
 sortByRatingElement.addEventListener('click', sortByRating);
 
@@ -46,21 +87,37 @@ categoryDropdownBtn.addEventListener('click', () => {
 })
 
 // Filter products by category
-const bathroomProducts = productList.filter(prod => prod.category === 'Bathroom');
-console.log(bathroomProducts)
+let chosenCategory = null;
 
-// function filterByCategory() {
-  
-// }
+function filterByCategory(category) {
+  chosenCategory = category;
 
-function resetSorting() {
+  const filteredProducts = chosenCategory ? productList.filter(prod => prod.category === chosenCategory) : productList;
+  products = [...filteredProducts];
+  printProductList(); 
+}
+
+// Byt eventuellt till en for-each-loop
+filterBathroom.addEventListener('click', () => filterByCategory('Bathroom'));
+filterBedroom.addEventListener('click', () => filterByCategory('Bedroom'));
+filterKitchen.addEventListener('click', () => filterByCategory('Kitchen'));
+
+
+// const bathroomProducts = productList.filter(prod => prod.category === 'Bathroom');
+// console.log(bathroomProducts)
+
+function resetProductList() {
   products = [...productList];
   printProductList()
 }
+resetBtn.addEventListener('click', resetProductList);
 
-resetBtn.addEventListener('click', resetSorting);
 
-// Get rating for each product
+// ------------------------------------------------------------------------------------
+// --- RATING SYMBOLS -----------------------------------------------------------------
+// ------------------------------------------------------------------------------------
+
+// Get rating for each product, moons instead of stars for now
 function getRatingStars(rating) {
   const fullStars = Math.floor(rating);
   const halfStars = (rating % 1 === 0.5) ? 1 : 0; 
@@ -79,37 +136,9 @@ function getRatingStars(rating) {
   return html;
 }
 
-// A function that prints a html-element for each product
-function printProductList() {
-  productListContainer.innerHTML = ''; // Empty container of current products to update the products when they change
-  products.forEach(product => {
-    productListContainer.innerHTML += `
-            <article class="single-product">
-                <h3>${product.name}</h3>
-                <p>${product.price} kr</p>
-                <p>Rating: ${getRatingStars(product.rating)}</p>
-                <div>
-                    <button class="decrease" id="decrease-${product.id}">-</button>
-                    <input type="number" min="0" value="${product.amount}" id="input-${product.id}">
-                    <button class="increase" id="increase-${product.id}">+</button>
-                </div>
-            </article>
-        `;
-  });
-  // Create functions to make the - and + buttons adjust the chosen amount of each product
-  // Have an add button that updates the amount chosen?
-  // Increase button function
-  const increaseButtons = document.querySelectorAll('button.increase');
-  increaseButtons.forEach(button => {
-    button.addEventListener('click', e => updateProductAmount(e, true));
-  });
-  const decreaseButtons = document.querySelectorAll('button.decrease');
-  decreaseButtons.forEach(button => {
-    button.addEventListener('click', e => updateProductAmount(e, false));
-  });
-}
-printProductList();
-
+// ------------------------------------------------------------------------------------
+// --- CART ---------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------
 /**
  * Create a shopping cart that displays all chosen products:
  * x How many of each product
@@ -141,8 +170,6 @@ function updateProductAmount(e, isIncrease) {
   printProductList();
   updateAndPrintCart();
 }
-// ------------------------
-// ------------------------
 
 // A function that prints chosen products
 function updateAndPrintCart() {
@@ -173,13 +200,9 @@ function updateAndPrintCart() {
 
 updateAndPrintCart();
 
-/**
- * Create functions (connected to buttons) that sorts products based on:
- * - Name
- * - Price
- * - Category
- * - Rating
- */
+// ------------------------------------------------------------------------------------
+// ---- TO DO -------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------
 
 /**
  * Create an order form
@@ -190,9 +213,9 @@ updateAndPrintCart();
 
 
 
-// ------------------------------------------------
-// ------------------------------------------------
-// ------------------------------------------------
+// ------------------------------------------------------------------------------------
+// --- DEAD CODE ----------------------------------------------------------------------
+// ------------------------------------------------------------------------------------
 /*
 Första versionen av implementering av + och - funktionen på knapparna
 const increaseButtons = document.querySelectorAll('button.increase');
