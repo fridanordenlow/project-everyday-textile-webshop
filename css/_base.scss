@@ -8,7 +8,7 @@ main {
   flex-direction: column; 
   justify-content: center; 
   align-items: center; 
-  height: 100vh; 
+  // height: 100vh; 
 }
 
 header {
@@ -71,4 +71,10 @@ header {
   input {
     width: 40px;
   }
+}
+
+.order-form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
 }

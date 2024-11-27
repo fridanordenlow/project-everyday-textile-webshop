@@ -10,11 +10,11 @@
     <main>
       <header>
         <h1>Everyday Textile Webshop</h1>
-        <div>Varukorgsikon</div>
+        <div>Cart icon</div>
       </header>
       <section class="product-section">
-        <h2>Våra produkter</h2>
-        <div class="sorting-and-filtering-container">Sortera produkterna efter:
+        <h2>Our products:</h2>
+        <div class="sorting-and-filtering-container">
           <!-- Gör om detta till någon form av drop-down? -->
           <!-- En drop-down för sortering och en för filter? -->
           <div id="sortingDropdown" class="dropdown">
@@ -44,15 +44,53 @@
         </div>
       </section>
       <section>
-        <h3>Din varukorg</h3>
+        <h3>Your cart</h3>
         <div id="cartSummary">
           <!-- Här visas produkterna du har lagt i din varukorg, totalpris etc -->
-           Din varukorg är tom.
+          Your cart is empty. 
         </div>
       </section>
       <section>
-        <h4>Beställningsformulär</h4>
         <!-- Här kommer ett formulär med en massa inputs och checkboxes etc -->
+        <form class="order-form">
+          <h4>Order form</h4>
+          <label>
+            <span>First name</span>
+            <input type="text">
+          </label>
+          <label>
+            <span>Last name</span>
+            <input type="text">
+          </label>
+          <label>
+            <span>Street name</span>
+            <input type="text">
+          </label>
+          <label>
+            <span>Postal code</span>
+            <input type="text">
+          </label>
+          <label>
+            <span>City</span>
+            <input type="text">
+          </label>
+          <label>
+            <span>Phone number</span>
+            <input type="number">
+          </label>
+          <label>
+            <span>E-mail</span>
+            <input type="email">
+          </label>
+          <label>
+            <span>Payment option</span>
+            <input type="checkbox">Card</input>
+            <input type="checkbox">Invoice</input>
+          </label>
+          <label>
+            <span>Discount code</span>
+            <input type="text">
+          </label>
       </section>
     </main>
     <script type="module" src="script.js" defer></script>
