@@ -12,8 +12,8 @@ const resetButton = document.querySelector('#resetButton');
  * Sort/filter by:
  * x Name
  * x Price 
+ * x Rating 
  * - Category 
- * - Rating
  * x Have button for clearing filters/sorting
  */
 
@@ -30,6 +30,16 @@ function sortByPrice() {
   printProductList()
 }
 sortByPriceElement.addEventListener('click', sortByPrice);
+
+function sortByRating() {
+  products.sort((a, b) => a.rating - b.rating);
+  printProductList()
+}
+sortByRatingElement.addEventListener('click', sortByRating);
+
+// function sortByCategory() {
+
+// }
 
 function resetSorting() {
   products = [...productList];

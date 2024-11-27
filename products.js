@@ -5,7 +5,7 @@ const productList = [
     price: 250,
     rating: 5,
     amount: 0,
-    category: 'kitchen',
+    category: 'Kitchen',
     /*img: {
               url:,
               alt:
@@ -19,7 +19,7 @@ const productList = [
     price: 375,
     rating: 3.5,
     amount: 0,
-    category: 'bathroom',
+    category: 'Bathroom',
     /*img: {
               url:,
               alt:
@@ -33,7 +33,7 @@ const productList = [
     price: 265,
     rating: 3,
     amount: 0,
-    category: 'bathroom',
+    category: 'Bathroom',
     /*img: {
               url:,
               alt:
@@ -43,11 +43,11 @@ const productList = [
   },
   {
     id: 3,
-    name: 'Hand Towel 2',
+    name: 'Blue Pillow Case',
     price: 275,
     rating: 3,
     amount: 0,
-    category: 'bathroom',
+    category: 'Bedroom',
     /*img: {
               url:,
               alt:
@@ -61,7 +61,7 @@ const productList = [
     price: 175,
     rating: 2.5,
     amount: 0,
-    category: 'bathroom',
+    category: 'Bathroom',
     /*img: {
               url:,
               alt:
@@ -71,11 +71,11 @@ const productList = [
   },
   {
     id: 5,
-    name: 'Kitchen Towel 2',
+    name: 'Yellow Pillow Case',
     price: 260,
     rating: 4.5,
     amount: 0,
-    category: 'kitchen',
+    category: 'Bedroom',
     /*img: {
               url:,
               alt:
