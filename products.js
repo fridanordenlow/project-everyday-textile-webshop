@@ -1,4 +1,4 @@
-const products = [
+const productList = [
   {
     id: 0,
     name: 'Kitchen Towel',
@@ -85,4 +85,4 @@ const products = [
   },
 ];
 
-export default products;
+export default productList;

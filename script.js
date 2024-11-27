@@ -1,5 +1,4 @@
-import products from './products.js';
-
+import productList from './products.js';
 
 const productListContainer = document.querySelector('#productList');
 const cart = document.querySelector('#cartSummary');
@@ -7,14 +6,19 @@ const sortByNameElement = document.querySelector('#sortByName');
 const sortByPriceElement = document.querySelector('#sortByPrice');
 const sortByCategoryElement = document.querySelector('#sortByCategory');
 const sortByRatingElement = document.querySelector('#sortByRating');
+const resetButton = document.querySelector('#resetButton');
 
 /**
  * Sort/filter by:
  * x Name
- * - Price 
+ * x Price 
  * - Category 
  * - Rating
+ * x Have button for clearing filters/sorting
  */
+
+let products = [...productList]
+
 function sortByName() {
   products.sort((a, b) => a.name.localeCompare(b.name, 'sv'));
   printProductList()
@@ -27,6 +31,12 @@ function sortByPrice() {
 }
 sortByPriceElement.addEventListener('click', sortByPrice);
 
+function resetSorting() {
+  products = [...productList];
+  printProductList()
+}
+
+resetButton.addEventListener('click', resetSorting);
 
 // Get rating for each product
 function getRatingStars(rating) {
