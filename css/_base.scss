@@ -15,6 +15,44 @@ header {
   display: flex;
 }
 
+// -------------------------------
+// -------------------------------
+
+.sorting-and-filtering-container {
+  display: flex; 
+  flex-wrap: wrap; 
+  gap: 0.5rem; 
+
+  button {
+    border: none; 
+    padding: 0.5rem; 
+  }
+
+  .dropdown {
+    position: relative; 
+
+    .category-dropdown-button {
+    }
+
+    .dropdown-content {
+      display: none; 
+      position: absolute; 
+      z-index: 1; 
+
+      button {
+        width: 100%; 
+      }
+    }
+
+    &.show .dropdown-content {
+      display: block; 
+    }
+  }
+}
+
+// -------------------------------
+// -------------------------------
+
 .product-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

@@ -9,18 +9,26 @@
   <body>
     <main>
       <header>
-        <h1>The Best Webshop</h1>
+        <h1>Everyday Textile Memories</h1>
         <div>Varukorgsikon</div>
       </header>
-      <section>
+      <section class="product-section">
         <h2>Våra produkter</h2>
-        <div>Sortera produkterna efter:
+        <div class="sorting-and-filtering-container">Sortera produkterna efter:
           <!-- Gör om detta till någon form av drop-down? -->
+          <!-- En drop-down för sortering och en för filter? -->
           <button id="sortByName">Name</button>
           <button id="sortByPrice">Price</button>
-          <button id="sortByCategory">Category</button>
           <button id="sortByRating">Rating</button>
-          <button id="resetButton">Reset</button>
+          <button id="resetBtn">Reset</button>
+          <div id="categoryDropdown" class="dropdown">
+            <button id="categoryDropdownBtn" class="category-dropdown-button">Filter by category 🔽</button>
+            <div class="dropdown-content">
+              <button id="filterBathroom">Bathroom</button>
+              <button id="filterBedroom">Bedroom</button>
+              <button id="filterKitchen">Kitchen</button>
+            </div>
+          </div>
         </div>
         <div>
           <!-- Sortera efter det ena eller det andra -->

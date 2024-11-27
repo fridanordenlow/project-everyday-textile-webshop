@@ -4,9 +4,13 @@ const productListContainer = document.querySelector('#productList');
 const cart = document.querySelector('#cartSummary');
 const sortByNameElement = document.querySelector('#sortByName');
 const sortByPriceElement = document.querySelector('#sortByPrice');
-const sortByCategoryElement = document.querySelector('#sortByCategory');
 const sortByRatingElement = document.querySelector('#sortByRating');
-const resetButton = document.querySelector('#resetButton');
+const categoryDropdown = document.querySelector('#categoryDropdown');
+const categoryDropdownBtn = document.querySelector('#categoryDropdownBtn');
+const filterBathroom = document.querySelector('#filterBathroom');
+const filterBedroom = document.querySelector('#filterBedroom');
+const filterKitchen = document.querySelector('#filterKitchen');
+const resetBtn = document.querySelector('#resetBtn');
 
 /**
  * Sort/filter by:
@@ -37,8 +41,16 @@ function sortByRating() {
 }
 sortByRatingElement.addEventListener('click', sortByRating);
 
-// function sortByCategory() {
+categoryDropdownBtn.addEventListener('click', () => {
+  categoryDropdown.classList.toggle('show');
+})
 
+// Filter products by category
+const bathroomProducts = productList.filter(prod => prod.category === 'Bathroom');
+console.log(bathroomProducts)
+
+// function filterByCategory() {
+  
 // }
 
 function resetSorting() {
@@ -46,7 +58,7 @@ function resetSorting() {
   printProductList()
 }
 
-resetButton.addEventListener('click', resetSorting);
+resetBtn.addEventListener('click', resetSorting);
 
 // Get rating for each product
 function getRatingStars(rating) {
