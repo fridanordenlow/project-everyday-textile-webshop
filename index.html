@@ -83,14 +83,32 @@
             <input type="email">
           </label>
           <label>
-            <span>Payment option</span>
+            <span>Payment option:</span>
+            <br>
             <input type="checkbox">Card</input>
+            <!-- Om kort valts, visas fält för kortnummer, datum/år och CVC -->
+             <br>
             <input type="checkbox">Invoice</input>
+            <!-- Om faktura valts ska ett formulärfält för svenskt personnummer visas.
+            Även detta fält ska valideras innan formuläret går att skicka iväg -->
           </label>
           <label>
             <span>Discount code</span>
             <input type="text">
           </label>
+          <label>
+            <input type="checkbox">
+            <span>Yes, process my personal data in accordance to our privacy policy</span>
+          </label>
+          <label>
+            <input type="checkbox" checked>
+            <span>Yes, I want to subscribe to newsletters!</span>
+          </label>
+          <button type="submit">Place order</button>
+          <!-- Knappen ska vara disabled tills formuläret är rätt ifyllt -->
+          <!-- Felen ska markeras och kommuniceras tydligt -->
+          <button type="reset">Clear order</button>
+          <!-- Reset-knapp som återställer samtliga formulärfält + beställda munkar/produkter -->
       </section>
     </main>
     <script type="module" src="script.js" defer></script>
