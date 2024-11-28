@@ -265,8 +265,9 @@ const resetBtn = form.querySelector('#resetBtn');
 
 function validateInput(inputElementId, checkSpecialInput = '') {
   const inputField = document.getElementById(inputElementId);
+
   const inputFieldValue = inputField.value;
-  let feedbackField = inputField.nextElementSibling;
+  const feedbackField = inputField.parentElement.querySelector(".error-message");
 
   if (!feedbackField) {
     console.log(`No feedback field found for ${inputField}`);
@@ -291,11 +292,11 @@ function validateInput(inputElementId, checkSpecialInput = '') {
 
   if (inputFieldValue.length === 0 || hasSpecialError) {
     feedbackField.innerHTML = `* ${customErrorMessage || 'This field is required'}`;
-    feedbackField.style.color = 'red';
+    // feedbackField.style.color = 'red';
     return false;
   } else {
     feedbackField.innerHTML = '✅';
-    feedbackField.style.color = 'green';
+    // feedbackField.style.color = 'green';
     return true;
   }
 }
