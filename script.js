@@ -13,7 +13,7 @@ const sortingDropdownBtn = document.querySelector('#sortingDropdownBtn');
 const filterBathroom = document.querySelector('#filterBathroom');
 const filterBedroom = document.querySelector('#filterBedroom');
 const filterKitchen = document.querySelector('#filterKitchen');
-const resetBtn = document.querySelector('#resetBtn');
+const resetSortFiltBtn = document.querySelector('#resetSortFiltBtn');
 
 
 // ------------------------------------------------------------------------------------
@@ -157,12 +157,14 @@ function resetProductList() {
   products = [...productList];
   printProductList()
 }
-resetBtn.addEventListener('click', resetProductList);
+resetSortFiltBtn.addEventListener('click', resetProductList);
 
 
 // ------------------------------------------------------------------------------------
 // --- RATING SYMBOLS -----------------------------------------------------------------
 // ------------------------------------------------------------------------------------
+
+// cmd + D välj flera av samma namn och ändra
 
 // Get rating for each product, moons instead of stars for now
 function getRatingStars(rating) {
@@ -248,17 +250,97 @@ function updateAndPrintCart() {
 updateAndPrintCart();
 
 // ------------------------------------------------------------------------------------
-// ---- TO DO -------------------------------------------------------------------------
+// ---- FORM --------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------
 
 /**
  * Create an order form
  * - Connect to DOM-elements
+ * - Validate form inputs
  */
 
+const form = document.querySelector('#form');
+const submitBtn = form.querySelector('#submitBtn');
+const resetBtn = form.querySelector('#resetBtn');
+
+function validateInput(inputElementId, checkSpecialInput = '') {
+  const inputField = document.getElementById(inputElementId);
+  const inputFieldValue = inputField.value;
+  let feedbackField = inputField.nextElementSibling;
+
+  if (!feedbackField) {
+    console.log(`No feedback field found for ${inputField}`);
+  }
+
+  let hasSpecialError = false;
+  let customErrorMessage = '';
+
+  // Check special cases
+  if (checkSpecialInput !== '') {
+    // Check which special input
+    switch(checkSpecialInput) {
+      case 'phoneNumber':
+        hasSpecialError = !inputFieldValue.match(/^[0-9]{10}$/);
+        customErrorMessage = 'Phone number must be 10 digits.';
+        break;
+      case 'zipCode':
+        hasSpecialError = !inputFieldValue.match(/^\d{3}\s?\d{2}$/);
+        customErrorMessage = 'Zip code must be in the format "123 45" or "12345".';
+    }
+  }
+
+  if (inputFieldValue.length === 0 || hasSpecialError) {
+    feedbackField.innerHTML = `* ${customErrorMessage || 'This field is required'}`;
+    feedbackField.style.color = 'red';
+    return false;
+  } else {
+    feedbackField.innerHTML = '✅';
+    feedbackField.style.color = 'green';
+    return true;
+  }
+}
+
+function validateAllInputs() {
+  let isValid = true;
+  isValid = validateInput('firstName') && isValid;
+  isValid = validateInput('lastName') && isValid;
+  isValid = validateInput('streetAddress') && isValid;
+  isValid = validateInput('zipCode', 'zipCode') && isValid;
+  isValid = validateInput('city') && isValid;
+  isValid = validateInput('phone', 'phoneNumber') && isValid;
+  isValid = validateInput('email') && isValid;
+  return isValid;
+}
+
+function updateSubmitButton() {
+  const isFormValid = validateAllInputs();
+  submitBtn.disabled = !isFormValid;
+}
+
+// On submit give feedback
+function submitForm(e) {
+  e.preventDefault();
+  const orderSection = document.querySelector('#order-section');
+  orderSection.innerHTML = `<p>Thank you! Your order has been received.</p>`
+}
+
+submitBtn.addEventListener('click', submitForm);
+
+const formInputs = form.querySelectorAll('input');
+formInputs.forEach(input => {
+  input.addEventListener('blur', () => {
+    validateInput(input.id);
+    updateSubmitButton();
+    console.log('Input validerad', input.id);
+  })
+})
+
+// - Add resetBtn to clear form and order amount
 
 
-
+// ------------------------------------------------------------------------------------
+// ---- TO DO -------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------
 
 // ------------------------------------------------------------------------------------
 // --- DEAD CODE ----------------------------------------------------------------------

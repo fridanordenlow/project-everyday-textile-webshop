@@ -8,6 +8,7 @@ main {
   flex-direction: column; 
   justify-content: center; 
   align-items: center; 
+  font-family: $primary-font;
   // height: 100vh; 
 }
 
@@ -26,12 +27,15 @@ header {
   button {
     border: none; 
     padding: 0.5rem; 
+    border-radius: $general-border-radius;
   }
 
   .dropdown {
     position: relative; 
 
     .dropdown-button {
+      width: 100%;
+      border-radius: $general-border-radius;
     }
 
     .dropdown-content {
@@ -68,8 +72,16 @@ header {
   padding: 10px;
   margin: 10px;
 
+  button {
+    width: 30px;
+    border: none;
+    border-radius: $general-border-radius;
+  }
+
   input {
     width: 40px;
+    border: none;
+    border-radius: $general-border-radius;
   }
 }
 
@@ -77,4 +89,16 @@ header {
   display: flex;
   flex-direction: column;
   row-gap: 5px;
+
+  input {
+    height: 20px;
+    border: none;
+    border-radius: $general-border-radius;
+  }
+}
+
+.cart-section {
+  height: 300px;
+  width: 500px;
+  background-color: antiquewhite;
 }
