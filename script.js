@@ -3,7 +3,8 @@ import productList from './products.js';
 const productListContainer = document.querySelector('#productList');
 const cart = document.querySelector('#cartSummary');
 const sortByNameElement = document.querySelector('#sortByName');
-const sortByPriceElement = document.querySelector('#sortByPrice');
+const sortByLowestPriceElement = document.querySelector('#sortByLowestPrice');
+const sortByHighestPriceElement = document.querySelector('#sortByHighestPrice');
 const sortByRatingElement = document.querySelector('#sortByRating');
 const categoryDropdown = document.querySelector('#categoryDropdown');
 const categoryDropdownBtn = document.querySelector('#categoryDropdownBtn');
@@ -87,12 +88,21 @@ sortByNameElement.addEventListener('click', () => {
   closeDropdown(sortingDropdown); 
 });
 
-function sortByPrice() {
+function sortByLowestPrice() {
   products.sort((a, b) => a.price - b.price);
   printProductList();
 }
-sortByPriceElement.addEventListener('click', () => {
-  sortByPrice();
+sortByLowestPriceElement.addEventListener('click', () => {
+  sortByLowestPrice();
+  closeDropdown(sortingDropdown);
+});
+
+function sortByHighestPrice() {
+  products.sort((a, b) => b.price - a.price );
+  printProductList();
+}
+sortByHighestPriceElement.addEventListener('click', () => {
+  sortByHighestPrice();
   closeDropdown(sortingDropdown);
 });
 
