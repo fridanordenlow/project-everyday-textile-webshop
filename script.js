@@ -255,8 +255,9 @@ updateAndPrintCart();
 
 /**
  * Create an order form
- * - Connect to DOM-elements
- * - Validate form inputs
+ * x Connect to DOM-elements
+ * x Validate form inputs
+ * x Add more special cases with regex rules
  */
 
 const form = document.querySelector('#form');
@@ -287,10 +288,12 @@ function validateInput(inputElementId, checkSpecialInput = '') {
       case 'zipCode':
         hasSpecialError = !inputFieldValue.match(/^\d{3}\s?\d{2}$/);
         customErrorMessage = 'Zip code must be in the format "123 45" or "12345".';
+      default:
+        break;
     }
   }
 
-  if (inputFieldValue.length === 0 || hasSpecialError) {
+  if (hasSpecialError || inputFieldValue.length === 0) {
     feedbackField.innerHTML = `* ${customErrorMessage || 'This field is required'}`;
     // feedbackField.style.color = 'red';
     return false;
@@ -300,6 +303,23 @@ function validateInput(inputElementId, checkSpecialInput = '') {
     return true;
   }
 }
+
+// Validate each field individually to show error message
+const formInputs = form.querySelectorAll('input');
+formInputs.forEach(input => {
+  input.addEventListener('blur', () => {
+    const specialInputType = input.id === 'phone' ? 'phoneNumber' : input.id === 'zipCode' ? 'zipCode' : '';
+    validateInput(input.id, specialInputType);
+  });
+});
+// const formInputs = form.querySelectorAll('input');
+// formInputs.forEach(input => {
+//   input.addEventListener('blur', () => {
+//     validateInput(input.id);
+//     updateSubmitButton();
+//     console.log('Input validerad', input.id);
+//   })
+// })
 
 function validateAllInputs() {
   let isValid = true;
@@ -318,6 +338,7 @@ function updateSubmitButton() {
   submitBtn.disabled = !isFormValid;
 }
 
+
 // On submit give feedback
 function submitForm(e) {
   e.preventDefault();
@@ -325,16 +346,9 @@ function submitForm(e) {
   orderSection.innerHTML = `<p>Thank you! Your order has been received.</p>`
 }
 
+
 submitBtn.addEventListener('click', submitForm);
 
-const formInputs = form.querySelectorAll('input');
-formInputs.forEach(input => {
-  input.addEventListener('blur', () => {
-    validateInput(input.id);
-    updateSubmitButton();
-    console.log('Input validerad', input.id);
-  })
-})
 
 // - Add resetBtn to clear form and order amount
 
