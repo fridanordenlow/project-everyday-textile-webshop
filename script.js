@@ -188,12 +188,6 @@ function getRatingStars(rating) {
 // ------------------------------------------------------------------------------------
 // --- CART ---------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------
-/**
- * Create a shopping cart that displays all chosen products:
- * x How many of each product
- * x How much the total sum of each product
- * x Total sum of all products
- * */
 
 // A function that updates and increases product amount
 function updateProductAmount(e, isIncrease) {
@@ -259,7 +253,7 @@ updateAndPrintCart();
  * x Validate form inputs
  * x Add more special cases with regex rules
  * - Card or invoice needs to be choosen for submit to work as well as personal data checkbox
- * - Reset button implemented
+ * x Reset button implemented
  */
 
 const form = document.querySelector('#form');
@@ -339,7 +333,20 @@ function submitForm(e) {
   orderSection.innerHTML = `<p>Thank you! Your order has been received.</p>`;
 }
 
+function resetForm() {
+  form.reset();
+  document.querySelectorAll('.error-message').forEach(msg => msg.textContent = '');
+  const productsInCart = products.filter(product => product.amount > 0);
+
+  cart.innerHTML = '';
+
+  productsInCart.forEach(prod => {
+    prod.amount = 0;
+  })
+}
+
 submitBtn.addEventListener('click', submitForm);
+resetBtn.addEventListener('click', resetForm)
 
 updateSubmitButton();
 
