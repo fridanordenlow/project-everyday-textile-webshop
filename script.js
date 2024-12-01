@@ -258,99 +258,222 @@ updateAndPrintCart();
  * x Connect to DOM-elements
  * x Validate form inputs
  * x Add more special cases with regex rules
+ * - Card or invoice needs to be choosen for submit to work as well as personal data checkbox
+ * - Reset button implemented
  */
 
 const form = document.querySelector('#form');
 const submitBtn = form.querySelector('#submitBtn');
 const resetBtn = form.querySelector('#resetBtn');
 
-function validateInput(inputElementId, checkSpecialInput = '') {
-  const inputField = document.getElementById(inputElementId);
+const regexRules = {
+  email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+  name: /^[a-zA-ZåäöÅÄÖ\s-]{2,}$/,
+  streetAddress: /^(?=.*[a-zA-ZåäöÅÄÖ])[a-zA-ZåäöÅÄÖ0-9\s.,-]{2,}$/,
+  city: /^[a-zA-ZåäöÅÄÖ\s-]{2,}$/,
+  phoneNumber: /^[0-9]{10}$/,
+  zipCode: /^\d{3}\s?\d{2}$/,
+};
 
-  const inputFieldValue = inputField.value;
+const validationRules = {
+  firstName: 'name',
+  lastName: 'name',
+  streetAddress: 'streetAddress',
+  zipCode: 'zipCode',
+  city: 'city',
+  phone: 'phoneNumber',
+  email: 'email',
+};
+
+function validateInput(inputElementId) {
+  const inputField = document.getElementById(inputElementId);
+  const inputFieldValue = inputField.value.trim();
   const feedbackField = inputField.parentElement.querySelector(".error-message");
+  const rule = validationRules[inputElementId];
 
   if (!feedbackField) {
-    console.log(`No feedback field found for ${inputField}`);
+    console.log(`No feedback field found for ${inputField.id}`);
+    return false;
   }
 
-  let hasSpecialError = false;
-  let customErrorMessage = '';
+  if (inputFieldValue.length === 0) {
+    feedbackField.textContent = '* This field is required.';
+    return false;
+  }
 
-  // Check special cases
-  if (checkSpecialInput !== '') {
-    // Check which special input
-    switch(checkSpecialInput) {
-      case 'phoneNumber':
-        hasSpecialError = !inputFieldValue.match(/^[0-9]{10}$/);
-        customErrorMessage = 'Phone number must be 10 digits.';
-        break;
-      case 'zipCode':
-        hasSpecialError = !inputFieldValue.match(/^\d{3}\s?\d{2}$/);
-        customErrorMessage = 'Zip code must be in the format "123 45" or "12345".';
-      default:
-        break;
+  if (rule && regexRules[rule]) {
+    if (!regexRules[rule].test(inputFieldValue)) {
+      feedbackField.textContent = `* Please enter a valid ${rule.replace(/([A-Z])/g, ' $1').toLowerCase()}.`;
+      return false;
     }
   }
 
-  if (hasSpecialError || inputFieldValue.length === 0) {
-    feedbackField.innerHTML = `* ${customErrorMessage || 'This field is required'}`;
-    // feedbackField.style.color = 'red';
-    return false;
-  } else {
-    feedbackField.innerHTML = '✅';
-    // feedbackField.style.color = 'green';
-    return true;
-  }
+  feedbackField.textContent = '✅';
+  return true;
 }
 
-// Validate each field individually to show error message
-const formInputs = form.querySelectorAll('input');
-formInputs.forEach(input => {
-  input.addEventListener('blur', () => {
-    const specialInputType = input.id === 'phone' ? 'phoneNumber' : input.id === 'zipCode' ? 'zipCode' : '';
-    validateInput(input.id, specialInputType);
-  });
-});
-// const formInputs = form.querySelectorAll('input');
-// formInputs.forEach(input => {
-//   input.addEventListener('blur', () => {
-//     validateInput(input.id);
-//     updateSubmitButton();
-//     console.log('Input validerad', input.id);
-//   })
-// })
-
 function validateAllInputs() {
-  let isValid = true;
-  isValid = validateInput('firstName') && isValid;
-  isValid = validateInput('lastName') && isValid;
-  isValid = validateInput('streetAddress') && isValid;
-  isValid = validateInput('zipCode', 'zipCode') && isValid;
-  isValid = validateInput('city') && isValid;
-  isValid = validateInput('phone', 'phoneNumber') && isValid;
-  isValid = validateInput('email') && isValid;
-  return isValid;
+  return Object.keys(validationRules).every(inputId => {
+    const input = document.getElementById(inputId);
+    return input.value.trim().length > 0 && validateInput(inputId);
+  });
 }
 
 function updateSubmitButton() {
-  const isFormValid = validateAllInputs();
-  submitBtn.disabled = !isFormValid;
+  submitBtn.disabled = !validateAllInputs();
 }
 
+const formInputs = form.querySelectorAll('input');
+formInputs.forEach(input => {
+  input.addEventListener('blur', () => {
+    if (input.value.trim().length > 0) {
+      validateInput(input.id);
+    }
+    updateSubmitButton();
+  });
+});
 
-// On submit give feedback
 function submitForm(e) {
   e.preventDefault();
   const orderSection = document.querySelector('#order-section');
-  orderSection.innerHTML = `<p>Thank you! Your order has been received.</p>`
+  orderSection.innerHTML = `<p>Thank you! Your order has been received.</p>`;
 }
-
 
 submitBtn.addEventListener('click', submitForm);
 
+updateSubmitButton();
 
-// - Add resetBtn to clear form and order amount
+
+// const form = document.querySelector('#form');
+// const submitBtn = form.querySelector('#submitBtn');
+// // const resetBtn = form.querySelector('#resetBtn');
+
+// function validateInput(inputElementId, checkSpecialInput = '') {
+//   const inputField = document.getElementById(inputElementId);
+//   const inputFieldValue = inputField.value;
+//   const feedbackField = inputField.parentElement.querySelector(".error-message");
+
+//   if (!feedbackField) {
+//     console.log(`No feedback field found for ${inputField}`);
+//   }
+
+//   let hasSpecialError = false;
+//   let customErrorMessage = '';
+
+//   const regexRules = {
+//     email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+//     name: /^[a-zA-ZåäöÅÄÖ\s-]{2,}$/,
+//     streetAddress: /^(?=.*[a-zA-ZåäöÅÄÖ])[a-zA-ZåäöÅÄÖ0-9\s.,-]{2,}$/,
+//     city: /^[a-zA-ZåäöÅÄÖ\s-]{2,}$/,
+//     phoneNumber: /^[0-9]{10}$/,
+//     zipCode: /^\d{3}\s?\d{2}$/,
+//   }
+
+//   // Check special cases
+//   if (checkSpecialInput) {
+//     switch (checkSpecialInput) {
+//       case 'email':
+//         hasSpecialError = !regexRules.email.test(inputFieldValue);
+//         customErrorMessage = 'Please enter a valid email address.';
+//         break;
+//       case 'name':
+//         hasSpecialError = !regexRules.name.test(inputFieldValue);
+//         customErrorMessage = 'Please enter a valid name.';
+//         break;
+//       case 'streetAddress':
+//         hasSpecialError = !regexRules.streetAddress.test(inputFieldValue);
+//         customErrorMessage = 'Please enter a valid street address.';
+//         break;
+//       case 'city':
+//         hasSpecialError = !regexRules.city.test(inputFieldValue);
+//         customErrorMessage = 'Please enter a valid city name.';
+//         break;
+//       case 'phoneNumber':
+//         hasSpecialError = !regexRules.phoneNumber.test(inputFieldValue);
+//         customErrorMessage = 'Phone number must be 10 digits.';
+//         break;
+//       case 'zipCode':
+//         hasSpecialError = !regexRules.zipCode.test(inputFieldValue);
+//         customErrorMessage = 'Zip code must be in the format "12345" or "123 45".';
+//         break;
+//       default:
+//         console.log(`No regex rule defined for ${checkSpecialInput}`);
+//     }
+//     console.log('Validating:', inputField.id, inputFieldValue, 'with regex:', regexRules[checkSpecialInput]);
+//   }
+
+//   if (hasSpecialError || inputFieldValue.length === 0) {
+//     feedbackField.innerHTML = `* ${customErrorMessage || 'This field is required.'}`;
+//     // feedbackField.style.color = 'red';
+//     return false;
+//   } else {
+//     feedbackField.innerHTML = '✅';
+//     // feedbackField.style.color = 'green';
+//     return true;
+//   }
+// }
+
+// // Validate each field individually to show error message
+// const formInputs = form.querySelectorAll('input');
+
+// const validationRules = {
+//   firstName: 'name',
+//   lastName: 'name',
+//   streetAddress: 'streetAddress',
+//   zipCode: 'zipCode',
+//   city: 'city',
+//   phone: 'phoneNumber',
+//   email: 'email',
+// };
+
+// formInputs.forEach(input => {
+//   input.addEventListener('blur', () => {
+//     validateInput(input.id, validationRules[input.id]);
+//   });
+// });
+
+// //   formInputs.forEach(input => {
+// //     input.addEventListener('blur', () => {
+// //       const specialInputType = validationRules[input.id] || '';
+// //       validateInput(input.id, specialInputType);
+// //       console.log('Input validerad', input.id);
+// //       updateSubmitButton();
+// //     });
+// // });
+// // const formInputs = form.querySelectorAll('input');
+// // formInputs.forEach(input => {
+// //   input.addEventListener('blur', () => {
+// //     validateInput(input.id);
+// //     updateSubmitButton();
+// //     console.log('Input validerad', input.id);
+// //   })
+// // })
+
+// function validateAllInputs() {
+//   let isValid = true;
+//   isValid = validateInput('firstName') && isValid;
+//   isValid = validateInput('lastName') && isValid;
+//   isValid = validateInput('streetAddress') && isValid;
+//   isValid = validateInput('zipCode', 'zipCode') && isValid;
+//   isValid = validateInput('city') && isValid;
+//   isValid = validateInput('phone', 'phoneNumber') && isValid;
+//   isValid = validateInput('email') && isValid;
+//   return isValid;
+// }
+
+// function updateSubmitButton() {
+//   const isFormValid = validateAllInputs();
+//   submitBtn.disabled = !isFormValid;
+// }
+
+// // On submit give feedback
+// function submitForm(e) {
+//   e.preventDefault();
+//   const orderSection = document.querySelector('#order-section');
+//   orderSection.innerHTML = `<p>Thank you! Your order has been received.</p>`
+// }
+
+// submitBtn.addEventListener('click', submitForm);
 
 
 // ------------------------------------------------------------------------------------
