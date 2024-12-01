@@ -259,6 +259,9 @@ updateAndPrintCart();
 const form = document.querySelector('#form');
 const submitBtn = form.querySelector('#submitBtn');
 const resetBtn = form.querySelector('#resetBtn');
+const cardCheckbox = document.getElementById('card');
+const invoiceCheckbox = document.getElementById('invoice');
+const personalDataCheckbox = document.querySelector('input[type="checkbox"][required]');
 
 const regexRules = {
   email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
@@ -286,7 +289,7 @@ function validateInput(inputElementId) {
   const rule = validationRules[inputElementId];
 
   if (!feedbackField) {
-    console.log(`No feedback field found for ${inputField.id}`);
+    // console.log(`No feedback field found for ${inputField.id}`);
     return false;
   }
 
@@ -307,11 +310,30 @@ function validateInput(inputElementId) {
 }
 
 function validateAllInputs() {
-  return Object.keys(validationRules).every(inputId => {
+  const allInputsValid = Object.keys(validationRules).every(inputId => {
     const input = document.getElementById(inputId);
     return input.value.trim().length > 0 && validateInput(inputId);
   });
+
+  const paymentSelected = cardCheckbox.checked || invoiceCheckbox.checked;
+  const personalDataAccepted = personalDataCheckbox.checked;
+
+  return allInputsValid && paymentSelected && personalDataAccepted;
 }
+
+// Event listeners for checkboxes
+[cardCheckbox, invoiceCheckbox, personalDataCheckbox].forEach(checkbox => {
+  checkbox.addEventListener('change', () => {
+    if (checkbox === cardCheckbox && checkbox.checked) {
+      invoiceCheckbox.checked = false;
+      console.log('Card checked')
+    } else if (checkbox === invoiceCheckbox && checkbox.checked) {
+      cardCheckbox.checked = false;
+      console.log('Invoice checked')
+    }
+    updateSubmitButton();
+  });
+});
 
 function updateSubmitButton() {
   submitBtn.disabled = !validateAllInputs();
