@@ -259,8 +259,13 @@ updateAndPrintCart();
 const form = document.querySelector('#form');
 const submitBtn = form.querySelector('#submitBtn');
 const resetBtn = form.querySelector('#resetBtn');
-const cardCheckbox = document.getElementById('card');
-const invoiceCheckbox = document.getElementById('invoice');
+const paymentOptionRadios = Array.from(document.querySelectorAll('input[name="payment-option"]'));
+// const cardCheckbox = document.getElementById('card');
+// const invoiceCheckbox = document.getElementById('invoice');
+const cardOption = document.querySelector('#card');
+const invoiceOption = document.querySelector('#invoice');
+// let selectedPaymentOption = 'card';
+let selectedPaymentOption = paymentOptionRadios.find(radio => radio.checked)?.value || 'card';
 const personalDataCheckbox = document.querySelector('input[type="checkbox"][required]');
 
 const regexRules = {
@@ -270,6 +275,7 @@ const regexRules = {
   city: /^[a-zA-ZåäöÅÄÖ\s-]{2,}$/,
   phoneNumber: /^[0-9]{10}$/,
   zipCode: /^\d{3}\s?\d{2}$/,
+  personalID: /^(19|20)?\d{2}((0[1-9])|(1[0-2]))(([0-2][0-9])|(3[0-1]))[- ]?\d{4}$/,
 };
 
 const validationRules = {
@@ -280,6 +286,7 @@ const validationRules = {
   city: 'city',
   phone: 'phoneNumber',
   email: 'email',
+  personalID: 'personalID'
 };
 
 function validateInput(inputElementId) {
@@ -309,31 +316,39 @@ function validateInput(inputElementId) {
   return true;
 }
 
+// paymentOptionRadios.forEach(radioBtn => {
+//   radioBtn.addEventListener('change', switchPaymentOption);
+// })
+
+
+// Switch between card or invoice payment, toggle visibility
+function switchPaymentOption(e) {
+  // selectedPaymentOption = e.target.value;
+  const selectedRadio = document.querySelector('input[name="payment-option"]:checked');
+  selectedPaymentOption = selectedRadio.value;
+
+  cardOption.classList.toggle('hidden', selectedPaymentOption !== 'card');
+  invoiceOption.classList.toggle('hidden', selectedPaymentOption !== 'invoice');
+
+  console.log(`${selectedPaymentOption} selected`);
+  // updateSubmitButton(); Varför här?
+}
+
 function validateAllInputs() {
   const allInputsValid = Object.keys(validationRules).every(inputId => {
     const input = document.getElementById(inputId);
     return input.value.trim().length > 0 && validateInput(inputId);
   });
 
-  const paymentSelected = cardCheckbox.checked || invoiceCheckbox.checked;
+  console.log(cardOption);
+  console.log(invoiceOption);
+  const paymentSelected = cardOption.checked || invoiceOption.checked;
   const personalDataAccepted = personalDataCheckbox.checked;
 
   return allInputsValid && paymentSelected && personalDataAccepted;
 }
 
-// Event listeners for checkboxes
-[cardCheckbox, invoiceCheckbox, personalDataCheckbox].forEach(checkbox => {
-  checkbox.addEventListener('change', () => {
-    if (checkbox === cardCheckbox && checkbox.checked) {
-      invoiceCheckbox.checked = false;
-      console.log('Card checked')
-    } else if (checkbox === invoiceCheckbox && checkbox.checked) {
-      cardCheckbox.checked = false;
-      console.log('Invoice checked')
-    }
-    updateSubmitButton();
-  });
-});
+
 
 function updateSubmitButton() {
   submitBtn.disabled = !validateAllInputs();
@@ -359,17 +374,42 @@ function resetForm() {
   form.reset();
   document.querySelectorAll('.error-message').forEach(msg => msg.textContent = '');
   const productsInCart = products.filter(product => product.amount > 0);
-
+  
   cart.innerHTML = '';
-
+  
   productsInCart.forEach(prod => {
     prod.amount = 0;
   })
 }
 
+// Event listeners
+
+[cardOption, invoiceOption].forEach(radio => {
+  radio.addEventListener('change', () => {
+    updateSubmitButton();
+  });
+});
+
+personalDataCheckbox.addEventListener('change', updateSubmitButton);
+
+// [cardOption, invoiceOption, personalDataCheckbox].forEach(checkbox => {
+//   checkbox.addEventListener('change', () => {
+//     if (checkbox === cardOption && checkbox.checked) {
+//       invoiceOption.checked = false;
+//       console.log('Card checked')
+//     } else if (checkbox === invoiceOption && checkbox.checked) {
+//       cardOption.checked = false;
+//       console.log('Invoice checked')
+//     }
+//     updateSubmitButton();
+//   });
+// });
+// paymentOptionRadios.forEach(radio => radio.addEventListener('change', switchPaymentOption));
+// personalDataCheckbox.addEventListener('change', updateSubmitButton);
 submitBtn.addEventListener('click', submitForm);
 resetBtn.addEventListener('click', resetForm)
 
+switchPaymentOption();
 updateSubmitButton();
 
 

@@ -92,19 +92,52 @@
             <input type="email" id="email" required>
           </label>
           <label>
-            <span>Payment option:</span>
-            <br>
-            <input type="checkbox" id="card">Card</input>
-            <!-- Om kort valts, visas fält för kortnummer, datum/år och CVC -->
-             <br>
-            <input type="checkbox" id="invoice">Invoice</input>
-            <!-- Om faktura valts ska ett formulärfält för svenskt personnummer visas.
-            Även detta fält ska valideras innan formuläret går att skicka iväg -->
-          </label>
-          <label>
             <span>Discount code</span>
             <input type="text">
           </label>
+          <div class="payment-options">
+            <div class="selector">
+              <label>
+                <input type="radio" name="payment-option" value="card" checked>
+                <span>Card</span>
+              </label>
+              <label>
+                <input type="radio" name="payment-option" value="invoice">
+                <span>Invoice</span>
+              </label>
+            </div>
+            <div class="card" id="card">
+              <label>
+                <span>Card number</span>
+                <input type="number">
+              </label>
+              <label>
+                <span>Expiry date</span>
+                <input type="number" placeholder="YY">/
+                <input type="number" placeholder="MM">
+              </label>
+              <label>
+                <span>CVC</span>
+                <input type="number" placeholder="123">
+              </label>
+            </div>
+            <div class="invoice hidden" id="invoice">
+              <label>
+                <span>Personal ID</span>
+                <input type="text" name="personal-id" id="personalID">
+              </label>
+            </div>
+          </div>
+          <!-- <label>
+            <span>Payment option:</span>
+            <br>
+            <input type="checkbox" id="card">Card</input>
+             Om kort valts, visas fält för kortnummer, datum/år och CVC 
+             <br>
+            <input type="checkbox" id="invoice">Invoice</input>
+             Om faktura valts ska ett formulärfält för svenskt personnummer visas.
+            Även detta fält ska valideras innan formuläret går att skicka iväg 
+          </label> -->
           <label>
             <input type="checkbox" required>
             <span>Yes, process my personal data in accordance to our privacy policy</span>
@@ -117,7 +150,6 @@
           <!-- Knappen ska vara disabled tills formuläret är rätt ifyllt -->
           <!-- Felen ska markeras och kommuniceras tydligt -->
           <button type="reset" id="resetBtn">Clear order</button>
-          Reset-knapp som återställer samtliga formulärfält + beställda munkar/produkter
       </section>
     </main>
     <script type="module" src="script.js" defer></script>
