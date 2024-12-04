@@ -106,15 +106,15 @@
                 <span>Invoice</span>
               </label>
             </div>
-            <div class="card" id="card">
+            <div class="card">
               <label>
                 <span>Card number</span>
-                <input type="number">
+                <input type="number" id="card-input">
               </label>
               <label>
                 <span>Expiry date</span>
-                <input type="number" placeholder="YY">/
-                <input type="number" placeholder="MM">
+                <input type="number" placeholder="YY" id="year">/
+                <input type="number" placeholder="MM" id="month">
               </label>
               <label>
                 <span>CVC</span>
@@ -124,20 +124,11 @@
             <div class="invoice hidden" id="invoice">
               <label>
                 <span>Personal ID</span>
-                <input type="text" name="personal-id" id="personalID">
+                <div class="error-message"></div>
+                <input type="text" name="personal-id" id="personalID" value="890201-3286">
               </label>
             </div>
           </div>
-          <!-- <label>
-            <span>Payment option:</span>
-            <br>
-            <input type="checkbox" id="card">Card</input>
-             Om kort valts, visas fält för kortnummer, datum/år och CVC 
-             <br>
-            <input type="checkbox" id="invoice">Invoice</input>
-             Om faktura valts ska ett formulärfält för svenskt personnummer visas.
-            Även detta fält ska valideras innan formuläret går att skicka iväg 
-          </label> -->
           <label>
             <input type="checkbox" required>
             <span>Yes, process my personal data in accordance to our privacy policy</span>
@@ -147,8 +138,6 @@
             <span>Yes, I want to subscribe to newsletters!</span>
           </label>
           <button type="submit" id="submitBtn" disabled>Place order</button>
-          <!-- Knappen ska vara disabled tills formuläret är rätt ifyllt -->
-          <!-- Felen ska markeras och kommuniceras tydligt -->
           <button type="reset" id="resetBtn">Clear order</button>
       </section>
     </main>

@@ -58,14 +58,6 @@ printProductList();
 // ------------------------------------------------------------------------------------
 // --- SORTING AND FILTERS ------------------------------------------------------------
 // ------------------------------------------------------------------------------------
-/**
- * Sort/filter by:
- * x Name
- * x Price 
- * x Rating 
- * x Category 
- * x Have button for clearing filters/sorting
- */
 
 categoryDropdownBtn.addEventListener('click', () => {
   categoryDropdown.classList.toggle('show');
@@ -222,7 +214,6 @@ function updateAndPrintCart() {
   const totalCartSum = chosenProducts.reduce((sum, product) => {
     return sum + (product.amount * product.price);
   }, 0);
-  console.log(chosenProducts, totalCartSum);
 
   // Print products in cart
   cart.innerHTML = ''; // Empty element from current content
@@ -252,22 +243,21 @@ updateAndPrintCart();
  * x Connect to DOM-elements
  * x Validate form inputs
  * x Add more special cases with regex rules
- * - Card or invoice needs to be choosen for submit to work as well as personal data checkbox
+ * x Card or invoice needs to be choosen for submit to work as well as personal data checkbox
  * x Reset button implemented
+ * - MOVE INTO MODULES if there is time !!!!!!!
  */
 
 const form = document.querySelector('#form');
 const submitBtn = form.querySelector('#submitBtn');
 const resetBtn = form.querySelector('#resetBtn');
 const paymentOptionRadios = Array.from(document.querySelectorAll('input[name="payment-option"]'));
-// const cardCheckbox = document.getElementById('card');
-// const invoiceCheckbox = document.getElementById('invoice');
-const cardOption = document.querySelector('#card');
-const invoiceOption = document.querySelector('#invoice');
-// let selectedPaymentOption = 'card';
+const cardOption = document.querySelector('input[name="payment-option"][value="card"]');
+const invoiceOption = document.querySelector('input[name="payment-option"][value="invoice"]');
 let selectedPaymentOption = paymentOptionRadios.find(radio => radio.checked)?.value || 'card';
 const personalDataCheckbox = document.querySelector('input[type="checkbox"][required]');
 
+// REGEX
 const regexRules = {
   email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   name: /^[a-zA-ZåäöÅÄÖ\s-]{2,}$/,
@@ -278,6 +268,7 @@ const regexRules = {
   personalID: /^(19|20)?\d{2}((0[1-9])|(1[0-2]))(([0-2][0-9])|(3[0-1]))[- ]?\d{4}$/,
 };
 
+// Validation rules
 const validationRules = {
   firstName: 'name',
   lastName: 'name',
@@ -295,8 +286,13 @@ function validateInput(inputElementId) {
   const feedbackField = inputField.parentElement.querySelector(".error-message");
   const rule = validationRules[inputElementId];
 
+  if (!inputField) {
+    console.warn(`Input field with id "${inputElementId}" not found`);
+    return false;
+  }
+
   if (!feedbackField) {
-    // console.log(`No feedback field found for ${inputField.id}`);
+    console.warn(`Feedback field with id "${inputElementId}" not found`);
     return false;
   }
 
@@ -316,22 +312,17 @@ function validateInput(inputElementId) {
   return true;
 }
 
-// paymentOptionRadios.forEach(radioBtn => {
-//   radioBtn.addEventListener('change', switchPaymentOption);
-// })
-
-
 // Switch between card or invoice payment, toggle visibility
-function switchPaymentOption(e) {
-  // selectedPaymentOption = e.target.value;
-  const selectedRadio = document.querySelector('input[name="payment-option"]:checked');
-  selectedPaymentOption = selectedRadio.value;
-
-  cardOption.classList.toggle('hidden', selectedPaymentOption !== 'card');
-  invoiceOption.classList.toggle('hidden', selectedPaymentOption !== 'invoice');
-
+function switchPaymentOption() {
+  selectedPaymentOption = document.querySelector('input[name="payment-option"]:checked').value;
+  const cardSection = document.querySelector('.card');
+  const invoiceSection = document.querySelector('.invoice');
+  
+  cardSection.classList.toggle('hidden', selectedPaymentOption !== 'card');
+  invoiceSection.classList.toggle('hidden', selectedPaymentOption !== 'invoice');
+  
   console.log(`${selectedPaymentOption} selected`);
-  // updateSubmitButton(); Varför här?
+  updateSubmitButton();
 }
 
 function validateAllInputs() {
@@ -340,8 +331,6 @@ function validateAllInputs() {
     return input.value.trim().length > 0 && validateInput(inputId);
   });
 
-  console.log(cardOption);
-  console.log(invoiceOption);
   const paymentSelected = cardOption.checked || invoiceOption.checked;
   const personalDataAccepted = personalDataCheckbox.checked;
 
@@ -349,20 +338,10 @@ function validateAllInputs() {
 }
 
 
-
 function updateSubmitButton() {
   submitBtn.disabled = !validateAllInputs();
 }
 
-const formInputs = form.querySelectorAll('input');
-formInputs.forEach(input => {
-  input.addEventListener('blur', () => {
-    if (input.value.trim().length > 0) {
-      validateInput(input.id);
-    }
-    updateSubmitButton();
-  });
-});
 
 function submitForm(e) {
   e.preventDefault();
@@ -382,168 +361,56 @@ function resetForm() {
   })
 }
 
-// Event listeners
+// Add event listeners
+const inputs = [
+  document.querySelector('#firstName'),
+  document.querySelector('#lastName'),
+  document.querySelector('#streetAddress'),
+  document.querySelector('#zipCode'),
+  document.querySelector('#city'),
+  document.querySelector('#phone'),
+  document.querySelector('#email'),
+  document.querySelector('#personalID'),
+]
 
-[cardOption, invoiceOption].forEach(radio => {
-  radio.addEventListener('change', () => {
-    updateSubmitButton();
+inputs.forEach(input => {
+  // change to focus out?
+  input.addEventListener('blur', () => {
+    validateInput(input.id);
+    updateSubmitButton(); 
   });
 });
 
-personalDataCheckbox.addEventListener('change', updateSubmitButton);
-
-// [cardOption, invoiceOption, personalDataCheckbox].forEach(checkbox => {
-//   checkbox.addEventListener('change', () => {
-//     if (checkbox === cardOption && checkbox.checked) {
-//       invoiceOption.checked = false;
-//       console.log('Card checked')
-//     } else if (checkbox === invoiceOption && checkbox.checked) {
-//       cardOption.checked = false;
-//       console.log('Invoice checked')
+// const formInputs = form.querySelectorAll('input');
+// formInputs.forEach(input => {
+//   input.addEventListener('blur', () => {
+//     if (input.value.trim().length > 0) {
+//       validateInput(input.id);
 //     }
 //     updateSubmitButton();
 //   });
 // });
-// paymentOptionRadios.forEach(radio => radio.addEventListener('change', switchPaymentOption));
-// personalDataCheckbox.addEventListener('change', updateSubmitButton);
+
+paymentOptionRadios.forEach(radioBtn => {
+  radioBtn.addEventListener('change', switchPaymentOption);
+})
+
+if (cardOption && invoiceOption) {
+  [cardOption, invoiceOption].forEach(radio => {
+    radio.addEventListener('change', () => {
+      updateSubmitButton();
+    });
+  });
+} else {
+  console.error('Card or invoice option not found');
+}
+
+personalDataCheckbox.addEventListener('change', updateSubmitButton);
 submitBtn.addEventListener('click', submitForm);
 resetBtn.addEventListener('click', resetForm)
 
-switchPaymentOption();
+// switchPaymentOption();
 updateSubmitButton();
-
-
-// const form = document.querySelector('#form');
-// const submitBtn = form.querySelector('#submitBtn');
-// // const resetBtn = form.querySelector('#resetBtn');
-
-// function validateInput(inputElementId, checkSpecialInput = '') {
-//   const inputField = document.getElementById(inputElementId);
-//   const inputFieldValue = inputField.value;
-//   const feedbackField = inputField.parentElement.querySelector(".error-message");
-
-//   if (!feedbackField) {
-//     console.log(`No feedback field found for ${inputField}`);
-//   }
-
-//   let hasSpecialError = false;
-//   let customErrorMessage = '';
-
-//   const regexRules = {
-//     email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-//     name: /^[a-zA-ZåäöÅÄÖ\s-]{2,}$/,
-//     streetAddress: /^(?=.*[a-zA-ZåäöÅÄÖ])[a-zA-ZåäöÅÄÖ0-9\s.,-]{2,}$/,
-//     city: /^[a-zA-ZåäöÅÄÖ\s-]{2,}$/,
-//     phoneNumber: /^[0-9]{10}$/,
-//     zipCode: /^\d{3}\s?\d{2}$/,
-//   }
-
-//   // Check special cases
-//   if (checkSpecialInput) {
-//     switch (checkSpecialInput) {
-//       case 'email':
-//         hasSpecialError = !regexRules.email.test(inputFieldValue);
-//         customErrorMessage = 'Please enter a valid email address.';
-//         break;
-//       case 'name':
-//         hasSpecialError = !regexRules.name.test(inputFieldValue);
-//         customErrorMessage = 'Please enter a valid name.';
-//         break;
-//       case 'streetAddress':
-//         hasSpecialError = !regexRules.streetAddress.test(inputFieldValue);
-//         customErrorMessage = 'Please enter a valid street address.';
-//         break;
-//       case 'city':
-//         hasSpecialError = !regexRules.city.test(inputFieldValue);
-//         customErrorMessage = 'Please enter a valid city name.';
-//         break;
-//       case 'phoneNumber':
-//         hasSpecialError = !regexRules.phoneNumber.test(inputFieldValue);
-//         customErrorMessage = 'Phone number must be 10 digits.';
-//         break;
-//       case 'zipCode':
-//         hasSpecialError = !regexRules.zipCode.test(inputFieldValue);
-//         customErrorMessage = 'Zip code must be in the format "12345" or "123 45".';
-//         break;
-//       default:
-//         console.log(`No regex rule defined for ${checkSpecialInput}`);
-//     }
-//     console.log('Validating:', inputField.id, inputFieldValue, 'with regex:', regexRules[checkSpecialInput]);
-//   }
-
-//   if (hasSpecialError || inputFieldValue.length === 0) {
-//     feedbackField.innerHTML = `* ${customErrorMessage || 'This field is required.'}`;
-//     // feedbackField.style.color = 'red';
-//     return false;
-//   } else {
-//     feedbackField.innerHTML = '✅';
-//     // feedbackField.style.color = 'green';
-//     return true;
-//   }
-// }
-
-// // Validate each field individually to show error message
-// const formInputs = form.querySelectorAll('input');
-
-// const validationRules = {
-//   firstName: 'name',
-//   lastName: 'name',
-//   streetAddress: 'streetAddress',
-//   zipCode: 'zipCode',
-//   city: 'city',
-//   phone: 'phoneNumber',
-//   email: 'email',
-// };
-
-// formInputs.forEach(input => {
-//   input.addEventListener('blur', () => {
-//     validateInput(input.id, validationRules[input.id]);
-//   });
-// });
-
-// //   formInputs.forEach(input => {
-// //     input.addEventListener('blur', () => {
-// //       const specialInputType = validationRules[input.id] || '';
-// //       validateInput(input.id, specialInputType);
-// //       console.log('Input validerad', input.id);
-// //       updateSubmitButton();
-// //     });
-// // });
-// // const formInputs = form.querySelectorAll('input');
-// // formInputs.forEach(input => {
-// //   input.addEventListener('blur', () => {
-// //     validateInput(input.id);
-// //     updateSubmitButton();
-// //     console.log('Input validerad', input.id);
-// //   })
-// // })
-
-// function validateAllInputs() {
-//   let isValid = true;
-//   isValid = validateInput('firstName') && isValid;
-//   isValid = validateInput('lastName') && isValid;
-//   isValid = validateInput('streetAddress') && isValid;
-//   isValid = validateInput('zipCode', 'zipCode') && isValid;
-//   isValid = validateInput('city') && isValid;
-//   isValid = validateInput('phone', 'phoneNumber') && isValid;
-//   isValid = validateInput('email') && isValid;
-//   return isValid;
-// }
-
-// function updateSubmitButton() {
-//   const isFormValid = validateAllInputs();
-//   submitBtn.disabled = !isFormValid;
-// }
-
-// // On submit give feedback
-// function submitForm(e) {
-//   e.preventDefault();
-//   const orderSection = document.querySelector('#order-section');
-//   orderSection.innerHTML = `<p>Thank you! Your order has been received.</p>`
-// }
-
-// submitBtn.addEventListener('click', submitForm);
-
 
 // ------------------------------------------------------------------------------------
 // ---- TO DO -------------------------------------------------------------------------
