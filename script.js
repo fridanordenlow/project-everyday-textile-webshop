@@ -15,6 +15,10 @@ const filterBedroom = document.querySelector('#filterBedroom');
 const filterKitchen = document.querySelector('#filterKitchen');
 const resetSortFiltBtn = document.querySelector('#resetSortFiltBtn');
 
+const today = new Date();
+const isMonday = today.getDay() === 1
+const isFriday = today.getDay() === 6; // friday = 6
+const currentHour = today.getHours();
 
 // ------------------------------------------------------------------------------------
 // --- PRODUCTS -----------------------------------------------------------------------
@@ -22,14 +26,28 @@ const resetSortFiltBtn = document.querySelector('#resetSortFiltBtn');
 
 let products = [...productList]
 
+function getPriceMultiplier() {
+  if ((isFriday && currentHour >= 15) || (isMonday && isMonday >= 3)) {
+    return 1.15;
+  }
+  return 1;
+}
+
 // A function that prints an html-element for each product
 function printProductList() {
   productListContainer.innerHTML = ''; // Empty container of current products to update the products when they change
+  
+  let priceIncrease = getPriceMultiplier();
+
+  // if ((isFriday && currentHour >= 15) || (isMonday && isMonday >= 3)) {
+  //   priceIncrease = 1.15;
+  // }
+  
   products.forEach(product => {
     productListContainer.innerHTML += `
             <article class="single-product">
                 <h3>${product.name}</h3>
-                <p>${product.price} kr</p>
+                <p>${product.price * priceIncrease} kr</p>
                 <p>Rating: ${getRatingStars(product.rating)}</p>
                 <div>
                     <button class="decrease" id="decrease-${product.id}">-</button>
@@ -137,26 +155,17 @@ filterKitchen.addEventListener('click', () => {
   closeDropdown(categoryDropdown); 
 });
 
-
-// filterBathroom.addEventListener('click', () => filterByCategory('Bathroom'));
-// filterBedroom.addEventListener('click', () => filterByCategory('Bedroom'));
-// filterKitchen.addEventListener('click', () => filterByCategory('Kitchen'));
-
-// const bathroomProducts = productList.filter(prod => prod.category === 'Bathroom');
-// console.log(bathroomProducts)
-
 function resetProductList() {
   products = [...productList];
   printProductList()
 }
+
 resetSortFiltBtn.addEventListener('click', resetProductList);
 
 
 // ------------------------------------------------------------------------------------
 // --- RATING SYMBOLS -----------------------------------------------------------------
 // ------------------------------------------------------------------------------------
-
-// cmd + D välj flera av samma namn och ändra
 
 // Get rating for each product, moons instead of stars for now
 function getRatingStars(rating) {
@@ -206,30 +215,53 @@ function updateProductAmount(e, isIncrease) {
   updateAndPrintCart();
 }
 
-// A function that prints chosen products
-function updateAndPrintCart() {
-  // Create a variable that stores chosen products
-  const chosenProducts = products.filter(product => product.amount > 0);
-  // Calculate the total sum of chosen products
-  const totalCartSum = chosenProducts.reduce((sum, product) => {
-    return sum + (product.amount * product.price);
-  }, 0);
 
-  // Print products in cart
+function updateAndPrintCart() {
   cart.innerHTML = ''; // Empty element from current content
+
+  const chosenProducts = products.filter(product => product.amount > 0);
+  
+  let totalCartSum = 0;
+  // let totalCartSum = chosenProducts.reduce((sum, product) => {
+  //   return sum + (product.amount * product.price);
+  // }, 0);
+  let msg = '';
+  let priceIncrease = getPriceMultiplier();
+
   // Loop through and print chosen products
   chosenProducts.forEach(product => {
+    if (product.amount >= 10) {
+       
+    }
+    const adjustedProductPrice = product.price * priceIncrease;
+
+
+    totalCartSum += product.amount * adjustedProductPrice;
+
     cart.innerHTML += `
     <div> 
       ${product.name}: ${product.amount} st - ${product.amount * product.price} kr
     </div>
     `;
   });
-  cart.innerHTML += `
-  <div>
-  Total sum: ${totalCartSum} kr
-  </div>
-  `
+
+// På måndagar innan kl. 10 ges 10 % rabatt på hela beställningssumman. 
+// Detta visas i varukorgssammanställningen som en rad med texten "Måndagsrabatt: 
+// 10 % på hela beställningen".
+    
+if (totalCartSum <= 0) {
+  return;
+}
+
+// (today.getDay() === 1 && today.getHours() < 10)
+if (today.getDay() === 3 ) {
+    totalCartSum *= 0.9;
+    msg += '<p>Monday discount: 10% off on your order.</p>'
+    console.log(msg)
+}
+
+  cart.innerHTML += `<div>Total sum: ${totalCartSum} kr</div>`
+  cart.innerHTML += `<div>${msg}</div>`
 }
 
 updateAndPrintCart();
