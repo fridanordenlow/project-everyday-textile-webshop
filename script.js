@@ -16,8 +16,9 @@ const filterKitchen = document.querySelector('#filterKitchen');
 const resetSortFiltBtn = document.querySelector('#resetSortFiltBtn');
 
 const today = new Date();
-const isMonday = today.getDay() === 1 // Monday = 1
-const isFriday = today.getDay() === 6; // Friday = 6
+const dayOfWeek = today.getDay()
+// const isMonday = today.getDay() === 1 // Monday = 1
+// const isFriday = today.getDay() === 5; // Friday = 5
 const currentHour = today.getHours();
 
 // ------------------------------------------------------------------------------------
@@ -27,11 +28,22 @@ const currentHour = today.getHours();
 let products = [...productList]
 
 function getPriceMultiplier() {
-  if ((isFriday && currentHour >= 15) || (isMonday && isMonday >= 3)) {
+  if (
+    (dayOfWeek === 5 && currentHour >= 15) || // Friday after 15:00
+    dayOfWeek === 6 || // All Saturday
+    dayOfWeek === 0 || // All Sunday
+    (dayOfWeek === 1 && currentHour < 3) // Monday before 03:00
+  ) {
     return 1.15;
   }
   return 1;
 }
+// function getPriceMultiplier() {
+//   if ((isFriday && currentHour >= 15) || (isMonday && currentHour <= 3)) {
+//     return 1.15;
+//   }
+//   return 1;
+// }
 
 // A function that prints an html-element for each product
 function printProductList() {
