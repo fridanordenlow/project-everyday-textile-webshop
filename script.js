@@ -16,8 +16,8 @@ const filterKitchen = document.querySelector('#filterKitchen');
 const resetSortFiltBtn = document.querySelector('#resetSortFiltBtn');
 
 const today = new Date();
-const isMonday = today.getDay() === 1
-const isFriday = today.getDay() === 6; // friday = 6
+const isMonday = today.getDay() === 1 // Monday = 1
+const isFriday = today.getDay() === 6; // Friday = 6
 const currentHour = today.getHours();
 
 // ------------------------------------------------------------------------------------
@@ -196,9 +196,7 @@ function updateProductAmount(e, isIncrease) {
   const productId = Number(e.target.id.replace(`${action}-`, ''));
   console.log('clicked on button with id', productId);
 
-  // Find product in array with correct id
   const foundProductIndex = products.findIndex(product => product.id === productId);
-  // Message if product does not exist
   if (foundProductIndex === -1) {
     console.error('No such product exists. Check that product-ID is correct.');
     return;
@@ -220,22 +218,23 @@ function updateAndPrintCart() {
   cart.innerHTML = ''; // Empty element from current content
 
   const chosenProducts = products.filter(product => product.amount > 0);
-  
-  let totalCartSum = 0;
   // let totalCartSum = chosenProducts.reduce((sum, product) => {
   //   return sum + (product.amount * product.price);
   // }, 0);
+  let totalCartSum = 0;
+  let orderProductAmount = 0;
   let msg = '';
   let priceIncrease = getPriceMultiplier();
 
   // Loop through and print chosen products
   chosenProducts.forEach(product => {
+    orderProductAmount += product.amount;
+    let productPrice = product.price;
     if (product.amount >= 10) {
-       
+       productPrice *= 0.9;
+       console.log(productPrice)
     }
-    const adjustedProductPrice = product.price * priceIncrease;
-
-
+    const adjustedProductPrice = productPrice * priceIncrease;
     totalCartSum += product.amount * adjustedProductPrice;
 
     cart.innerHTML += `
@@ -244,23 +243,30 @@ function updateAndPrintCart() {
     </div>
     `;
   });
-
-// På måndagar innan kl. 10 ges 10 % rabatt på hela beställningssumman. 
-// Detta visas i varukorgssammanställningen som en rad med texten "Måndagsrabatt: 
-// 10 % på hela beställningen".
     
 if (totalCartSum <= 0) {
-  return;
+  return; // avbryt resten av funktionen
 }
 
-// (today.getDay() === 1 && today.getHours() < 10)
-if (today.getDay() === 3 ) {
+if (today.getDay() === 1 && today.getHours() < 10) {
     totalCartSum *= 0.9;
     msg += '<p>Monday discount: 10% off on your order.</p>'
     console.log(msg)
 }
 
-  cart.innerHTML += `<div>Total sum: ${totalCartSum} kr</div>`
+if (orderProductAmount >= 15) {
+  cart.innerHTML += '<p>Shipping: 0 kr</p>';
+} else {
+  console.log(totalCartSum)
+  cart.innerHTML = `<p>Shipping: ${Math.round(25 + (0.1 * totalCartSum))} kr</p>`
+}
+
+let formattedTotalCartSum = totalCartSum.toFixed(2);
+if (formattedTotalCartSum.endsWith('.00')) {
+  formattedTotalCartSum = formattedTotalCartSum.slice(0, -3);
+}
+
+  cart.innerHTML += `<div>Total sum: ${formattedTotalCartSum} kr</div>`
   cart.innerHTML += `<div>${msg}</div>`
 }
 
@@ -271,12 +277,6 @@ updateAndPrintCart();
 // ------------------------------------------------------------------------------------
 
 /**
- * Create an order form
- * x Connect to DOM-elements
- * x Validate form inputs
- * x Add more special cases with regex rules
- * x Card or invoice needs to be choosen for submit to work as well as personal data checkbox
- * x Reset button implemented
  * - MOVE INTO MODULES if there is time !!!!!!!
  */
 
@@ -362,18 +362,14 @@ function validateAllInputs() {
     const input = document.getElementById(inputId);
     return input.value.trim().length > 0 && validateInput(inputId);
   });
-
   const paymentSelected = cardOption.checked || invoiceOption.checked;
   const personalDataAccepted = personalDataCheckbox.checked;
-
   return allInputsValid && paymentSelected && personalDataAccepted;
 }
-
 
 function updateSubmitButton() {
   submitBtn.disabled = !validateAllInputs();
 }
-
 
 function submitForm(e) {
   e.preventDefault();
@@ -393,7 +389,7 @@ function resetForm() {
   })
 }
 
-// Add event listeners
+// Inputs to validate
 const inputs = [
   document.querySelector('#firstName'),
   document.querySelector('#lastName'),
@@ -405,6 +401,7 @@ const inputs = [
   document.querySelector('#personalID'),
 ]
 
+// Add event listeners
 inputs.forEach(input => {
   // change to focus out?
   input.addEventListener('blur', () => {
