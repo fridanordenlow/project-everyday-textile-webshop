@@ -5,21 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Web shop</title>
     <link rel="stylesheet" href="css/style.css" type="text/css" />
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   </head>
   <body>
     <main>
       <!-- Ändra id's från camelCase till namn-namn -->
       <header>
         <h1>Everyday Textile Webshop</h1>
-        <div>Cart icon</div>
+        <div>
+          <i class="fa-solid fa-basket-shopping fa-2x" aria-hidden="true"></i>
+        </div>
       </header>
       <section class="product-section">
         <h2>Our products:</h2>
         <div class="sorting-and-filtering-container">
-          <!-- Gör om detta till någon form av drop-down? -->
-          <!-- En drop-down för sortering och en för filter? -->
           <div id="sortingDropdown" class="dropdown">
-            <button id="sortingDropdownBtn" class="dropdown-button">Sort by: 🔽</button>
+            <button id="sortingDropdownBtn" class="dropdown-button">
+              Sort by
+              <i class="fa-solid fa-caret-down" aria-hidden="true"></i>
+              <!-- <i class="fa-solid fa-square-caret-down" aria-hidden="true"></i>
+              <i class="fa-regular fa-square-caret-down" aria-hidden="true"></i> -->
+            </button>
             <div class="dropdown-content">
               <button id="sortByName">Name</button>
               <button id="sortByLowestPrice">Lowest price</button>
@@ -28,7 +35,10 @@
             </div>
           </div>
           <div id="categoryDropdown" class="dropdown">
-            <button id="categoryDropdownBtn" class="dropdown-button">Filter by category: 🔽</button>
+            <button id="categoryDropdownBtn" class="dropdown-button">
+              Filter by category
+              <i class="fa-solid fa-caret-down" aria-hidden="true"></i>
+            </button>
             <div class="dropdown-content">
               <button id="filterBathroom">Bathroom</button>
               <button id="filterBedroom">Bedroom</button>
@@ -37,10 +47,6 @@
           </div>
           <button id="resetSortFiltBtn">Reset</button>
         </div>
-        <div>
-          <!-- Sortera efter det ena eller det andra -->
-        </div>
-        <!-- Här kommer alla produkter -->
         <div id="productList" class="product-container">
           <!-- Fylls på från JS -->
         </div>
@@ -48,8 +54,7 @@
       <section class="cart-section">
         <h3>Your cart</h3>
         <div id="cartSummary">
-          <!-- Här visas produkterna du har lagt i din varukorg, totalpris etc -->
-          Your cart is empty. 
+          <!-- Fylls på från JS -->
         </div>
       </section>
       <section id="order-section">

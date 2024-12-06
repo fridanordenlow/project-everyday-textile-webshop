@@ -17,8 +17,6 @@ const resetSortFiltBtn = document.querySelector('#resetSortFiltBtn');
 
 const today = new Date();
 const dayOfWeek = today.getDay()
-// const isMonday = today.getDay() === 1 // Monday = 1
-// const isFriday = today.getDay() === 5; // Friday = 5
 const currentHour = today.getHours();
 
 // ------------------------------------------------------------------------------------
@@ -26,6 +24,10 @@ const currentHour = today.getHours();
 // ------------------------------------------------------------------------------------
 
 let products = [...productList]
+
+/**
+ * - Fix so that the multiplied prices are rounded down correctly
+ */
 
 function getPriceMultiplier() {
   if (
@@ -38,22 +40,12 @@ function getPriceMultiplier() {
   }
   return 1;
 }
-// function getPriceMultiplier() {
-//   if ((isFriday && currentHour >= 15) || (isMonday && currentHour <= 3)) {
-//     return 1.15;
-//   }
-//   return 1;
-// }
 
 // A function that prints an html-element for each product
 function printProductList() {
   productListContainer.innerHTML = ''; // Empty container of current products to update the products when they change
   
   let priceIncrease = getPriceMultiplier();
-
-  // if ((isFriday && currentHour >= 15) || (isMonday && isMonday >= 3)) {
-  //   priceIncrease = 1.15;
-  // }
   
   products.forEach(product => {
     productListContainer.innerHTML += `
@@ -70,9 +62,11 @@ function printProductList() {
         `;
   });
 
+  // ---- TO DO -------------------------------------------------------------------------
   /**
    * - Have an add button that updates the amount chosen instead of immediate update of cart? 
    */
+
   const increaseButtons = document.querySelectorAll('button.increase');
   increaseButtons.forEach(button => {
     button.addEventListener('click', e => updateProductAmount(e, true));
@@ -98,6 +92,7 @@ function closeDropdown(dropdown) {
   dropdown.classList.remove('show');
 }
 
+// ---- TO DO -------------------------------------------------------------------------
 /**
  * - Remake into loop?
  */
@@ -187,13 +182,16 @@ function getRatingStars(rating) {
 
   let html = '';
   for (let i = 0; i < fullStars; i++) {
-    html += `<span>🌕</span>`
+    html += `<i class="fa-solid fa-star" aria-hidden="true"></i>`;
+    // html += `<span>🌕</span>`
   }
   if (halfStars) {
-    html += `<span>🌗</span>`
+    html += `<i class="fa-regular fa-star-half-stroke" aria-hidden="true"></i>`
+    // html += `<span>🌗</span>`
   }
   for (let i = 0; i < emptyStars; i++) {
-    html += `<span>🌑</span>`;
+    html += `<i class="fa-regular fa-star" aria-hidden="true"></i>`
+    // html += `<span>🌑</span>`;
   }
   return html;
 }
@@ -227,7 +225,7 @@ function updateProductAmount(e, isIncrease) {
 
 
 function updateAndPrintCart() {
-  cart.innerHTML = ''; // Empty element from current content
+  cart.innerHTML = 'Your cart is empty.';
 
   const chosenProducts = products.filter(product => product.amount > 0);
   // let totalCartSum = chosenProducts.reduce((sum, product) => {
@@ -394,7 +392,7 @@ function resetForm() {
   document.querySelectorAll('.error-message').forEach(msg => msg.textContent = '');
   const productsInCart = products.filter(product => product.amount > 0);
   
-  cart.innerHTML = '';
+  cart.innerHTML = 'Your cart is empty.';
   
   productsInCart.forEach(prod => {
     prod.amount = 0;
@@ -402,7 +400,7 @@ function resetForm() {
 }
 
 // Inputs to validate
-const inputs = [
+const inputsToValidate = [
   document.querySelector('#firstName'),
   document.querySelector('#lastName'),
   document.querySelector('#streetAddress'),
@@ -414,7 +412,7 @@ const inputs = [
 ]
 
 // Add event listeners
-inputs.forEach(input => {
+inputsToValidate.forEach(input => {
   // change to focus out?
   input.addEventListener('blur', () => {
     validateInput(input.id);
