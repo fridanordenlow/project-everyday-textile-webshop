@@ -36,9 +36,9 @@ export default [
       'quotes': ['error', 'single'], // Enforce single quotes
       'semi': ['error', 'always'], // Require semicolons
       'space-before-blocks': ['error', 'always'], // Enforce spacing before blocks
-      'template/no-duplicate-attributes': 'error', // Förhindra duplicerade attribut i HTML
-      'template/html-self-closing': 'warn', // Varning om taggar inte är självstängande där det är relevant (t.ex. <img>)
-      'template/no-invalid-html': 'error', // Förhindra ogiltig HTML-struktur
+      // 'template/no-duplicate-attributes': 'error', // Förhindra duplicerade attribut i HTML
+      // 'template/html-self-closing': 'warn', // Varning om taggar inte är självstängande där det är relevant (t.ex. <img>)
+      // 'template/no-invalid-html': 'error', // Förhindra ogiltig HTML-struktur
     },
   },
   pluginJs.configs.recommended, // Recommended ESLint rules

@@ -1,6 +1,8 @@
 import productList from './data/products.mjs';
 import getRatingStars from './helpers/getRatingStars.mjs';
 import getPriceMultiplier from './helpers/getPriceMultiplier.mjs';
+import regexRules from './rules/regexRules.mjs';
+import validationRules from './rules/validationRules.mjs';
 
 const productListContainer = document.querySelector('#productList');
 const cart = document.querySelector('#cartSummary');
@@ -18,43 +20,24 @@ const filterKitchen = document.querySelector('#filterKitchen');
 const resetSortFiltBtn = document.querySelector('#resetSortFiltBtn');
 
 const today = new Date();
-// const dayOfWeek = today.getDay()
-// const currentHour = today.getHours();
 
 // ------------------------------------------------------------------------------------
 // --- PRODUCTS -----------------------------------------------------------------------
 // ------------------------------------------------------------------------------------
 
-let products = [...productList]
-
-/**
- * - Fix so that the multiplied prices are rounded down correctly
- */
-
-// function getPriceMultiplier() {
-//   console.log(dayOfWeek)
-//   if (
-//     (dayOfWeek === 5 && currentHour >= 15) || // Friday after 15:00 (5)
-//     dayOfWeek === 6 || // All Saturday (6)
-//     dayOfWeek === 0 || // All Sunday (0)
-//     (dayOfWeek === 1 && currentHour < 3) // Monday before 03:00 (1)
-//   ) {
-//     return 1.15;
-//   }
-//   return 1;
-// }
+let products = [...productList];
 
 // A function that prints an html-element for each product
 function printProductList() {
   productListContainer.innerHTML = ''; // Empty container of current products to update the products when they change
-  
+
   let priceIncrease = getPriceMultiplier();
-  
+
   products.forEach(product => {
     productListContainer.innerHTML += `
             <article class="single-product">
                 <h3>${product.name}</h3>
-                <p>${(Math.round((product.price * priceIncrease) * 2) / 2).toFixed(2).replace(/\.00$/, '')} kr</p>
+                <p>${(Math.round(product.price * priceIncrease * 2) / 2).toFixed(2).replace(/\.00$/, '')} kr</p>
                 <p>Rating: ${getRatingStars(product.rating)}</p>
                 <div>
                     <button class="decrease" id="decrease-${product.id}">-</button>
@@ -67,7 +50,7 @@ function printProductList() {
 
   // ---- TO DO -------------------------------------------------------------------------
   /**
-   * - Have an add button that updates the amount chosen instead of immediate update of cart? 
+   * - Have an add button that updates the amount chosen instead of immediate update of cart?
    */
 
   const increaseButtons = document.querySelectorAll('button.increase');
@@ -81,14 +64,13 @@ function printProductList() {
 }
 printProductList();
 
-
 // ------------------------------------------------------------------------------------
 // --- SORTING AND FILTERS ------------------------------------------------------------
 // ------------------------------------------------------------------------------------
 
 categoryDropdownBtn.addEventListener('click', () => {
   categoryDropdown.classList.toggle('show');
-})
+});
 
 // Closes the dropdown after you chose an option
 function closeDropdown(dropdown) {
@@ -105,7 +87,7 @@ function sortByName() {
 }
 sortByNameElement.addEventListener('click', () => {
   sortByName();
-  closeDropdown(sortingDropdown); 
+  closeDropdown(sortingDropdown);
 });
 
 function sortByLowestPrice() {
@@ -118,7 +100,7 @@ sortByLowestPriceElement.addEventListener('click', () => {
 });
 
 function sortByHighestPrice() {
-  products.sort((a, b) => b.price - a.price );
+  products.sort((a, b) => b.price - a.price);
   printProductList();
 }
 sortByHighestPriceElement.addEventListener('click', () => {
@@ -135,11 +117,10 @@ sortByRatingElement.addEventListener('click', () => {
   closeDropdown(sortingDropdown);
 });
 
-
 // Filter products by category
 sortingDropdownBtn.addEventListener('click', () => {
   sortingDropdown.classList.toggle('show');
-})
+});
 
 let chosenCategory = null;
 
@@ -148,56 +129,29 @@ function filterByCategory(category) {
 
   const filteredProducts = chosenCategory ? productList.filter(prod => prod.category === chosenCategory) : productList;
   products = [...filteredProducts];
-  printProductList(); 
+  printProductList();
 }
 
 // Byt eventuellt till en for-each-loop
 filterBathroom.addEventListener('click', () => {
   filterByCategory('Bathroom');
-  closeDropdown(categoryDropdown); 
+  closeDropdown(categoryDropdown);
 });
 filterBedroom.addEventListener('click', () => {
   filterByCategory('Bedroom');
-  closeDropdown(categoryDropdown); 
+  closeDropdown(categoryDropdown);
 });
 filterKitchen.addEventListener('click', () => {
   filterByCategory('Kitchen');
-  closeDropdown(categoryDropdown); 
+  closeDropdown(categoryDropdown);
 });
 
 function resetProductList() {
   products = [...productList];
-  printProductList()
+  printProductList();
 }
 
 resetSortFiltBtn.addEventListener('click', resetProductList);
-
-
-// // ------------------------------------------------------------------------------------
-// // --- RATING SYMBOLS -----------------------------------------------------------------
-// // ------------------------------------------------------------------------------------
-
-// // Get rating for each product, moons instead of stars for now
-// function getRatingStars(rating) {
-//   const fullStars = Math.floor(rating);
-//   const halfStars = (rating % 1 === 0.5) ? 1 : 0; 
-//   const emptyStars = 5 - fullStars - halfStars; 
-
-//   let html = '';
-//   for (let i = 0; i < fullStars; i++) {
-//     html += `<i class="fa-solid fa-star" aria-hidden="true"></i>`;
-//     // html += `<span>🌕</span>`
-//   }
-//   if (halfStars) {
-//     html += `<i class="fa-regular fa-star-half-stroke" aria-hidden="true"></i>`
-//     // html += `<span>🌗</span>`
-//   }
-//   for (let i = 0; i < emptyStars; i++) {
-//     html += `<i class="fa-regular fa-star" aria-hidden="true"></i>`
-//     // html += `<span>🌑</span>`;
-//   }
-//   return html;
-// }
 
 // ------------------------------------------------------------------------------------
 // --- CART ---------------------------------------------------------------------------
@@ -207,7 +161,7 @@ const cartProductCount = document.getElementById('cartProductCount');
 
 function updateCartIcon() {
   const totalProducts = products.reduce((sum, product) => sum + product.amount, 0);
-  
+
   if (totalProducts > 0) {
     cartProductCount.textContent = totalProducts;
     cartProductCount.style.display = 'block';
@@ -240,14 +194,14 @@ function updateProductAmount(e, isIncrease) {
   updateAndPrintCart();
 }
 
-
 function updateAndPrintCart() {
-  cart.innerHTML = 'Your cart is empty.';
-
   const chosenProducts = products.filter(product => product.amount > 0);
-  // let totalCartSum = chosenProducts.reduce((sum, product) => {
-  //   return sum + (product.amount * product.price);
-  // }, 0);
+  if (chosenProducts.length === 0) {
+    cart.innerHTML = 'Your cart is empty.';
+    return;
+  }
+
+  cart.innerHTML = '';
   let totalCartSum = 0;
   let orderProductAmount = 0;
   let msg = '';
@@ -258,8 +212,8 @@ function updateAndPrintCart() {
     orderProductAmount += product.amount;
     let productPrice = product.price;
     if (product.amount >= 10) {
-       productPrice *= 0.9;
-       console.log(productPrice)
+      productPrice *= 0.9;
+      console.log(productPrice);
     }
     const adjustedProductPrice = productPrice * priceIncrease;
     totalCartSum += product.amount * adjustedProductPrice;
@@ -269,33 +223,30 @@ function updateAndPrintCart() {
       ${product.name}: ${product.amount} st - ${product.amount * product.price} kr
     </div>
     `;
-    // ${product.name}: ${product.amount} st - ${adjustedPrice.toFixed(2)} kr
   });
-    
-if (totalCartSum <= 0) {
-  return; // avbryt resten av funktionen
-}
 
-if (today.getDay() === 1 && today.getHours() < 10) {
+  if (totalCartSum <= 0) {
+    return; // avbryt resten av funktionen
+  }
+
+  if (today.getDay() === 1 && today.getHours() < 10) {
     totalCartSum *= 0.9;
-    msg += '<p>Monday discount: 10% off on your order.</p>'
-    console.log(msg)
-}
+    msg += '<p>Monday discount: 10% off on your order.</p>';
+  }
 
-if (orderProductAmount >= 15) {
-  cart.innerHTML += '<p>Shipping: 0 kr</p>';
-} else {
-  console.log(totalCartSum)
-  cart.innerHTML = `<p>Shipping: ${Math.round(25 + (0.1 * totalCartSum))} kr</p>`
-}
+  if (orderProductAmount >= 15) {
+    cart.innerHTML += '<p>Shipping: 0 kr</p>';
+  } else {
+    cart.innerHTML = `<p>Shipping: ${Math.round(25 + 0.1 * totalCartSum)} kr</p>`;
+  }
 
-let formattedTotalCartSum = totalCartSum.toFixed(2);
-if (formattedTotalCartSum.endsWith('.00')) {
-  formattedTotalCartSum = formattedTotalCartSum.slice(0, -3);
-}
+  let formattedTotalCartSum = totalCartSum.toFixed(2);
+  if (formattedTotalCartSum.endsWith('.00')) {
+    formattedTotalCartSum = formattedTotalCartSum.slice(0, -3);
+  }
 
-  cart.innerHTML += `<div>Total sum: ${formattedTotalCartSum} kr</div>`
-  cart.innerHTML += `<div>${msg}</div>`
+  cart.innerHTML += `<div>Total sum: ${formattedTotalCartSum} kr</div>`;
+  cart.innerHTML += `<div>${msg}</div>`;
 }
 
 updateAndPrintCart();
@@ -304,46 +255,20 @@ updateAndPrintCart();
 // ---- FORM --------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------
 
-/**
- * - MOVE INTO MODULES if there is time !!!!!!!
- */
-
+// Are some of these variables unnecessary complex? Re-write?
 const form = document.querySelector('#form');
-const submitBtn = form.querySelector('#submitBtn');
-const resetBtn = form.querySelector('#resetBtn');
-const paymentOptionRadios = Array.from(document.querySelectorAll('input[name="payment-option"]'));
 const cardOption = document.querySelector('input[name="payment-option"][value="card"]');
 const invoiceOption = document.querySelector('input[name="payment-option"][value="invoice"]');
+const paymentOptionRadios = Array.from(document.querySelectorAll('input[name="payment-option"]'));
 let selectedPaymentOption = paymentOptionRadios.find(radio => radio.checked)?.value || 'card';
 const personalDataCheckbox = document.querySelector('input[type="checkbox"][required]');
-
-// REGEX
-const regexRules = {
-  email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-  name: /^[a-zA-ZåäöÅÄÖ\s-]{2,}$/,
-  streetAddress: /^(?=.*[a-zA-ZåäöÅÄÖ])[a-zA-ZåäöÅÄÖ0-9\s.,-]{2,}$/,
-  city: /^[a-zA-ZåäöÅÄÖ\s-]{2,}$/,
-  phoneNumber: /^[0-9]{10}$/,
-  zipCode: /^\d{3}\s?\d{2}$/,
-  personalID: /^(19|20)?\d{2}((0[1-9])|(1[0-2]))(([0-2][0-9])|(3[0-1]))[- ]?\d{4}$/,
-};
-
-// Validation rules
-const validationRules = {
-  firstName: 'name',
-  lastName: 'name',
-  streetAddress: 'streetAddress',
-  zipCode: 'zipCode',
-  city: 'city',
-  phone: 'phoneNumber',
-  email: 'email',
-  personalID: 'personalID'
-};
+const submitBtn = form.querySelector('#submitBtn');
+const resetBtn = form.querySelector('#resetBtn');
 
 function validateInput(inputElementId) {
   const inputField = document.getElementById(inputElementId);
   const inputFieldValue = inputField.value.trim();
-  const feedbackField = inputField.parentElement.querySelector(".error-message");
+  const feedbackField = inputField.parentElement.querySelector('.error-message');
   const rule = validationRules[inputElementId];
 
   if (!inputField) {
@@ -377,10 +302,10 @@ function switchPaymentOption() {
   selectedPaymentOption = document.querySelector('input[name="payment-option"]:checked').value;
   const cardSection = document.querySelector('.card');
   const invoiceSection = document.querySelector('.invoice');
-  
+
   cardSection.classList.toggle('hidden', selectedPaymentOption !== 'card');
   invoiceSection.classList.toggle('hidden', selectedPaymentOption !== 'invoice');
-  
+
   console.log(`${selectedPaymentOption} selected`);
   updateSubmitButton();
 }
@@ -407,14 +332,14 @@ function submitForm(e) {
 
 function resetForm() {
   form.reset();
-  document.querySelectorAll('.error-message').forEach(msg => msg.textContent = '');
+  document.querySelectorAll('.error-message').forEach(msg => (msg.textContent = ''));
   const productsInCart = products.filter(product => product.amount > 0);
-  
+
   cart.innerHTML = 'Your cart is empty.';
-  
+
   productsInCart.forEach(prod => {
     prod.amount = 0;
-  })
+  });
 }
 
 // Inputs to validate
@@ -427,14 +352,14 @@ const inputsToValidate = [
   document.querySelector('#phone'),
   document.querySelector('#email'),
   document.querySelector('#personalID'),
-]
+];
 
 // Add event listeners
 inputsToValidate.forEach(input => {
   // change to focus out?
   input.addEventListener('blur', () => {
     validateInput(input.id);
-    updateSubmitButton(); 
+    updateSubmitButton();
   });
 });
 
@@ -450,7 +375,7 @@ inputsToValidate.forEach(input => {
 
 paymentOptionRadios.forEach(radioBtn => {
   radioBtn.addEventListener('change', switchPaymentOption);
-})
+});
 
 if (cardOption && invoiceOption) {
   [cardOption, invoiceOption].forEach(radio => {
@@ -464,7 +389,7 @@ if (cardOption && invoiceOption) {
 
 personalDataCheckbox.addEventListener('change', updateSubmitButton);
 submitBtn.addEventListener('click', submitForm);
-resetBtn.addEventListener('click', resetForm)
+resetBtn.addEventListener('click', resetForm);
 
 // switchPaymentOption();
 updateCartIcon();
