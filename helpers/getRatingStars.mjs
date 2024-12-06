@@ -1,4 +1,4 @@
-// Get rating for each product, moons instead of stars for now
+// Get rating for each product
 function getRatingStars(rating) {
   const fullStars = Math.floor(rating);
   const halfStars = rating % 1 === 0.5 ? 1 : 0;

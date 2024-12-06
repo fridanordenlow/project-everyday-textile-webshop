@@ -247,6 +247,8 @@ function updateAndPrintCart() {
 
   cart.innerHTML += `<div>Total sum: ${formattedTotalCartSum} kr</div>`;
   cart.innerHTML += `<div>${msg}</div>`;
+
+  updatePaymentOptions(totalCartSum);
 }
 
 updateAndPrintCart();
@@ -310,6 +312,21 @@ function switchPaymentOption() {
   updateSubmitButton();
 }
 
+// A function that disables invoice as a payment option if the total order sum is above 800 kr
+function updatePaymentOptions(totalCartSum) {
+  const invoiceMessage = document.getElementById('invoiceMessage');
+  if (totalCartSum > 800) {
+    invoiceOption.disabled = true; // Inaktivera invoice-alternativet
+    // invoiceOption.parentElement.classList.add('disabled'); // Lägg till CSS-klass för visuell feedback
+    invoiceMessage.classList.remove('hidden'); // Visa meddelandet
+    console.log('Invoice disabled due to high cart sum.');
+  } else {
+    invoiceOption.disabled = false; // Aktivera invoice-alternativet
+    // invoiceOption.parentElement.classList.remove('disabled'); // Ta bort CSS-klass
+  }
+  updateSubmitButton();
+}
+
 function validateAllInputs() {
   const allInputsValid = Object.keys(validationRules).every(inputId => {
     const input = document.getElementById(inputId);
@@ -362,16 +379,6 @@ inputsToValidate.forEach(input => {
     updateSubmitButton();
   });
 });
-
-// const formInputs = form.querySelectorAll('input');
-// formInputs.forEach(input => {
-//   input.addEventListener('blur', () => {
-//     if (input.value.trim().length > 0) {
-//       validateInput(input.id);
-//     }
-//     updateSubmitButton();
-//   });
-// });
 
 paymentOptionRadios.forEach(radioBtn => {
   radioBtn.addEventListener('change', switchPaymentOption);
