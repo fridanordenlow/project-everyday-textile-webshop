@@ -200,6 +200,19 @@ function getRatingStars(rating) {
 // --- CART ---------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------
 
+const cartProductCount = document.getElementById('cartProductCount');
+
+function updateCartIcon() {
+  const totalProducts = products.reduce((sum, product) => sum + product.amount, 0);
+  
+  if (totalProducts > 0) {
+    cartProductCount.textContent = totalProducts;
+    cartProductCount.style.display = 'block';
+  } else {
+    cartProductCount.style.display = 'none';
+  }
+}
+
 // A function that updates and increases product amount
 function updateProductAmount(e, isIncrease) {
   const action = isIncrease ? 'increase' : 'decrease';
@@ -220,6 +233,7 @@ function updateProductAmount(e, isIncrease) {
   product.amount = Math.max(product.amount, 0);
 
   printProductList();
+  updateCartIcon();
   updateAndPrintCart();
 }
 
@@ -252,6 +266,7 @@ function updateAndPrintCart() {
       ${product.name}: ${product.amount} st - ${product.amount * product.price} kr
     </div>
     `;
+    // ${product.name}: ${product.amount} st - ${adjustedPrice.toFixed(2)} kr
   });
     
 if (totalCartSum <= 0) {
@@ -449,6 +464,7 @@ submitBtn.addEventListener('click', submitForm);
 resetBtn.addEventListener('click', resetForm)
 
 // switchPaymentOption();
+updateCartIcon();
 updateSubmitButton();
 
 // ------------------------------------------------------------------------------------
