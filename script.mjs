@@ -1,6 +1,7 @@
 import productList from './data/products.mjs';
 import getRatingStars from './helpers/getRatingStars.mjs';
 import getPriceMultiplier from './helpers/getPriceMultiplier.mjs';
+import startInactivityTimer from './helpers/startInactivityTimer.mjs';
 import regexRules from './rules/regexRules.mjs';
 import validationRules from './rules/validationRules.mjs';
 
@@ -347,10 +348,19 @@ function submitForm(e) {
   orderSection.innerHTML = `<p>Thank you! Your order has been received.</p>`;
 }
 
-function resetForm() {
+// manual = false
+function resetForm(manual = false) {
   form.reset();
   document.querySelectorAll('.error-message').forEach(msg => (msg.textContent = ''));
   const productsInCart = products.filter(product => product.amount > 0);
+  const timerMessage = document.querySelector('#timerMessage');
+
+  // timerMessage.innerHTML = 'Test: You are too slow! The form has been reset.'
+
+  if (!manual) {
+    timerMessage.innerHTML = 'You are too slow! The form has been reset.';
+    console.log('Form has been reset due to inactivity.')
+  }
 
   cart.innerHTML = 'Your cart is empty.';
 
@@ -358,6 +368,11 @@ function resetForm() {
     prod.amount = 0;
   });
 }
+
+form.addEventListener('input', () => startInactivityTimer(() => resetForm()));
+form.addEventListener('mousemove', () => startInactivityTimer(() => resetForm()));
+form.addEventListener('keypress', () => startInactivityTimer(() => resetForm()));
+
 
 // Inputs to validate
 const inputsToValidate = [
@@ -396,9 +411,8 @@ if (cardOption && invoiceOption) {
 
 personalDataCheckbox.addEventListener('change', updateSubmitButton);
 submitBtn.addEventListener('click', submitForm);
-resetBtn.addEventListener('click', resetForm);
+resetBtn.addEventListener('click', resetForm(true));
 
-// switchPaymentOption();
 updateCartIcon();
 updateSubmitButton();
 
