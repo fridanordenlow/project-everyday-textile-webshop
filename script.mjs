@@ -1,4 +1,6 @@
-import productList from './products.js';
+import productList from './data/products.mjs';
+import getRatingStars from './helpers/getRatingStars.mjs';
+import getPriceMultiplier from './helpers/getPriceMultiplier.mjs';
 
 const productListContainer = document.querySelector('#productList');
 const cart = document.querySelector('#cartSummary');
@@ -16,8 +18,8 @@ const filterKitchen = document.querySelector('#filterKitchen');
 const resetSortFiltBtn = document.querySelector('#resetSortFiltBtn');
 
 const today = new Date();
-const dayOfWeek = today.getDay()
-const currentHour = today.getHours();
+// const dayOfWeek = today.getDay()
+// const currentHour = today.getHours();
 
 // ------------------------------------------------------------------------------------
 // --- PRODUCTS -----------------------------------------------------------------------
@@ -29,17 +31,18 @@ let products = [...productList]
  * - Fix so that the multiplied prices are rounded down correctly
  */
 
-function getPriceMultiplier() {
-  if (
-    (dayOfWeek === 5 && currentHour >= 15) || // Friday after 15:00
-    dayOfWeek === 6 || // All Saturday
-    dayOfWeek === 0 || // All Sunday
-    (dayOfWeek === 1 && currentHour < 3) // Monday before 03:00
-  ) {
-    return 1.15;
-  }
-  return 1;
-}
+// function getPriceMultiplier() {
+//   console.log(dayOfWeek)
+//   if (
+//     (dayOfWeek === 5 && currentHour >= 15) || // Friday after 15:00 (5)
+//     dayOfWeek === 6 || // All Saturday (6)
+//     dayOfWeek === 0 || // All Sunday (0)
+//     (dayOfWeek === 1 && currentHour < 3) // Monday before 03:00 (1)
+//   ) {
+//     return 1.15;
+//   }
+//   return 1;
+// }
 
 // A function that prints an html-element for each product
 function printProductList() {
@@ -51,7 +54,7 @@ function printProductList() {
     productListContainer.innerHTML += `
             <article class="single-product">
                 <h3>${product.name}</h3>
-                <p>${product.price * priceIncrease} kr</p>
+                <p>${(Math.round((product.price * priceIncrease) * 2) / 2).toFixed(2).replace(/\.00$/, '')} kr</p>
                 <p>Rating: ${getRatingStars(product.rating)}</p>
                 <div>
                     <button class="decrease" id="decrease-${product.id}">-</button>
@@ -170,31 +173,31 @@ function resetProductList() {
 resetSortFiltBtn.addEventListener('click', resetProductList);
 
 
-// ------------------------------------------------------------------------------------
-// --- RATING SYMBOLS -----------------------------------------------------------------
-// ------------------------------------------------------------------------------------
+// // ------------------------------------------------------------------------------------
+// // --- RATING SYMBOLS -----------------------------------------------------------------
+// // ------------------------------------------------------------------------------------
 
-// Get rating for each product, moons instead of stars for now
-function getRatingStars(rating) {
-  const fullStars = Math.floor(rating);
-  const halfStars = (rating % 1 === 0.5) ? 1 : 0; 
-  const emptyStars = 5 - fullStars - halfStars; 
+// // Get rating for each product, moons instead of stars for now
+// function getRatingStars(rating) {
+//   const fullStars = Math.floor(rating);
+//   const halfStars = (rating % 1 === 0.5) ? 1 : 0; 
+//   const emptyStars = 5 - fullStars - halfStars; 
 
-  let html = '';
-  for (let i = 0; i < fullStars; i++) {
-    html += `<i class="fa-solid fa-star" aria-hidden="true"></i>`;
-    // html += `<span>🌕</span>`
-  }
-  if (halfStars) {
-    html += `<i class="fa-regular fa-star-half-stroke" aria-hidden="true"></i>`
-    // html += `<span>🌗</span>`
-  }
-  for (let i = 0; i < emptyStars; i++) {
-    html += `<i class="fa-regular fa-star" aria-hidden="true"></i>`
-    // html += `<span>🌑</span>`;
-  }
-  return html;
-}
+//   let html = '';
+//   for (let i = 0; i < fullStars; i++) {
+//     html += `<i class="fa-solid fa-star" aria-hidden="true"></i>`;
+//     // html += `<span>🌕</span>`
+//   }
+//   if (halfStars) {
+//     html += `<i class="fa-regular fa-star-half-stroke" aria-hidden="true"></i>`
+//     // html += `<span>🌗</span>`
+//   }
+//   for (let i = 0; i < emptyStars; i++) {
+//     html += `<i class="fa-regular fa-star" aria-hidden="true"></i>`
+//     // html += `<span>🌑</span>`;
+//   }
+//   return html;
+// }
 
 // ------------------------------------------------------------------------------------
 // --- CART ---------------------------------------------------------------------------
