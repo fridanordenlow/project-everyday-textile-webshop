@@ -197,12 +197,14 @@ function updateProductAmount(e, isIncrease) {
 
 function updateAndPrintCart() {
   const chosenProducts = products.filter(product => product.amount > 0);
+
   if (chosenProducts.length === 0) {
     cart.innerHTML = 'Your cart is empty.';
     return;
   }
 
   cart.innerHTML = '';
+
   let totalCartSum = 0;
   let orderProductAmount = 0;
   let msg = '';
@@ -212,9 +214,11 @@ function updateAndPrintCart() {
   chosenProducts.forEach(product => {
     orderProductAmount += product.amount;
     let productPrice = product.price;
+
+    // Lowered price if you order 10 or more of a product - does not work?
     if (product.amount >= 10) {
       productPrice *= 0.9;
-      console.log(productPrice);
+      console.log('Product price lowered to:', productPrice.toFixed(2));
     }
     const adjustedProductPrice = productPrice * priceIncrease;
     totalCartSum += product.amount * adjustedProductPrice;
@@ -238,7 +242,7 @@ function updateAndPrintCart() {
   if (orderProductAmount >= 15) {
     cart.innerHTML += '<p>Shipping: 0 kr</p>';
   } else {
-    cart.innerHTML = `<p>Shipping: ${Math.round(25 + 0.1 * totalCartSum)} kr</p>`;
+    cart.innerHTML += `<p>Shipping: ${Math.round(25 + 0.1 * totalCartSum)} kr</p>`;
   }
 
   let formattedTotalCartSum = totalCartSum.toFixed(2);
@@ -320,7 +324,7 @@ function updatePaymentOptions(totalCartSum) {
     invoiceOption.disabled = true; // Inaktivera invoice-alternativet
     // invoiceOption.parentElement.classList.add('disabled'); // Lägg till CSS-klass för visuell feedback
     invoiceMessage.classList.remove('hidden'); // Visa meddelandet
-    console.log('Invoice disabled due to high cart sum.');
+    // console.log('Invoice disabled due to high cart sum.');
   } else {
     invoiceOption.disabled = false; // Aktivera invoice-alternativet
     // invoiceOption.parentElement.classList.remove('disabled'); // Ta bort CSS-klass
@@ -342,13 +346,18 @@ function updateSubmitButton() {
   submitBtn.disabled = !validateAllInputs();
 }
 
+/**
+ * - Re-name to submit order or something like that
+ */
 function submitForm(e) {
   e.preventDefault();
   const orderSection = document.querySelector('#order-section');
-  orderSection.innerHTML = `<p>Thank you! Your order has been received.</p>`;
+  orderSection.innerHTML = `
+  <p>Thank you! We have received your order. Expected delivery time is 2-3 business days.</p>
+  `;
 }
 
-// manual = false
+// Default manual = false
 function resetForm(manual = false) {
   form.reset();
   document.querySelectorAll('.error-message').forEach(msg => (msg.textContent = ''));
@@ -369,10 +378,10 @@ function resetForm(manual = false) {
   });
 }
 
+// Event listeners for inactivity to start timer to reset form
 form.addEventListener('input', () => startInactivityTimer(() => resetForm()));
 form.addEventListener('mousemove', () => startInactivityTimer(() => resetForm()));
 form.addEventListener('keypress', () => startInactivityTimer(() => resetForm()));
-
 
 // Inputs to validate
 const inputsToValidate = [
@@ -419,55 +428,3 @@ updateSubmitButton();
 // ------------------------------------------------------------------------------------
 // ---- TO DO -------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------
-
-// ------------------------------------------------------------------------------------
-// --- DEAD CODE ----------------------------------------------------------------------
-// ------------------------------------------------------------------------------------
-/*
-Första versionen av implementering av + och - funktionen på knapparna
-const increaseButtons = document.querySelectorAll('button.increase');
-  increaseButtons.forEach(button => {
-    button.addEventListener('click', increaseProductAmount);
-  });
-  const decreaseButtons = document.querySelectorAll('button.decrease');
-  decreaseButtons.forEach(button => {
-    button.addEventListener('click', decreaseProductAmount);
-  });
-
-function increaseProductAmount(e) {
-  const productId = Number(e.target.id.replace('increase-', ''));
-  console.log('clicked on button with id', productId);
-  // Find product in array with correct id
-  const foundProductIndex = products.findIndex(product => product.id === productId);
-  // Message if product does not exist
-  if (foundProductIndex === -1) {
-    console.error('Det finns ingen sådan produkt i listan. kolla att id:t är rätt');
-    return;
-  }
-
-  // Increase amount with +1
-  products[foundProductIndex].amount += 1;
-
-  printProductList();
-  updateAndPrintCart();
-}
-
-// A function that updates and decreases product amount
-function decreaseProductAmount(e) {
-  const productId = Number(e.target.id.replace('decrease-', ''));
-  console.log('clicked on button with id', productId);
-  // Find product in array with correct id
-  const foundProductIndex = products.findIndex(product => product.id === productId);
-  // Message if product does not exist
-  if (foundProductIndex === -1) {
-    console.error('Det finns ingen sådan produkt i listan. kolla att id:t är rätt');
-    return;
-  }
-
-  // Increase amount with +1
-  products[foundProductIndex].amount -= 1;
-
-  printProductList();
-  updateAndPrintCart();
-}
-*/
