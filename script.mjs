@@ -314,19 +314,20 @@ function validateInput(inputElementId) {
   }
 
   if (inputFieldValue.length === 0) {
-    feedbackField.textContent = '* This field is required.';
+    feedbackField.innerHTML = '<i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> This field is required.';
     return false;
   }
 
   if (rule && regexRules[rule]) {
     if (!regexRules[rule].test(inputFieldValue)) {
-      feedbackField.textContent = `* Please enter a valid ${rule.replace(/([A-Z])/g, ' $1').toLowerCase()}.`;
+      feedbackField.innerHTML = `<i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Please enter a valid ${rule.replace(/([A-Z])/g, ' $1').toLowerCase()}.`;
       return false;
     }
   }
 
-  feedbackField.textContent = '✅';
-  return true;
+  // Maybe no feedback needed when the input is correct
+  // feedbackField.innerHTML = '<i class="fa-solid fa-check"></i>';
+  // return true;
 }
 
 // Switch between card or invoice payment, toggle visibility
