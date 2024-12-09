@@ -6,12 +6,12 @@ const productList = [
     rating: 5,
     amount: 0,
     category: 'Kitchen',
-    /*img: {
-              url:,
-              alt:
-              width:,
-              height:
-          }*/
+    img: {
+      url: '../assets/photos/kitchen_red.png',
+      alt: 'Red kitchen towel',
+      width: 709,
+      height: 945,
+    },
   },
   {
     id: 1,
@@ -20,12 +20,12 @@ const productList = [
     rating: 3.5,
     amount: 0,
     category: 'Bathroom',
-    /*img: {
-              url:,
-              alt:
-              width:,
-              height:
-          }*/
+    img: {
+      url: '../assets/photos/kitchen_red.png',
+      alt: 'Red kitchen towel',
+      width: 709,
+      height: 945,
+    },
   },
   {
     id: 2,
@@ -34,12 +34,12 @@ const productList = [
     rating: 3,
     amount: 0,
     category: 'Bathroom',
-    /*img: {
-              url:,
-              alt:
-              width:,
-              height:
-          }*/
+    img: {
+      url: '../assets/photos/kitchen_red.png',
+      alt: 'Red kitchen towel',
+      width: 709,
+      height: 945,
+    },
   },
   {
     id: 3,
@@ -48,12 +48,12 @@ const productList = [
     rating: 3,
     amount: 0,
     category: 'Bedroom',
-    /*img: {
-              url:,
-              alt:
-              width:,
-              height:
-          }*/
+    img: {
+      url: '../assets/photos/kitchen_red.png',
+      alt: 'Red kitchen towel',
+      width: 709,
+      height: 945,
+    },
   },
   {
     id: 4,
@@ -62,12 +62,12 @@ const productList = [
     rating: 2.5,
     amount: 0,
     category: 'Bathroom',
-    /*img: {
-              url:,
-              alt:
-              width:,
-              height:
-          }*/
+    img: {
+      url: '../assets/photos/kitchen_red.png',
+      alt: 'Red kitchen towel',
+      width: 709,
+      height: 945,
+    },
   },
   {
     id: 5,
@@ -76,12 +76,12 @@ const productList = [
     rating: 4.5,
     amount: 0,
     category: 'Bedroom',
-    /*img: {
-              url:,
-              alt:
-              width:,
-              height:
-          }*/
+    img: {
+      url: '../assets/photos/kitchen_red.png',
+      alt: 'Red kitchen towel',
+      width: 709,
+      height: 945,
+    },
   },
 ];
 
