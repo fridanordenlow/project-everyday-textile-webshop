@@ -12,7 +12,7 @@
       <!-- Ändra id's från camelCase till namn-namn eller ej? Vad är bäst praxis för id's?-->
       <header>
         <h1>Everyday Textile Webshop</h1>
-        <a href="#cartSection" class="cart-link">
+        <a href="#cartView" class="cart-link">
           <div id="cartIcon" class="cart-container">
             <i class="fa-solid fa-basket-shopping fa-2x" aria-hidden="true"></i>
             <span id="cartProductCount" class="cart-count"></span>
@@ -50,16 +50,117 @@
           <button id="resetSortFiltBtn">Reset</button>
         </div>
         <div id="productList" class="product-container">
-          <!-- Fylls på från JS -->
+          <!-- Content from JS -->
         </div>
       </section>
-      <section id="cartSection" class="cart-section">
-        <h3>Your cart</h3>
+
+      <section id="cart-and-order-section" class="cart-and-order-section">
+        <div id="cartView" class="cart-view">
+          <div id="cartSummary">
+            <!-- Content from JS -->
+          </div>
+          <button id="proceedToOrderBtn">Proceed to Order</button>
+        </div>
+        <div id="orderView" class="order-view hidden">
+          <form class="order-form" id="form">
+            <h4>Order form</h4>
+            <div id="timerMessage">      
+            </div>
+            <label>
+              <span>First name</span>
+              <div class="error-message"></div>
+              <input type="text" id="firstName" required>
+            </label>
+            <label>
+              <span>Last name</span>
+              <div class="error-message"></div>
+              <input type="text" id="lastName" required>
+            </label>
+            <label>
+              <span>Street address</span>
+              <div class="error-message"></div>
+              <input type="text" id="streetAddress" required>
+            </label>
+            <label>
+              <span>Zip code</span>
+              <div class="error-message"></div>
+              <input type="text" id="zipCode" required>
+            </label>
+            <label>
+              <span>City</span>
+              <div class="error-message"></div>
+              <input type="text" id="city" required>
+            </label>
+            <label>
+              <span>Phone number</span>
+              <div class="error-message"></div>
+              <input type="number" id="phone" required>
+            </label>
+            <label>
+              <span>E-mail</span>
+              <div class="error-message"></div>
+              <input type="email" id="email" required>
+            </label>
+            <label>
+              <span>Discount code</span>
+              <input type="text">
+            </label>
+            <div class="payment-options">
+              <div class="selector">
+                <label>
+                  <input type="radio" name="payment-option" value="card" checked>
+                  <span>Card</span>
+                </label>
+                <label>
+                  <input type="radio" name="payment-option" value="invoice">
+                  <span>Invoice</span>
+                  <div id="invoiceMessage" class="invoice-message hidden">* Invoice not an option on orders above 800 kr</div>
+                </label>
+              </div>
+              <div class="card">
+                <label>
+                  <span>Card number</span>
+                  <input type="number" id="card-input">
+                </label>
+                <label>
+                  <span>Expiry date</span>
+                  <input type="number" placeholder="YY" id="year">/
+                  <input type="number" placeholder="MM" id="month">
+                </label>
+                <label>
+                  <span>CVC</span>
+                  <input type="number" placeholder="123">
+                </label>
+              </div>
+              <div class="invoice hidden" id="invoice">
+                <label>
+                  <span>Personal ID</span>
+                  <div class="error-message"></div>
+                  <input type="text" name="personal-id" id="personalID" value="890201-3286">
+                </label>
+              </div>
+            </div>
+            <label>
+              <input type="checkbox" required>
+              <span>I have read and agree to the processing of my personal data as stated in our privacy policy.</span>
+            </label>
+            <label>
+              <input type="checkbox" checked>
+              <span>Yes, I want to subscribe to newsletters!</span>
+            </label>
+            <button type="button" id="backToCartBtn">Back to cart</button>
+            <button type="submit" id="submitBtn" disabled>Place order</button>
+            <button type="reset" id="resetBtn">Clear order</button>
+        </div>
+      </section>
+
+      <!-- <section id="cartView" class="cart-section">
+        <h3>Cart</h3>
         <div id="cartSummary">
-          <!-- Fylls på från JS -->
         </div>
+        <button id="proceedToOrderBtn">Proceed to Order</button>
       </section>
-      <section id="order-section">
+      <section id="orderView" class="hidden">
         <form class="order-form" id="form">
           <h4>Order form</h4>
           <div id="timerMessage">      
@@ -146,9 +247,10 @@
             <input type="checkbox" checked>
             <span>Yes, I want to subscribe to newsletters!</span>
           </label>
+          <button type="button" id="backToCartBtn">Back to cart</button>
           <button type="submit" id="submitBtn" disabled>Place order</button>
           <button type="reset" id="resetBtn">Clear order</button>
-      </section>
+      </section> -->
     </main>
     <script type="module" src="script.mjs" defer></script>
   </body>

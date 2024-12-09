@@ -260,6 +260,30 @@ function updateAndPrintCart() {
 updateAndPrintCart();
 
 // ------------------------------------------------------------------------------------
+// ---- TOGGLE BETWEEN CART AND FORM VIEW ---------------------------------------------
+// ------------------------------------------------------------------------------------
+const cartView = document.getElementById('cartView');
+const orderView = document.getElementById('orderView');
+const proceedToOrderBtn = document.getElementById('proceedToOrderBtn');
+const backToCartBtn = document.getElementById('backToCartBtn');
+
+// Function to switch to order form view
+function showOrderForm() {
+  cartView.classList.add('hidden');
+  orderView.classList.remove('hidden');
+}
+
+// Function to switch back to cart view
+function showCart() {
+  cartView.classList.remove('hidden');
+  orderView.classList.add('hidden');
+}
+
+// Add event listeners to the buttons
+proceedToOrderBtn.addEventListener('click', showOrderForm);
+backToCartBtn.addEventListener('click', showCart);
+
+// ------------------------------------------------------------------------------------
 // ---- FORM --------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------
 
@@ -352,8 +376,8 @@ function updateSubmitButton() {
  */
 function submitForm(e) {
   e.preventDefault();
-  const orderSection = document.querySelector('#order-section');
-  orderSection.innerHTML = `
+  const orderView = document.querySelector('#orderView');
+  orderView.innerHTML = `
   <p>Thank you! We have received your order. Expected delivery time is 2-3 business days.</p>
   `;
 }
