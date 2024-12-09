@@ -1,7 +1,7 @@
 const productList = [
   {
     id: 0,
-    name: 'Kitchen Towel',
+    name: 'Red Striped Kitchen Towel',
     price: 250,
     rating: 5,
     amount: 0,
@@ -33,7 +33,7 @@ const productList = [
     price: 225,
     rating: 3.5,
     amount: 0,
-    category: 'Bathroom',
+    category: 'Bedroom',
     img: {
       url: '../assets/photos/bedroom_yellow_opaque.png',
       alt: 'Pillowcase with yellow dots',
@@ -99,9 +99,9 @@ const productList = [
   },
   {
     id: 7,
-    name: 'Teal Terry Towel',
+    name: 'Flower Terry Towel',
     price: 195,
-    rating: 3,
+    rating: 3.5,
     amount: 0,
     category: 'Bathroom',
     img: {

@@ -133,8 +133,10 @@ header {
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      background-color: lightblue;
+      // background-color: lightblue;
       padding: 10px;
+      border: 2px solid black;
+      // border-radius: $general-border-radius;
     
       button {
         width: 30px;
