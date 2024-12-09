@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: pink;
   height: 100%;
@@ -18,6 +22,28 @@ header {
   align-items: center;
   justify-content: space-between;
   width: 80%;
+  color: black;
+
+  .cart-link {
+    text-decoration: none;
+    color: inherit;
+    
+    &:link,
+    &:visited {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      color: rgb(60, 60, 60);
+    }
+
+    &:active {
+      color: inherit;
+    }
+  }
 
   .cart-container {
     position: relative;

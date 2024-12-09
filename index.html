@@ -12,10 +12,12 @@
       <!-- Ändra id's från camelCase till namn-namn eller ej? Vad är bäst praxis för id's?-->
       <header>
         <h1>Everyday Textile Webshop</h1>
-        <div id="cartIcon" class="cart-container">
-          <i class="fa-solid fa-basket-shopping fa-2x" aria-hidden="true"></i>
-          <span id="cartProductCount" class="cart-count"></span>
-        </div>
+        <a href="#cartSection" class="cart-link">
+          <div id="cartIcon" class="cart-container">
+            <i class="fa-solid fa-basket-shopping fa-2x" aria-hidden="true"></i>
+            <span id="cartProductCount" class="cart-count"></span>
+          </div>
+        </a>
       </header>
       <section class="product-section">
         <h2>Our products:</h2>
@@ -51,7 +53,7 @@
           <!-- Fylls på från JS -->
         </div>
       </section>
-      <section class="cart-section">
+      <section id="cartSection" class="cart-section">
         <h3>Your cart</h3>
         <div id="cartSummary">
           <!-- Fylls på från JS -->
