@@ -18,6 +18,7 @@
             <span id="cartProductCount" class="cart-count"></span>
           </div>
         </a>
+        <!-- <i class="fa-solid fa-bars fa-2x" aria-hidden="true"></i> -->
       </header>
       <section class="product-section">
         <h2>Our products:</h2>
@@ -54,16 +55,20 @@
         </div>
       </section>
 
-      <section id="cart-and-order-section" class="cart-and-order-section">
+      <section id="cartAndOrderSection" class="cart-and-order-section">
         <div id="cartView" class="cart-view">
-          <div id="cartSummary">
-            <!-- Content from JS -->
+          <div>
+            <h3>Cart</h3>
+            <div id="cartSummary">
+              <!-- Content from JS -->
+            </div>
           </div>
           <button id="proceedToOrderBtn">Proceed to Order</button>
         </div>
+
         <div id="orderView" class="order-view hidden">
-          <form class="order-form" id="form">
-            <h4>Order form</h4>
+          <form id="form">
+            <h3>Order form</h4>
             <div id="timerMessage">      
             </div>
             <label>
@@ -120,7 +125,7 @@
               <div class="card">
                 <label>
                   <span>Card number</span>
-                  <input type="number" id="card-input">
+                  <input type="number" id="card-input" placeholder="4701322211111234">
                 </label>
                 <label>
                   <span>Expiry date</span>

@@ -14,19 +14,19 @@ main {
   align-items: center; 
   font-family: $primary-font;
   margin-top: 10px;
-  // height: 100vh; 
-}
-
-.hidden {
-  display: none;
+  max-width: 1200px; // Set a maximum width for the main tag
+  width: 100%; // Ensure it takes full width of the viewport
+  padding: 0 20px; // Add horizontal padding for spacing
 }
 
 header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 80%;
+  width: 100%;
   color: black;
+  border-bottom: 2px solid black;
+  margin-bottom: 15px;
 
   .cart-link {
     text-decoration: none;
@@ -114,90 +114,182 @@ header {
 // -------------------------------
 // -------------------------------
 
-.product-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-}
+.product-section {
+  width: 100%;
 
-.single-product {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  background-color: lightblue;
-  width: 200px;
-  padding: 10px;
-  margin: 10px;
-
-  button {
-    width: 30px;
-    border: none;
-    border-radius: $general-border-radius;
+  .product-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 10px 0 10px 0;
+  
+    .single-product {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      background-color: lightblue;
+      width: 200px;
+      padding: 10px;
+    
+      button {
+        width: 30px;
+        border: none;
+        border-radius: $general-border-radius;
+      }
+    
+      input {
+        width: 40px;
+        border: none;
+        border-radius: $general-border-radius;
+      }
+    }
   }
 
-  input {
-    width: 40px;
-    border: none;
-    border-radius: $general-border-radius;
-  }
 }
 
 .cart-and-order-section {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   max-width: 500px;
   min-height: 300px;
   margin: 0 auto;
   padding: 20px;
+  margin-bottom: 20px;
   background-color: #f5f5f5;
   border-radius: 8px;
 
-  .order-form {
+  .cart-view,
+  .order-view {
     display: flex;
     flex-direction: column;
-    row-gap: 5px;
+    justify-content: space-between;
+    flex-grow: 1;
+    height: 100%;
+  }
+
+  .hidden {
+    display: none;
+  }
   
-    input {
-      height: 20px;
-      border: none;
-      border-radius: $general-border-radius;
+  .cart-view {
+    button {
+      align-self: flex-end;
     }
   }
 
-  button {
-    width: 150px;
-    padding: 5px 10px;
-    background-color: white;
-    color: black;
-    border: none;
-    border-radius: $general-border-radius;
-    cursor: pointer;
-  
-    &:hover {
-      background-color: grey;
+  .order-view {
+    form {
+      display: flex;
+      flex-direction: column;
+      row-gap: 5px;
+    
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+
+      input[type="text"],
+      input[type="number"],
+      input[type="email"] {
+        width: 100%;
+        padding: 6px;
+        border: 1px solid #ccc;
+        border-radius: $general-border-radius;
+        box-sizing: border-box;
+        height: 30px;
+      }
+
+      input[type="radio"]:disabled + span {
+        color: #aaa; /* Change text color to gray */
+        cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+      }
+      // input {
+      //   height: 20px;
+      //   border: none;
+      //   border-radius: $general-border-radius;
+      // }
+
+      .payment-options {
+        margin-top: 20px;
+        border: 1px solid #ccc;
+        padding: 15px;
+        border-radius: 5px;
+      
+        .selector {
+          margin-bottom: 15px;
+      
+          label {
+            display: inline-block;
+            margin-right: 20px;
+          }
+        }
+      
+        .card,
+        .invoice {
+          margin-top: 15px;
+      
+          label {
+            display: block;
+            margin-bottom: 10px;
+          }
+      
+          input {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: $general-border-radius;
+          }
+        }
+      
+        .card {
+          label:nth-child(2) {
+            input {
+              width: 15%;
+              display: inline-block;
+              margin-right: 5px;
+      
+              &:first-child {
+                margin-right: 5%;
+              }
+            }
+          }
+        }
+      
+        .invoice-message {
+          color: #ff0000;
+          font-size: 0.9em;
+          margin-top: 5px;
+        }
+      
+        .hidden {
+          display: none;
+        }
+      }
+
+      button {
+        width: 150px;
+        padding: 5px 10px;
+        background-color: white;
+        color: black;
+        border: none;
+        border-radius: $general-border-radius;
+        cursor: pointer;
+      
+        &:hover {
+          background-color: grey;
+        }
+
+        &:disabled {
+          background-color: #ccc; /* Light gray background */
+          color: #666; /* Darker gray text */
+          cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+          border: 1px solid #aaa;
+        }
+      }
     }
   }
-}
 
-// .order-form {
-//   display: flex;
-//   flex-direction: column;
-//   row-gap: 5px;
-
-//   input {
-//     height: 20px;
-//     border: none;
-//     border-radius: $general-border-radius;
-//   }
-// }
-
-
-.payment-options {
-  .card {
-    display: flex;
-    flex-direction: column;
-  }
-
-  // .hidden {
-  //   display: none;
-  // }
 }

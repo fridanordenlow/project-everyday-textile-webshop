@@ -382,14 +382,15 @@ function submitForm(e) {
   `;
 }
 
+
+// ---- !!! RESET CART PRODUCT AMOUNT DOESN'T WORK ANYMORE? -------------------------------
+
 // Default manual = false
 function resetForm(manual = false) {
   form.reset();
   document.querySelectorAll('.error-message').forEach(msg => (msg.textContent = ''));
   const productsInCart = products.filter(product => product.amount > 0);
   const timerMessage = document.querySelector('#timerMessage');
-
-  // timerMessage.innerHTML = 'Test: You are too slow! The form has been reset.'
 
   if (!manual) {
     timerMessage.innerHTML = 'You are too slow! The form has been reset.';
