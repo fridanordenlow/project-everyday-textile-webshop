@@ -1,9 +1,10 @@
-.product-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-  }
+.product-section {
+    .product-container {
+        grid-template-columns: repeat(3, 1fr);
+      }
+}
 
-  .order-view {
+.order-view {
     form {
       label {
         .input-field-and-msg {
