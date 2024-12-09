@@ -7,7 +7,7 @@ const productList = [
     amount: 0,
     category: 'Kitchen',
     img: {
-      url: '../assets/photos/kitchen_red.png',
+      url: '../assets/photos/kitchen_red_opac.png',
       alt: 'Red kitchen towel',
       width: 709,
       height: 945,
@@ -21,7 +21,7 @@ const productList = [
     amount: 0,
     category: 'Bathroom',
     img: {
-      url: '../assets/photos/kitchen_red.png',
+      url: '../assets/photos/kitchen_red_opac.png',
       alt: 'Red kitchen towel',
       width: 709,
       height: 945,
@@ -35,7 +35,7 @@ const productList = [
     amount: 0,
     category: 'Bathroom',
     img: {
-      url: '../assets/photos/kitchen_red.png',
+      url: '../assets/photos/kitchen_red_opac.png',
       alt: 'Red kitchen towel',
       width: 709,
       height: 945,
@@ -49,7 +49,7 @@ const productList = [
     amount: 0,
     category: 'Bedroom',
     img: {
-      url: '../assets/photos/kitchen_red.png',
+      url: '../assets/photos/kitchen_red_opac.png',
       alt: 'Red kitchen towel',
       width: 709,
       height: 945,
@@ -63,7 +63,7 @@ const productList = [
     amount: 0,
     category: 'Bathroom',
     img: {
-      url: '../assets/photos/kitchen_red.png',
+      url: '../assets/photos/kitchen_red_opac.png',
       alt: 'Red kitchen towel',
       width: 709,
       height: 945,
@@ -77,7 +77,7 @@ const productList = [
     amount: 0,
     category: 'Bedroom',
     img: {
-      url: '../assets/photos/kitchen_red.png',
+      url: '../assets/photos/kitchen_red_opac.png',
       alt: 'Red kitchen towel',
       width: 709,
       height: 945,
