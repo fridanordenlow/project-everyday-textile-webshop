@@ -20,7 +20,7 @@ const filterBedroom = document.querySelector('#filterBedroom');
 const filterKitchen = document.querySelector('#filterKitchen');
 const resetSortFiltBtn = document.querySelector('#resetSortFiltBtn');
 
-const today = new Date();
+// const today = new Date(); // Should be inside the if-statement
 
 // ------------------------------------------------------------------------------------
 // --- PRODUCTS -----------------------------------------------------------------------
@@ -231,9 +231,10 @@ function updateAndPrintCart() {
   });
 
   if (totalCartSum <= 0) {
-    return; // avbryt resten av funktionen
+    return; // Stop the rest of the function
   }
 
+  const today = new Date();
   if (today.getDay() === 1 && today.getHours() < 10) {
     totalCartSum *= 0.9;
     msg += '<p>Monday discount: 10% off on your order.</p>';
