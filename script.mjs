@@ -21,15 +21,15 @@ function printProductList() {
   products.forEach(product => {
     productListContainer.innerHTML += `
     <article class="single-product">
-    <img src="${product.img.url}" alt="${product.img.alt}" width="${product.img.width}" height="${product.img.height}" loading="lazy">
-    <h3>${product.name}</h3>
-    <p>${(Math.round(product.price * priceIncrease * 2) / 2).toFixed(2).replace(/\.00$/, '')} kr</p>
-    <p>Rating: ${getRatingStars(product.rating)}</p>
-    <div>
-    <button class="decrease" id="decrease-${product.id}">-</button>
-    <input type="number" min="0" value="${product.amount}" id="input-${product.id}">
-    <button class="increase" id="increase-${product.id}">+</button>
-    </div>
+      <img src="${product.img.url}" alt="${product.img.alt}" width="${product.img.width}" height="${product.img.height}" loading="lazy">
+      <h2>${product.name}</h2>
+      <p>${(Math.round(product.price * priceIncrease * 2) / 2).toFixed(2).replace(/\.00$/, '')} kr</p>
+      <p>Rating: ${getRatingStars(product.rating)}</p>
+      <div>
+      <button class="decrease" id="decrease-${product.id}">-</button>
+      <input type="number" min="0" value="${product.amount}" id="input-${product.id}">
+      <button class="increase" id="increase-${product.id}">+</button>
+      </div>
     </article>
     `;
   });
