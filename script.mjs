@@ -37,7 +37,7 @@ function printProductList() {
   products.forEach(product => {
     productListContainer.innerHTML += `
             <article class="single-product">
-            <img src="${product.img.url}" alt="${product.img.alt}" width="${product.img.width}" height="${product.img.height}">
+            <img src="${product.img.url}" alt="${product.img.alt}" width="${product.img.width}" height="${product.img.height}" loading="lazy">
             <h3>${product.name}</h3>
             <p>${(Math.round(product.price * priceIncrease * 2) / 2).toFixed(2).replace(/\.00$/, '')} kr</p>
             <p>Rating: ${getRatingStars(product.rating)}</p>
@@ -324,6 +324,8 @@ function validateInput(inputElementId) {
       feedbackField.innerHTML = `<i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Please enter a valid ${rule.replace(/([A-Z])/g, ' $1').toLowerCase()}.`;
       return false;
     }
+    feedbackField.innerHTML = ''; // Clear error message
+    return true;
   }
 
   // Maybe no feedback needed when the input is correct
@@ -347,36 +349,78 @@ function switchPaymentOption() {
 // A function that disables invoice as a payment option if the total order sum is above 800 kr
 function updatePaymentOptions(totalCartSum) {
   const invoiceMessage = document.getElementById('invoiceMessage');
-  if (totalCartSum > 800) {
-    invoiceOption.disabled = true; // Inaktivera invoice-alternativet
-    // invoiceOption.parentElement.classList.add('disabled'); // Lägg till CSS-klass för visuell feedback
-    invoiceMessage.classList.remove('hidden'); // Visa meddelandet
-    // console.log('Invoice disabled due to high cart sum.');
-  } else {
-    invoiceOption.disabled = false; // Aktivera invoice-alternativet
-    // invoiceOption.parentElement.classList.remove('disabled'); // Ta bort CSS-klass
+  if (!invoiceMessage) {
+    console.warn('Invoice message element not found');
+    return; // Exit the function if the element doesn't exist
   }
-  updateSubmitButton();
+
+  if (totalCartSum > 800) {
+    invoiceOption.disabled = true; 
+    invoiceMessage.classList.remove('hidden'); 
+  } else {
+    invoiceOption.disabled = false;
+    invoiceMessage.classList.add('hidden');
+  }
+
+  const orderView = document.getElementById('orderView');
+  if (!orderView.classList.contains('hidden')) {
+    updateSubmitButton();
+  }
 }
+// function updatePaymentOptions(totalCartSum) {
+//   const invoiceMessage = document.getElementById('invoiceMessage');
+//   if (totalCartSum > 800) {
+//     invoiceOption.disabled = true; 
+//     invoiceMessage.classList.remove('hidden'); 
+//   } else {
+//     invoiceOption.disabled = false;
+//   }
+//   updateSubmitButton();
+// }
 
 function validateAllInputs() {
+  const orderView = document.getElementById('orderView');
+  if (orderView.classList.contains('hidden')) {
+    return false; // Don't validate if the order form isn't visible
+  }
   const allInputsValid = Object.keys(validationRules).every(inputId => {
     const input = document.getElementById(inputId);
+    if (!input) {
+      console.warn(`Input with id "${inputId}" not found`);
+      return false;
+    }
     return input.value.trim().length > 0 && validateInput(inputId);
   });
   const paymentSelected = cardOption.checked || invoiceOption.checked;
+  // console.log(`Payment selected: ${paymentSelected}`);
+
   const personalDataAccepted = personalDataCheckbox.checked;
+  // console.log(`Personal data accepted: ${personalDataAccepted}`);
+
+  console.log(`All inputs valid: ${allInputsValid && paymentSelected && personalDataAccepted}`);
+
   return allInputsValid && paymentSelected && personalDataAccepted;
 }
 
 function updateSubmitButton() {
-  submitBtn.disabled = !validateAllInputs();
+  const orderView = document.getElementById('orderView');
+  if (!orderView.classList.contains('hidden')) {
+    submitBtn.disabled = !validateAllInputs();
+  }
 }
+// function updateSubmitButton() {
+//   const isValid = validateAllInputs();
+//   submitBtn.disabled = !isValid;
+//   console.log(`Submit button disabled: ${!isValid}`);
+// }
+// function updateSubmitButton() {
+//   submitBtn.disabled = !validateAllInputs();
+// }
 
 /**
  * - Re-name to submit order or something like that
  */
-function submitForm(e) {
+function submitOrder(e) {
   e.preventDefault();
   const orderView = document.querySelector('#orderView');
   orderView.innerHTML = `
@@ -384,26 +428,23 @@ function submitForm(e) {
   `;
 }
 
-
-// ---- !!! RESET CART PRODUCT AMOUNT DOESN'T WORK ANYMORE? -------------------------------
-
-// Default manual = false
 function resetForm(manual = false) {
   form.reset();
   document.querySelectorAll('.error-message').forEach(msg => (msg.textContent = ''));
-  const productsInCart = products.filter(product => product.amount > 0);
   const timerMessage = document.querySelector('#timerMessage');
-
   if (!manual) {
     timerMessage.innerHTML = 'You are too slow! The form has been reset.';
     console.log('Form has been reset due to inactivity.')
   }
-
-  cart.innerHTML = 'Your cart is empty.';
-
+  
+  const productsInCart = products.filter(product => product.amount > 0);
   productsInCart.forEach(prod => {
     prod.amount = 0;
   });
+  
+  printProductList();
+  updateCartIcon();
+  updateAndPrintCart();
 }
 
 // Event listeners for inactivity to start timer to reset form
@@ -433,8 +474,13 @@ inputsToValidate.forEach(input => {
 });
 
 paymentOptionRadios.forEach(radioBtn => {
-  radioBtn.addEventListener('change', switchPaymentOption);
+  radioBtn.addEventListener('change', () => {
+    switchPaymentOption();
+    updateSubmitButton();
+  });
 });
+
+personalDataCheckbox.addEventListener('change', updateSubmitButton);
 
 if (cardOption && invoiceOption) {
   [cardOption, invoiceOption].forEach(radio => {
@@ -446,9 +492,11 @@ if (cardOption && invoiceOption) {
   console.error('Card or invoice option not found');
 }
 
-personalDataCheckbox.addEventListener('change', updateSubmitButton);
-submitBtn.addEventListener('click', submitForm);
-resetBtn.addEventListener('click', resetForm(true));
+submitBtn.addEventListener('click', submitOrder);
+resetBtn.addEventListener('click', () => {
+  resetForm(true);
+  console.log('Reset button has been pressed');
+});
 
 updateCartIcon();
 updateSubmitButton();

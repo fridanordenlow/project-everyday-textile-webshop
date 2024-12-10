@@ -156,7 +156,7 @@ const productList = [
   {
     id: 11,
     name: 'Blue Pillowcase',
-    price: 250,
+    price: 150,
     rating: 2,
     amount: 0,
     category: 'Bedroom',

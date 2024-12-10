@@ -59,11 +59,12 @@
         <div id="cartView" class="cart-view">
           <div>
             <h3>Cart</h3>
+            <!-- <div class="cart-line"></div> -->
             <div id="cartSummary">
               <!-- Content from JS -->
             </div>
           </div>
-          <button id="proceedToOrderBtn">Proceed to Order</button>
+          <button id="proceedToOrderBtn">Checkout</button>
         </div>
 
         <div id="orderView" class="order-view hidden">
@@ -74,49 +75,49 @@
             <label>
               <span>First name</span>
               <div class="input-field-and-msg">
-                <input type="text" id="firstName" required>
+                <input type="text" id="firstName" value="Kalle" required>
                 <div class="error-message"></div>
               </div>
             </label>
             <label>
               <span>Last name</span>
               <div class="input-field-and-msg">
-                <input type="text" id="lastName" required>
+                <input type="text" id="lastName" value="Anka" required>
                 <div class="error-message"></div>
               </div>
             </label>
             <label>
               <span>Street address</span>
               <div class="input-field-and-msg">
-                <input type="text" id="streetAddress" required>
+                <input type="text" id="streetAddress" value="Ankeborgsgatan 15" required>
                 <div class="error-message"></div>
               </div>
             </label>
             <label>
               <span>Zip code</span>
               <div class="input-field-and-msg">
-                <input type="text" id="zipCode" required>
+                <input type="text" id="zipCode" value="21571" required>
                 <div class="error-message"></div>
               </div>
             </label>
             <label>
               <span>City</span>
               <div class="input-field-and-msg">
-                <input type="text" id="city" required>
+                <input type="text" id="city" value="Ankeborg" required>
                 <div class="error-message"></div>
               </div>
             </label>
             <label>
               <span>Phone number</span>
               <div class="input-field-and-msg">
-                <input type="number" id="phone" required>
+                <input type="number" id="phone" value="0735766215" required>
                 <div class="error-message"></div>
               </div>
             </label>
             <label>
               <span>E-mail</span>
               <div class="input-field-and-msg">
-                <input type="email" id="email" required>
+                <input type="email" id="email" value="kalle.anka@mail.se" required>
                 <div class="error-message"></div>
               </div>
             </label>
@@ -175,9 +176,12 @@
               </label>
             </div>
             <div class="button-container">
-              <button type="button" id="backToCartBtn">Back to cart</button>
-              <button type="submit" id="submitBtn" disabled>Place order</button>
-              <button type="reset" id="resetBtn">Clear order</button>
+              <button type="button" id="backToCartBtn">Return to Cart</button>
+              <button type="submit" id="submitBtn" disabled>Place Order</button>
+              <button type="reset" id="resetBtn">
+                <i class="fa-solid fa-trash" aria-label="Clear cart and reset form"></i>
+              </button>
+              <!-- <button type="reset" id="resetBtn">Clear Order</button> -->
             </div>
         </div>
       </section>

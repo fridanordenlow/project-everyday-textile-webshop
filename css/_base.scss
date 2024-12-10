@@ -85,35 +85,118 @@ header {
   padding-bottom: 10px;
   border-bottom: 2px solid black;
 
-
   button {
-    border: none; 
-    padding: 0.5rem; 
+    border: 1px solid black; 
+    padding: 0.5rem; // Simplified padding
     border-radius: $general-border-radius;
+    background-color: #fff; /* White background */
+    color: #000; /* Black text */
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  
+    &:hover {
+      background-color: #ccc; /* Light gray */
+      color: #333; /* Darker gray */
+      border-color: #bbb; /* Subtle hover border change */
+    }
+  
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2); /* Focus ring */
+    }
+  
+    &:disabled {
+      background-color: #e0e0e0; /* Disabled gray */
+      color: #999;
+      cursor: not-allowed;
+      border-color: #d0d0d0;
+    }
   }
-
+  
   .dropdown {
-    position: relative; 
-
+    position: relative;
+  
     .dropdown-button {
       width: 100%;
       border-radius: $general-border-radius;
-    }
-
-    .dropdown-content {
-      display: none; 
-      position: absolute; 
-      z-index: 1; 
-
-      button {
-        width: 100%; 
+      background-color: #fff;
+      color: #000;
+      border: 1px solid #ccc;
+      transition: background-color 0.3s ease, color 0.3s ease;
+  
+      &:hover {
+        background-color: #ccc;
+        color: #333;
+        border-color: #bbb;
+      }
+  
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
       }
     }
-
+  
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      width: 100%;
+      background-color: #fff;
+      // border: 1px solid #ccc;
+      // border-radius: $general-border-radius;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      z-index: 1;
+  
+      button {
+        width: 100%;
+        border: none;
+        padding: 0.5rem;
+        background-color: #fff;
+        color: #000;
+        text-align: left;
+        transition: background-color 0.3s ease;
+  
+        &:hover {
+          background-color: #ccc;
+          color: #333;
+        }
+      }
+    }
+  
     &.show .dropdown-content {
-      display: block; 
+      display: block;
     }
   }
+  
+  // button {
+  //   border: 1px solid black; 
+  //   padding: 5px 10px 5px 10px;
+  //   // padding: 0.5rem; 
+  //   // border-radius: $general-border-radius;
+  // }
+
+  // .dropdown {
+  //   position: relative; 
+
+  //   .dropdown-button {
+  //     width: 100%;
+  //     // border-radius: $general-border-radius;
+  //   }
+
+  //   .dropdown-content {
+  //     display: none; 
+  //     position: absolute; 
+  //     z-index: 1; 
+
+  //     button {
+  //       width: 100%; 
+  //     }
+  //   }
+
+  //   &.show .dropdown-content {
+  //     display: block; 
+  //     border-radius: none;
+  //   }
+  // }
 }
 
 // -------------------------------
@@ -145,7 +228,8 @@ header {
       }
     
       input {
-        width: 30px;
+        text-align: center;
+        width: 40px;
         border: none;
         border-radius: $general-border-radius;
       }
@@ -165,28 +249,57 @@ header {
   margin-bottom: 20px;
   // background-color: #f5f5f5;
   // border-radius: 8px;
-  border-top: 2px solid black;
-  border-bottom: 2px solid black;
+  border: 2px solid black;
+  // border-top: 2px solid black;
+  // border-bottom: 2px solid black;
 
   button {
     width: 150px;
     padding: 5px 10px;
-    background-color: white;
-    color: black;
-    border: none;
+    background-color: #fff; /* White background */
+    color: #000; /* Black text */
+    border: 2px solid #ccc; /* Subtle border for monochrome style */
     border-radius: $general-border-radius;
     cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
   
     &:hover {
-      background-color: #859c84;
+      background-color: #ccc; /* Light gray on hover */
+      color: #333; /* Darker gray text */
+      border-color: #bbb; /* Subtle change to border */
     }
-
+  
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2); /* Add a focus ring for accessibility */
+    }
+  
     &:disabled {
-      background-color: #ccc; /* Light gray background */
-      color: #666; /* Darker gray text */
-      cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+      background-color: #e0e0e0; /* Light gray background */
+      color: #999; /* Muted gray text */
+      cursor: not-allowed;
+      border-color: #d0d0d0; /* Match the disabled style */
     }
   }
+  // button {
+  //   width: 150px;
+  //   padding: 5px 10px;
+  //   background-color: white;
+  //   color: black;
+  //   border: none;
+  //   border-radius: $general-border-radius;
+  //   cursor: pointer;
+  
+  //   &:hover {
+  //     background-color: #859c84;
+  //   }
+
+  //   &:disabled {
+  //     background-color: #ccc; /* Light gray background */
+  //     color: #666; /* Darker gray text */
+  //     cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+  //   }
+  // }
 
   .cart-view,
   .order-view {
@@ -201,11 +314,16 @@ header {
     display: none;
   }
   
-  // .cart-view {
-  //   button {
-  //     align-self: flex-start;
-  //   }
-  // }
+  .cart-view {
+    .cart-line {
+      width: 100%;
+      border-bottom: 2px solid black;
+      margin: 10px;
+    }
+    // button {
+    //   align-self: flex-start;
+    // }
+  }
 
   .order-view {
     form {
