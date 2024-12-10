@@ -1,12 +1,14 @@
-$primary-font: 'Jockey One', sans-serif;
+/* Font variables */
+$serif-font: "Libre Baskerville", serif;
+$sans-serif-font: "Source Sans 3", sans-serif;
 
+/* Colors */
+$primary-bg-color: rgb(222, 222, 222);
+$secondary-bg-color: rgb(222, 222, 222);
+
+/* General sizing */
 $input-width: 220px;
-
 $general-border-radius: 5px;
-
-$dark-mode-dark: rgb(15, 15, 15);
-$dark-mode-light: rgb(214, 219, 222);
-
 
 /* Variables for buttons */
 $button-bg: #fff; /* Default button background color */
@@ -17,3 +19,9 @@ $button-disabled-bg: #e0e0e0; /* Disabled background color */
 $button-disabled-color: #999; /* Disabled text color */
 $button-padding: 0.5rem 1rem; /* Default button padding */
 $button-transition: 0.3s ease; /* Transition for hover and focus */
+
+/* Dark mode variables */
+$dark-mode-dark: rgb(15, 15, 15);
+$dark-mode-light: rgb(214, 219, 222);
+
+
