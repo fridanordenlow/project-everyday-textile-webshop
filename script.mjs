@@ -20,6 +20,7 @@ const filterBedroom = document.querySelector('#filterBedroom');
 const filterKitchen = document.querySelector('#filterKitchen');
 const resetSortFiltBtn = document.querySelector('#resetSortFiltBtn');
 
+
 // ------------------------------------------------------------------------------------
 // --- PRODUCTS -----------------------------------------------------------------------
 // ------------------------------------------------------------------------------------
@@ -48,11 +49,6 @@ function printProductList() {
         `;
   });
 
-  // ---- TO DO -------------------------------------------------------------------------
-  /**
-   * - Have an add button that updates the amount chosen instead of immediate update of cart?
-   */
-
   const increaseButtons = document.querySelectorAll('button.increase');
   increaseButtons.forEach(button => {
     button.addEventListener('click', e => updateProductAmount(e, true));
@@ -62,65 +58,27 @@ function printProductList() {
     button.addEventListener('click', e => updateProductAmount(e, false));
   });
 }
-printProductList();
+
 
 // ------------------------------------------------------------------------------------
 // --- SORTING AND FILTERS ------------------------------------------------------------
 // ------------------------------------------------------------------------------------
 
-categoryDropdownBtn.addEventListener('click', () => {
-  categoryDropdown.classList.toggle('show');
-});
-
-// Closes the dropdown after you chose an option
 function closeDropdown(dropdown) {
   dropdown.classList.remove('show');
 }
 
-// ---- TO DO -------------------------------------------------------------------------
-/**
- * - Remake into loop?
- */
-function sortByName() {
-  products.sort((a, b) => a.name.localeCompare(b.name, 'sv'));
+function sortProducts(sortFunction) {
+  products.sort(sortFunction);
   printProductList();
 }
-sortByNameElement.addEventListener('click', () => {
-  sortByName();
-  closeDropdown(sortingDropdown);
-});
 
-function sortByLowestPrice() {
-  products.sort((a, b) => a.price - b.price);
-  printProductList();
-}
-sortByLowestPriceElement.addEventListener('click', () => {
-  sortByLowestPrice();
-  closeDropdown(sortingDropdown);
-});
-
-function sortByHighestPrice() {
-  products.sort((a, b) => b.price - a.price);
-  printProductList();
-}
-sortByHighestPriceElement.addEventListener('click', () => {
-  sortByHighestPrice();
-  closeDropdown(sortingDropdown);
-});
-
-function sortByRating() {
-  products.sort((a, b) => a.rating - b.rating);
-  printProductList();
-}
-sortByRatingElement.addEventListener('click', () => {
-  sortByRating();
-  closeDropdown(sortingDropdown);
-});
-
-// Filter products by category
-sortingDropdownBtn.addEventListener('click', () => {
-  sortingDropdown.classList.toggle('show');
-});
+const sortFunctions = {
+  byName: (a, b) => a.name.localeCompare(b.name, 'sv'),
+  byLowestPrice: (a, b) => a.price - b.price,
+  byHighestPrice: (a, b) => b.price - a.price,
+  byRating: (a, b) => b.rating - a.rating,
+};
 
 let chosenCategory = null;
 
@@ -132,26 +90,11 @@ function filterByCategory(category) {
   printProductList();
 }
 
-// Byt eventuellt till en for-each-loop
-filterBathroom.addEventListener('click', () => {
-  filterByCategory('Bathroom');
-  closeDropdown(categoryDropdown);
-});
-filterBedroom.addEventListener('click', () => {
-  filterByCategory('Bedroom');
-  closeDropdown(categoryDropdown);
-});
-filterKitchen.addEventListener('click', () => {
-  filterByCategory('Kitchen');
-  closeDropdown(categoryDropdown);
-});
-
 function resetProductList() {
   products = [...productList];
   printProductList();
 }
 
-resetSortFiltBtn.addEventListener('click', resetProductList);
 
 // ------------------------------------------------------------------------------------
 // --- CART ---------------------------------------------------------------------------
@@ -170,7 +113,6 @@ function updateCartIcon() {
   }
 }
 
-// A function that updates and increases product amount
 function updateProductAmount(e, isIncrease) {
   const action = isIncrease ? 'increase' : 'decrease';
   const productId = Number(e.target.id.replace(`${action}-`, ''));
@@ -256,8 +198,6 @@ function updateAndPrintCart() {
   updatePaymentOptions(totalCartSum);
 }
 
-updateAndPrintCart();
-
 // ------------------------------------------------------------------------------------
 // ---- TOGGLE BETWEEN CART AND FORM VIEW ---------------------------------------------
 // ------------------------------------------------------------------------------------
@@ -266,35 +206,41 @@ const orderView = document.getElementById('orderView');
 const proceedToOrderBtn = document.getElementById('proceedToOrderBtn');
 const backToCartBtn = document.getElementById('backToCartBtn');
 
-// Function to switch to order form view
 function showOrderForm() {
   cartView.classList.add('hidden');
   orderView.classList.remove('hidden');
 }
 
-// Function to switch back to cart view
 function showCart() {
   cartView.classList.remove('hidden');
   orderView.classList.add('hidden');
 }
 
-// Add event listeners to the buttons
-proceedToOrderBtn.addEventListener('click', showOrderForm);
-backToCartBtn.addEventListener('click', showCart);
-
 // ------------------------------------------------------------------------------------
 // ---- FORM --------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------
 
-// Are some of these variables unnecessary complex? Re-write?
 const form = document.querySelector('#form');
-const cardOption = document.querySelector('input[name="payment-option"][value="card"]');
-const invoiceOption = document.querySelector('input[name="payment-option"][value="invoice"]');
-const paymentOptionRadios = Array.from(document.querySelectorAll('input[name="payment-option"]'));
-let selectedPaymentOption = paymentOptionRadios.find(radio => radio.checked)?.value || 'card';
+const [cardOption, invoiceOption] = document.querySelectorAll('input[name="payment-option"]');
+// const cardOption = document.querySelector('input[name="payment-option"][value="card"]');
+// const invoiceOption = document.querySelector('input[name="payment-option"][value="invoice"]');
+const paymentOptionRadios = [cardOption, invoiceOption];
+// const paymentOptionRadios = Array.from(document.querySelectorAll('input[name="payment-option"]'));
+let selectedPaymentOption = cardOption.checked ? 'card' : 'invoice';
+// let selectedPaymentOption = paymentOptionRadios.find(radio => radio.checked)?.value || 'card';
 const personalDataCheckbox = document.querySelector('input[type="checkbox"][required]');
-const submitBtn = form.querySelector('#submitBtn');
-const resetBtn = form.querySelector('#resetBtn');
+const submitBtn = document.getElementById('submitBtn');
+const resetBtn = document.getElementById('resetBtn');
+const inputsToValidate = [
+  document.querySelector('#firstName'),
+  document.querySelector('#lastName'),
+  document.querySelector('#streetAddress'),
+  document.querySelector('#zipCode'),
+  document.querySelector('#city'),
+  document.querySelector('#phone'),
+  document.querySelector('#email'),
+  document.querySelector('#personalID'),
+];
 
 function validateInput(inputElementId) {
   const inputField = document.getElementById(inputElementId);
@@ -331,7 +277,6 @@ function validateInput(inputElementId) {
   // return true;
 }
 
-// Switch between card or invoice payment, toggle visibility
 function switchPaymentOption() {
   selectedPaymentOption = document.querySelector('input[name="payment-option"]:checked').value;
   const cardSection = document.querySelector('.card');
@@ -340,7 +285,6 @@ function switchPaymentOption() {
   cardSection.classList.toggle('hidden', selectedPaymentOption !== 'card');
   invoiceSection.classList.toggle('hidden', selectedPaymentOption !== 'invoice');
 
-  console.log(`${selectedPaymentOption} selected`);
   updateSubmitButton();
 }
 
@@ -394,9 +338,6 @@ function updateSubmitButton() {
     submitBtn.disabled = !validateAllInputs();
   }
 }
-// function updateSubmitButton() {
-//   submitBtn.disabled = !validateAllInputs();
-// }
 
 function submitOrder(e) {
   e.preventDefault();
@@ -409,7 +350,7 @@ function submitOrder(e) {
   products.forEach(product => {
     product.amount = 0;
   });
-  
+
   printProductList();
   updateCartIcon();
   updateAndPrintCart();
@@ -440,60 +381,120 @@ function resetForm(manual = false) {
   updateAndPrintCart();
 }
 
-// Event listeners for inactivity to start timer to reset form
-form.addEventListener('input', () => startInactivityTimer(() => resetForm()));
-form.addEventListener('mousemove', () => startInactivityTimer(() => resetForm()));
-form.addEventListener('keypress', () => startInactivityTimer(() => resetForm()));
+// // Inputs to validate
+// const inputsToValidate = [
+//   document.querySelector('#firstName'),
+//   document.querySelector('#lastName'),
+//   document.querySelector('#streetAddress'),
+//   document.querySelector('#zipCode'),
+//   document.querySelector('#city'),
+//   document.querySelector('#phone'),
+//   document.querySelector('#email'),
+//   document.querySelector('#personalID'),
+// ];
 
-// Inputs to validate
-const inputsToValidate = [
-  document.querySelector('#firstName'),
-  document.querySelector('#lastName'),
-  document.querySelector('#streetAddress'),
-  document.querySelector('#zipCode'),
-  document.querySelector('#city'),
-  document.querySelector('#phone'),
-  document.querySelector('#email'),
-  document.querySelector('#personalID'),
-];
 
-// Add event listeners
-inputsToValidate.forEach(input => {
-  // change to focus out?
-  input.addEventListener('blur', () => {
-    validateInput(input.id);
-    updateSubmitButton();
+// ------------------------------------------------------------------------------------
+// ---- SET UP EVENT LISTENERS --------------------------------------------------------
+// ------------------------------------------------------------------------------------
+
+function setupEventListeners() {
+  // Sorting and filtering event listeners
+  sortByNameElement.addEventListener('click', () => {
+    sortProducts(sortFunctions.byName);
+    closeDropdown(sortingDropdown);
   });
-});
 
-paymentOptionRadios.forEach(radioBtn => {
-  radioBtn.addEventListener('change', () => {
-    switchPaymentOption();
-    updateSubmitButton();
+  sortByLowestPriceElement.addEventListener('click', () => {
+    sortProducts(sortFunctions.byLowestPrice);
+    closeDropdown(sortingDropdown);
   });
-});
 
-personalDataCheckbox.addEventListener('change', updateSubmitButton);
+  sortByHighestPriceElement.addEventListener('click', () => {
+    sortProducts(sortFunctions.byHighestPrice);
+    closeDropdown(sortingDropdown);
+  });
 
-if (cardOption && invoiceOption) {
-  [cardOption, invoiceOption].forEach(radio => {
-    radio.addEventListener('change', () => {
+  sortByRatingElement.addEventListener('click', () => {
+    sortProducts(sortFunctions.byRating);
+    closeDropdown(sortingDropdown);
+  });
+
+  categoryDropdownBtn.addEventListener('click', () => {
+    categoryDropdown.classList.toggle('show');
+  });
+
+  sortingDropdownBtn.addEventListener('click', () => {
+    sortingDropdown.classList.toggle('show');
+  });
+
+  filterBathroom.addEventListener('click', () => {
+    filterByCategory('Bathroom');
+    closeDropdown(categoryDropdown);
+  });
+
+  filterBedroom.addEventListener('click', () => {
+    filterByCategory('Bedroom');
+    closeDropdown(categoryDropdown);
+  });
+
+  filterKitchen.addEventListener('click', () => {
+    filterByCategory('Kitchen');
+    closeDropdown(categoryDropdown);
+  });
+
+  resetSortFiltBtn.addEventListener('click', resetProductList);
+
+  // Cart view and order form toggle
+  proceedToOrderBtn.addEventListener('click', showOrderForm);
+  backToCartBtn.addEventListener('click', showCart);
+
+  // Form event listeners
+  form.addEventListener('input', () => startInactivityTimer(() => resetForm()));
+  form.addEventListener('mousemove', () => startInactivityTimer(() => resetForm()));
+  form.addEventListener('keypress', () => startInactivityTimer(() => resetForm()));
+
+  // Input validation event listeners
+  inputsToValidate.forEach(input => {
+    input.addEventListener('blur', () => {
+      validateInput(input.id);
       updateSubmitButton();
     });
   });
-} else {
-  console.error('Card or invoice option not found');
+
+  paymentOptionRadios.forEach(radioBtn => {
+    radioBtn.addEventListener('change', switchPaymentOption);
+  });
+
+  if (cardOption && invoiceOption) {
+    [cardOption, invoiceOption].forEach(radio => {
+      radio.addEventListener('change', () => {
+        updateSubmitButton();
+      });
+    });
+  } else {
+    console.error('Card or invoice option not found');
+  }
+
+  personalDataCheckbox.addEventListener('change', updateSubmitButton);
+
+  submitBtn.addEventListener('click', submitOrder);
+
+  resetBtn.addEventListener('click', () => {
+    resetForm(true);
+  });
 }
 
-submitBtn.addEventListener('click', submitOrder);
-resetBtn.addEventListener('click', () => {
-  resetForm(true);
-  console.log('Reset button has been pressed');
-});
-
-updateCartIcon();
-updateSubmitButton();
-
 // ------------------------------------------------------------------------------------
-// ---- TO DO -------------------------------------------------------------------------
+// ---- INITIALIZE APP ----------------------------------------------------------------
 // ------------------------------------------------------------------------------------
+
+function initializeApp() {
+  printProductList();
+  updateAndPrintCart();
+  updateCartIcon();
+  updateSubmitButton();
+  setupEventListeners();
+}
+
+initializeApp();
