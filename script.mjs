@@ -5,7 +5,6 @@ import startInactivityTimer from './helpers/startInactivityTimer.mjs';
 import regexRules from './rules/regexRules.mjs';
 import validationRules from './rules/validationRules.mjs';
 
-
 // ------------------------------------------------------------------------------------
 // --- PRODUCTS -----------------------------------------------------------------------
 // ------------------------------------------------------------------------------------
@@ -16,9 +15,9 @@ const productListContainer = document.querySelector('#productList');
 // A function that prints an html-element for each product
 function printProductList() {
   productListContainer.innerHTML = ''; // Empty container of current products to update the products when they change
-  
+
   let priceIncrease = getPriceMultiplier();
-  
+
   products.forEach(product => {
     productListContainer.innerHTML += `
     <article class="single-product">
@@ -34,7 +33,7 @@ function printProductList() {
     </article>
     `;
   });
-  
+
   const increaseButtons = document.querySelectorAll('button.increase');
   increaseButtons.forEach(button => {
     button.addEventListener('click', e => updateProductAmount(e, true));
@@ -44,7 +43,6 @@ function printProductList() {
     button.addEventListener('click', e => updateProductAmount(e, false));
   });
 }
-
 
 // ------------------------------------------------------------------------------------
 // --- SORTING AND FILTERS ------------------------------------------------------------
@@ -93,7 +91,6 @@ function resetProductList() {
   products = [...productList];
   printProductList();
 }
-
 
 // ------------------------------------------------------------------------------------
 // --- CART ---------------------------------------------------------------------------
@@ -222,7 +219,6 @@ function showCart() {
   cartView.classList.remove('hidden');
   orderView.classList.add('hidden');
 }
-
 
 // ------------------------------------------------------------------------------------
 // ---- FORM --------------------------------------------------------------------------
@@ -382,7 +378,6 @@ function resetForm(manual = false) {
   updateCartIcon();
   updateAndPrintCart();
 }
-
 
 // ------------------------------------------------------------------------------------
 // ---- ADD EVENT LISTENERS -----------------------------------------------------------

@@ -5,5 +5,15 @@ $input-width: 220px;
 $general-border-radius: 5px;
 
 $dark-mode-dark: rgb(15, 15, 15);
-
 $dark-mode-light: rgb(214, 219, 222);
+
+
+/* Variables for buttons */
+$button-bg: #fff; /* Default button background color */
+$button-color: #000; /* Default button text color */
+$button-hover-bg: #ccc; /* Hover background color */
+$button-hover-color: #333; /* Hover text color */
+$button-disabled-bg: #e0e0e0; /* Disabled background color */
+$button-disabled-color: #999; /* Disabled text color */
+$button-padding: 0.5rem 1rem; /* Default button padding */
+$button-transition: 0.3s ease; /* Transition for hover and focus */

@@ -88,29 +88,31 @@ header {
   // Reset button
   button {
     border: none;
-    padding: 0.5rem;
-    border-radius: $general-border-radius;
-    background-color: #fff; 
-    color: #000; 
+    border-radius: 0; 
+    padding: $button-padding; 
+    background-color: $button-bg; 
+    color: $button-color; 
+    text-align: center;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    transition: background-color $button-transition, 
+                color $button-transition, 
+                box-shadow $button-transition;
+  
   
     &:hover {
-      background-color: #ccc; /* Light gray */
-      color: #333; /* Darker gray */
-      border-color: #bbb; /* Subtle hover border change */
+      background-color: $button-hover-bg;
+      color: $button-hover-color;
     }
   
     &:focus {
       outline: none;
-      box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2); /* Focus ring */
+      box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
     }
   
     &:disabled {
-      background-color: #e0e0e0; /* Disabled gray */
-      color: #999;
+      background-color: $button-disabled-bg;
+      color: $button-disabled-color;
       cursor: not-allowed;
-      border-color: #d0d0d0;
     }
   }
   
@@ -119,20 +121,22 @@ header {
     background-color: #fff;
   
     .dropdown-button {
-      width: 100%;
+      padding: $button-padding;
+      background-color: $button-bg-light;
+      color: $button-color-light;
+      text-align: center;
+      cursor: pointer;
       border-radius: $general-border-radius;
-      // background-color: #fff;
-      color: #000;
-      transition: background-color 0.3s ease, color 0.3s ease;
-  
+      transition: background-color $button-transition, color $button-transition;
+
       &:hover {
-        background-color: #ccc;
-        color: #333;
-        border-color: #bbb;
+        background-color: $button-hover-bg;
+        color: $button-hover-color;
       }
   
       &:focus {
-        outline: none;
+        outline: 2px solid rgba(0, 0, 0, 0.5);
+        outline-offset: 2px;
         box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
       }
     }
@@ -141,24 +145,31 @@ header {
       display: none;
       position: absolute;
       width: 100%;
-      background-color: #fff;
-      // border: 1px solid #ccc;
-      // border-radius: $general-border-radius;
+      background-color: $button-bg;
+      border-radius: $general-border-radius;
       box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
       z-index: 1;
   
       button {
         width: 100%;
         border: none;
-        padding: 0.5rem;
-        background-color: #fff;
-        color: #000;
+        // border-radius: $general-border-radius;
+        padding: $button-padding;
+        background-color: $button-bg;
+        color: $button-color;
         text-align: left;
-        transition: background-color 0.3s ease;
-  
+        cursor: pointer;
+        transition: background-color $button-transition, color $button-transition;
+
         &:hover {
-          background-color: #ccc;
-          color: #333;
+          background-color: $button-hover-bg;
+          color: $button-hover-color;
+        }
+
+        &:focus {
+          outline: 2px solid rgba(0, 0, 0, 0.5);
+          outline-offset: 2px;
+          box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
         }
       }
     }
@@ -227,6 +238,11 @@ header {
         border: none;
         border-radius: $general-border-radius;
         font-size: pxToRem(18);
+
+        &:hover {
+          background-color: #ccc;
+          color: #333;
+        }
       }
     
       input {
