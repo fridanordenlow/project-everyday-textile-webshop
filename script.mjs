@@ -5,50 +5,36 @@ import startInactivityTimer from './helpers/startInactivityTimer.mjs';
 import regexRules from './rules/regexRules.mjs';
 import validationRules from './rules/validationRules.mjs';
 
-const productListContainer = document.querySelector('#productList');
-const cart = document.querySelector('#cartSummary');
-const sortByNameElement = document.querySelector('#sortByName');
-const sortByLowestPriceElement = document.querySelector('#sortByLowestPrice');
-const sortByHighestPriceElement = document.querySelector('#sortByHighestPrice');
-const sortByRatingElement = document.querySelector('#sortByRating');
-const categoryDropdown = document.querySelector('#categoryDropdown');
-const categoryDropdownBtn = document.querySelector('#categoryDropdownBtn');
-const sortingDropdown = document.querySelector('#sortingDropdown');
-const sortingDropdownBtn = document.querySelector('#sortingDropdownBtn');
-const filterBathroom = document.querySelector('#filterBathroom');
-const filterBedroom = document.querySelector('#filterBedroom');
-const filterKitchen = document.querySelector('#filterKitchen');
-const resetSortFiltBtn = document.querySelector('#resetSortFiltBtn');
-
 
 // ------------------------------------------------------------------------------------
 // --- PRODUCTS -----------------------------------------------------------------------
 // ------------------------------------------------------------------------------------
 
 let products = [...productList];
+const productListContainer = document.querySelector('#productList');
 
 // A function that prints an html-element for each product
 function printProductList() {
   productListContainer.innerHTML = ''; // Empty container of current products to update the products when they change
-
+  
   let priceIncrease = getPriceMultiplier();
-
+  
   products.forEach(product => {
     productListContainer.innerHTML += `
-            <article class="single-product">
-            <img src="${product.img.url}" alt="${product.img.alt}" width="${product.img.width}" height="${product.img.height}" loading="lazy">
-            <h3>${product.name}</h3>
-            <p>${(Math.round(product.price * priceIncrease * 2) / 2).toFixed(2).replace(/\.00$/, '')} kr</p>
-            <p>Rating: ${getRatingStars(product.rating)}</p>
-                <div>
-                    <button class="decrease" id="decrease-${product.id}">-</button>
-                    <input type="number" min="0" value="${product.amount}" id="input-${product.id}">
-                    <button class="increase" id="increase-${product.id}">+</button>
-                </div>
-            </article>
-        `;
+    <article class="single-product">
+    <img src="${product.img.url}" alt="${product.img.alt}" width="${product.img.width}" height="${product.img.height}" loading="lazy">
+    <h3>${product.name}</h3>
+    <p>${(Math.round(product.price * priceIncrease * 2) / 2).toFixed(2).replace(/\.00$/, '')} kr</p>
+    <p>Rating: ${getRatingStars(product.rating)}</p>
+    <div>
+    <button class="decrease" id="decrease-${product.id}">-</button>
+    <input type="number" min="0" value="${product.amount}" id="input-${product.id}">
+    <button class="increase" id="increase-${product.id}">+</button>
+    </div>
+    </article>
+    `;
   });
-
+  
   const increaseButtons = document.querySelectorAll('button.increase');
   increaseButtons.forEach(button => {
     button.addEventListener('click', e => updateProductAmount(e, true));
@@ -64,13 +50,21 @@ function printProductList() {
 // --- SORTING AND FILTERS ------------------------------------------------------------
 // ------------------------------------------------------------------------------------
 
+const sortByNameElement = document.querySelector('#sortByName');
+const sortByLowestPriceElement = document.querySelector('#sortByLowestPrice');
+const sortByHighestPriceElement = document.querySelector('#sortByHighestPrice');
+const sortByRatingElement = document.querySelector('#sortByRating');
+const categoryDropdown = document.querySelector('#categoryDropdown');
+const categoryDropdownBtn = document.querySelector('#categoryDropdownBtn');
+const sortingDropdown = document.querySelector('#sortingDropdown');
+const sortingDropdownBtn = document.querySelector('#sortingDropdownBtn');
+const filterBathroom = document.querySelector('#filterBathroom');
+const filterBedroom = document.querySelector('#filterBedroom');
+const filterKitchen = document.querySelector('#filterKitchen');
+const resetSortFiltBtn = document.querySelector('#resetSortFiltBtn');
+
 function closeDropdown(dropdown) {
   dropdown.classList.remove('show');
-}
-
-function sortProducts(sortFunction) {
-  products.sort(sortFunction);
-  printProductList();
 }
 
 const sortFunctions = {
@@ -79,6 +73,11 @@ const sortFunctions = {
   byHighestPrice: (a, b) => b.price - a.price,
   byRating: (a, b) => b.rating - a.rating,
 };
+
+function sortProducts(sortFunction) {
+  products.sort(sortFunction);
+  printProductList();
+}
 
 let chosenCategory = null;
 
@@ -100,6 +99,7 @@ function resetProductList() {
 // --- CART ---------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------
 
+const cart = document.querySelector('#cartSummary');
 const cartProductCount = document.getElementById('cartProductCount');
 
 function updateCartIcon() {
@@ -116,7 +116,7 @@ function updateCartIcon() {
 function updateProductAmount(e, isIncrease) {
   const action = isIncrease ? 'increase' : 'decrease';
   const productId = Number(e.target.id.replace(`${action}-`, ''));
-  console.log('clicked on button with id', productId);
+  // console.log('clicked on button with id', productId);
 
   const foundProductIndex = products.findIndex(product => product.id === productId);
   if (foundProductIndex === -1) {
@@ -159,7 +159,7 @@ function updateAndPrintCart() {
     // Lowered price if you order 10 or more of a product - does not work?
     if (product.amount >= 10) {
       productPrice *= 0.9;
-      console.log('Product price lowered to:', productPrice.toFixed(2));
+      // console.log('Product price lowered to:', productPrice.toFixed(2));
     }
     const adjustedProductPrice = productPrice * priceIncrease;
     totalCartSum += product.amount * adjustedProductPrice;
@@ -201,6 +201,7 @@ function updateAndPrintCart() {
 // ------------------------------------------------------------------------------------
 // ---- TOGGLE BETWEEN CART AND FORM VIEW ---------------------------------------------
 // ------------------------------------------------------------------------------------
+
 const cartView = document.getElementById('cartView');
 const orderView = document.getElementById('orderView');
 const proceedToOrderBtn = document.getElementById('proceedToOrderBtn');
@@ -216,18 +217,15 @@ function showCart() {
   orderView.classList.add('hidden');
 }
 
+
 // ------------------------------------------------------------------------------------
 // ---- FORM --------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------
 
 const form = document.querySelector('#form');
 const [cardOption, invoiceOption] = document.querySelectorAll('input[name="payment-option"]');
-// const cardOption = document.querySelector('input[name="payment-option"][value="card"]');
-// const invoiceOption = document.querySelector('input[name="payment-option"][value="invoice"]');
 const paymentOptionRadios = [cardOption, invoiceOption];
-// const paymentOptionRadios = Array.from(document.querySelectorAll('input[name="payment-option"]'));
 let selectedPaymentOption = cardOption.checked ? 'card' : 'invoice';
-// let selectedPaymentOption = paymentOptionRadios.find(radio => radio.checked)?.value || 'card';
 const personalDataCheckbox = document.querySelector('input[type="checkbox"][required]');
 const submitBtn = document.getElementById('submitBtn');
 const resetBtn = document.getElementById('resetBtn');
@@ -368,7 +366,7 @@ function resetForm(manual = false) {
   const timerMessage = document.querySelector('#timerMessage');
   if (!manual) {
     timerMessage.innerHTML = 'You are too slow! The form has been reset.';
-    console.log('Form has been reset due to inactivity.');
+    console.warn('Form has been reset due to inactivity.');
   }
 
   const productsInCart = products.filter(product => product.amount > 0);
@@ -381,21 +379,9 @@ function resetForm(manual = false) {
   updateAndPrintCart();
 }
 
-// // Inputs to validate
-// const inputsToValidate = [
-//   document.querySelector('#firstName'),
-//   document.querySelector('#lastName'),
-//   document.querySelector('#streetAddress'),
-//   document.querySelector('#zipCode'),
-//   document.querySelector('#city'),
-//   document.querySelector('#phone'),
-//   document.querySelector('#email'),
-//   document.querySelector('#personalID'),
-// ];
-
 
 // ------------------------------------------------------------------------------------
-// ---- SET UP EVENT LISTENERS --------------------------------------------------------
+// ---- ADD EVENT LISTENERS -----------------------------------------------------------
 // ------------------------------------------------------------------------------------
 
 function setupEventListeners() {
