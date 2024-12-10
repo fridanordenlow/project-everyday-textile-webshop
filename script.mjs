@@ -20,8 +20,6 @@ const filterBedroom = document.querySelector('#filterBedroom');
 const filterKitchen = document.querySelector('#filterKitchen');
 const resetSortFiltBtn = document.querySelector('#resetSortFiltBtn');
 
-// const today = new Date(); // Should be inside the if-statement
-
 // ------------------------------------------------------------------------------------
 // --- PRODUCTS -----------------------------------------------------------------------
 // ------------------------------------------------------------------------------------
@@ -315,7 +313,8 @@ function validateInput(inputElementId) {
   }
 
   if (inputFieldValue.length === 0) {
-    feedbackField.innerHTML = '<i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> This field is required.';
+    feedbackField.innerHTML =
+      '<i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> This field is required.';
     return false;
   }
 
@@ -327,7 +326,6 @@ function validateInput(inputElementId) {
     feedbackField.innerHTML = ''; // Clear error message
     return true;
   }
-
   // Maybe no feedback needed when the input is correct
   // feedbackField.innerHTML = '<i class="fa-solid fa-check"></i>';
   // return true;
@@ -355,8 +353,8 @@ function updatePaymentOptions(totalCartSum) {
   }
 
   if (totalCartSum > 800) {
-    invoiceOption.disabled = true; 
-    invoiceMessage.classList.remove('hidden'); 
+    invoiceOption.disabled = true;
+    invoiceMessage.classList.remove('hidden');
   } else {
     invoiceOption.disabled = false;
     invoiceMessage.classList.add('hidden');
@@ -367,16 +365,6 @@ function updatePaymentOptions(totalCartSum) {
     updateSubmitButton();
   }
 }
-// function updatePaymentOptions(totalCartSum) {
-//   const invoiceMessage = document.getElementById('invoiceMessage');
-//   if (totalCartSum > 800) {
-//     invoiceOption.disabled = true; 
-//     invoiceMessage.classList.remove('hidden'); 
-//   } else {
-//     invoiceOption.disabled = false;
-//   }
-//   updateSubmitButton();
-// }
 
 function validateAllInputs() {
   const orderView = document.getElementById('orderView');
@@ -392,12 +380,10 @@ function validateAllInputs() {
     return input.value.trim().length > 0 && validateInput(inputId);
   });
   const paymentSelected = cardOption.checked || invoiceOption.checked;
-  // console.log(`Payment selected: ${paymentSelected}`);
 
   const personalDataAccepted = personalDataCheckbox.checked;
-  // console.log(`Personal data accepted: ${personalDataAccepted}`);
 
-  console.log(`All inputs valid: ${allInputsValid && paymentSelected && personalDataAccepted}`);
+  // console.log(`All inputs valid: ${allInputsValid && paymentSelected && personalDataAccepted}`);
 
   return allInputsValid && paymentSelected && personalDataAccepted;
 }
@@ -409,23 +395,30 @@ function updateSubmitButton() {
   }
 }
 // function updateSubmitButton() {
-//   const isValid = validateAllInputs();
-//   submitBtn.disabled = !isValid;
-//   console.log(`Submit button disabled: ${!isValid}`);
-// }
-// function updateSubmitButton() {
 //   submitBtn.disabled = !validateAllInputs();
 // }
 
-/**
- * - Re-name to submit order or something like that
- */
 function submitOrder(e) {
   e.preventDefault();
   const orderView = document.querySelector('#orderView');
   orderView.innerHTML = `
   <p>Thank you! We have received your order. Expected delivery time is 2-3 business days.</p>
+  <button id="returnToStoreBtn">Return to Store</button>
   `;
+
+  products.forEach(product => {
+    product.amount = 0;
+  });
+  
+  printProductList();
+  updateCartIcon();
+  updateAndPrintCart();
+
+  const returnToStoreBtn = document.getElementById('returnToStoreBtn');
+  returnToStoreBtn.addEventListener('click', () => {
+    showCart();
+    orderView.innerHTML = '';
+  });
 }
 
 function resetForm(manual = false) {
@@ -434,14 +427,14 @@ function resetForm(manual = false) {
   const timerMessage = document.querySelector('#timerMessage');
   if (!manual) {
     timerMessage.innerHTML = 'You are too slow! The form has been reset.';
-    console.log('Form has been reset due to inactivity.')
+    console.log('Form has been reset due to inactivity.');
   }
-  
+
   const productsInCart = products.filter(product => product.amount > 0);
   productsInCart.forEach(prod => {
     prod.amount = 0;
   });
-  
+
   printProductList();
   updateCartIcon();
   updateAndPrintCart();
