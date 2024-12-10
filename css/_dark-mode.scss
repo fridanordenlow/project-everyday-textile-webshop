@@ -10,16 +10,45 @@ header {
 
 .sorting-and-filtering-container {
     border-bottom: 2px solid $dark-mode-light;
+
+    button {
+        background-color: $dark-mode-light;
+        color: $dark-mode-dark;
+    }
+
+    .dropdown {
+        background-color: $dark-mode-light;
+
+        .dropdown-button {
+            background-color: $dark-mode-light;
+            color: $dark-mode-dark;
+          }
+        
+          .dropdown-content { 
+            background-color: $dark-mode-light;
+              button {
+                  background-color: $dark-mode-light;
+              }
+          }
+      }
 }
 
 .product-section {  
     .product-container {
       .single-product {
         border: 2px solid $dark-mode-light;
+
+        input {
+            background-color: $dark-mode-light;
+        }
       }
     }
 }
 
 .cart-and-order-section {
     border: 2px solid $dark-mode-light;
+}
+
+button {
+    background-color: $dark-mode-light;
 }

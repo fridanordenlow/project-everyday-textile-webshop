@@ -58,13 +58,13 @@ header {
       position: absolute;
       top: -10px;
       right: -10px;
-      background-color: red;
-      color: white;
+      background-color: white;
+      color: black;
       border-radius: 50%;
       min-width: 20px;
       height: 20px;
       padding: 2px;
-      font-size: 12px;
+      font-size: pxToRem(14);
       font-weight: 900;
       display: inline-flex;
       justify-content: center;
@@ -85,6 +85,7 @@ header {
   padding-bottom: 10px;
   border-bottom: 2px solid black;
 
+  // Reset button
   button {
     border: none;
     padding: 0.5rem;
@@ -115,13 +116,13 @@ header {
   
   .dropdown {
     position: relative;
+    background-color: #fff;
   
     .dropdown-button {
       width: 100%;
       border-radius: $general-border-radius;
-      background-color: #fff;
+      // background-color: #fff;
       color: #000;
-      border: 1px solid #ccc;
       transition: background-color 0.3s ease, color 0.3s ease;
   
       &:hover {
@@ -412,9 +413,9 @@ header {
         }
       
         .invoice-message {
-          color: #ff0000;
-          font-size: 0.9em;
-          margin-top: 5px;
+          display: inline-block;
+          margin-left: 15px;
+          font-style: italic;
         }
       
         .hidden {
