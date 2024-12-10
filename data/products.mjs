@@ -7,7 +7,7 @@ const productList = [
     amount: 0,
     category: 'Kitchen',
     img: {
-      url: '/assets/photos/kitchen_red_opaque.png',
+      url: './assets/photos/kitchen_red_opaque.png',
       alt: 'Red kitchen towel',
       width: 709,
       height: 945,
@@ -21,7 +21,7 @@ const productList = [
     amount: 0,
     category: 'Bathroom',
     img: {
-      url: '/assets/photos/bathroom_roses_opaque.png',
+      url: './assets/photos/bathroom_roses_opaque.png',
       alt: 'Terry towel with rose pattern',
       width: 709,
       height: 945,
@@ -35,7 +35,7 @@ const productList = [
     amount: 0,
     category: 'Bedroom',
     img: {
-      url: '/assets/photos/bedroom_yellow_opaque.png',
+      url: './assets/photos/bedroom_yellow_opaque.png',
       alt: 'Pillowcase with yellow dots',
       width: 709,
       height: 945,
@@ -49,7 +49,7 @@ const productList = [
     amount: 0,
     category: 'Kitchen',
     img: {
-      url: '/assets/photos/kitchen_green_opaque.png',
+      url: './assets/photos/kitchen_green_opaque.png',
       alt: 'Kitchen towel with green checkered pattern',
       width: 666,
       height: 888,
@@ -63,7 +63,7 @@ const productList = [
     amount: 0,
     category: 'Bathroom',
     img: {
-      url: '/assets/photos/bathroom_purple_opaque.png',
+      url: './assets/photos/bathroom_purple_opaque.png',
       alt: 'Purple terry towel',
       width: 581,
       height: 775,
@@ -77,7 +77,7 @@ const productList = [
     amount: 0,
     category: 'Bathroom',
     img: {
-      url: '/assets/photos/bathroom_striped_opaque.png',
+      url: './assets/photos/bathroom_striped_opaque.png',
       alt: 'Striped teal terry towel',
       width: 709,
       height: 945,
@@ -91,7 +91,7 @@ const productList = [
     amount: 0,
     category: 'Bedroom',
     img: {
-      url: '/assets/photos/bedroom_flowers_opaque.png',
+      url: './assets/photos/bedroom_flowers_opaque.png',
       alt: 'Pillow case with floral pattern',
       width: 709,
       height: 945,
@@ -105,7 +105,7 @@ const productList = [
     amount: 0,
     category: 'Bathroom',
     img: {
-      url: '/assets/photos/bathroom_teal_opaque.png',
+      url: './assets/photos/bathroom_teal_opaque.png',
       alt: 'Teal terry towel',
       width: 638,
       height: 851,
@@ -119,7 +119,7 @@ const productList = [
     amount: 0,
     category: 'Kitchen',
     img: {
-      url: '/assets/photos/kitchen_blue_opaque.png',
+      url: './assets/photos/kitchen_blue_opaque.png',
       alt: 'Kitchen towel with blue checkered pattern',
       width: 666,
       height: 888,
@@ -133,7 +133,7 @@ const productList = [
     amount: 0,
     category: 'Bathroom',
     img: {
-      url: '/assets/photos/bathroom_flowers_opaque.png',
+      url: './assets/photos/bathroom_flowers_opaque.png',
       alt: 'Terry towel with floral pattern',
       width: 638,
       height: 851,
@@ -147,7 +147,7 @@ const productList = [
     amount: 0,
     category: 'Kitchen',
     img: {
-      url: '/assets/photos/kitchen_yellow_opaque.png',
+      url: './assets/photos/kitchen_yellow_opaque.png',
       alt: 'Yellow kitchen towel',
       width: 666,
       height: 888,
@@ -161,7 +161,7 @@ const productList = [
     amount: 0,
     category: 'Bedroom',
     img: {
-      url: '/assets/photos/bedroom_blue_opaque.png',
+      url: './assets/photos/bedroom_blue_opaque.png',
       alt: 'Blue pillow case',
       width: 709,
       height: 945,
