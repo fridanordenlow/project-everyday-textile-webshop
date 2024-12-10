@@ -1,0 +1,25 @@
+body {
+    background-color: $dark-mode-dark;
+    color: $dark-mode-light;
+  }
+
+header {
+    color: $dark-mode-light;
+    border-bottom-color: $dark-mode-light;
+}
+
+.sorting-and-filtering-container {
+    border-bottom: 2px solid $dark-mode-light;
+}
+
+.product-section {  
+    .product-container {
+      .single-product {
+        border: 2px solid $dark-mode-light;
+      }
+    }
+}
+
+.cart-and-order-section {
+    border: 2px solid $dark-mode-light;
+}

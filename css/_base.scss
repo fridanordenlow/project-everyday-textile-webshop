@@ -86,11 +86,11 @@ header {
   border-bottom: 2px solid black;
 
   button {
-    border: 1px solid black; 
-    padding: 0.5rem; // Simplified padding
+    border: none;
+    padding: 0.5rem;
     border-radius: $general-border-radius;
-    background-color: #fff; /* White background */
-    color: #000; /* Black text */
+    background-color: #fff; 
+    color: #000; 
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
   
@@ -216,7 +216,7 @@ header {
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      // background-color: lightblue;
+      gap: 5px;
       padding: 10px;
       border: 2px solid black;
       // border-radius: $general-border-radius;
@@ -225,6 +225,7 @@ header {
         width: 30px;
         border: none;
         border-radius: $general-border-radius;
+        font-size: pxToRem(18);
       }
     
       input {
@@ -232,6 +233,7 @@ header {
         width: 40px;
         border: none;
         border-radius: $general-border-radius;
+        font-size: pxToRem(18);
       }
     }
   }
@@ -242,31 +244,26 @@ header {
   display: flex;
   flex-direction: column;
   width: 100%;
-  // max-width: 500px;
   min-height: 300px;
   margin: 0 auto;
   padding: 20px;
   margin-bottom: 20px;
-  // background-color: #f5f5f5;
-  // border-radius: 8px;
   border: 2px solid black;
-  // border-top: 2px solid black;
-  // border-bottom: 2px solid black;
 
   button {
-    width: 150px;
+    width: fit-content;
     padding: 5px 10px;
-    background-color: #fff; /* White background */
-    color: #000; /* Black text */
-    border: 2px solid #ccc; /* Subtle border for monochrome style */
+    background-color: #fff; 
+    color: #000; 
+    border: none;
     border-radius: $general-border-radius;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
   
     &:hover {
-      background-color: #ccc; /* Light gray on hover */
-      color: #333; /* Darker gray text */
-      border-color: #bbb; /* Subtle change to border */
+      background-color: #ccc;
+      color: #333;
+      border-color: #bbb;
     }
   
     &:focus {
@@ -275,10 +272,10 @@ header {
     }
   
     &:disabled {
-      background-color: #e0e0e0; /* Light gray background */
-      color: #999; /* Muted gray text */
+      background-color: #e0e0e0; 
+      color: #999; 
       cursor: not-allowed;
-      border-color: #d0d0d0; /* Match the disabled style */
+      border-color: #d0d0d0;
     }
   }
   // button {
@@ -314,16 +311,16 @@ header {
     display: none;
   }
   
-  .cart-view {
-    .cart-line {
-      width: 100%;
-      border-bottom: 2px solid black;
-      margin: 10px;
-    }
-    // button {
-    //   align-self: flex-start;
-    // }
-  }
+  // .cart-view {
+  //   .cart-line {
+  //     width: 100%;
+  //     border-bottom: 2px solid black;
+  //     margin: 10px;
+  //   }
+  //   // button {
+  //   //   align-self: flex-start;
+  //   // }
+  // }
 
   .order-view {
     form {
@@ -367,13 +364,14 @@ header {
       }
       
       .payment-options {
-        margin-top: 20px;
-        border: 1px solid #ccc;
-        padding: 15px;
+        margin-top: 10px;
+        // border: 1px solid #ccc;
+        // padding: 15px;
+        padding-bottom: 10px;
         border-radius: 5px;
       
         .selector {
-          margin-bottom: 15px;
+          // margin-bottom: 15px;
       
           label {
             display: inline-block;
@@ -387,15 +385,16 @@ header {
       
           label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
           }
       
-          input {
-            width: $input-width;
-            padding: 6px;
-            border: 1px solid #ccc;
-            border-radius: $general-border-radius;
-          }
+          // Didn't change anything?
+          // input {
+          //   width: $input-width; 
+          //   padding: 6px;
+          //   border: 1px solid #ccc;
+          //   border-radius: $general-border-radius;
+          // }
         }
       
         .card {
