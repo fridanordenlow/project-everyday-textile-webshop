@@ -116,6 +116,7 @@ function updateCartIcon() {
 function updateProductAmount(e, isIncrease) {
   const action = isIncrease ? 'increase' : 'decrease';
   const productId = Number(e.target.id.replace(`${action}-`, ''));
+  const clickedButton = e.target;
   // console.log('clicked on button with id', productId);
 
   const foundProductIndex = products.findIndex(product => product.id === productId);
@@ -134,6 +135,11 @@ function updateProductAmount(e, isIncrease) {
   printProductList();
   updateCartIcon();
   updateAndPrintCart();
+
+  const buttonToFocus = document.getElementById(clickedButton.id);
+  if (buttonToFocus) {
+    buttonToFocus.focus();
+  }
 }
 
 function updateAndPrintCart() {
@@ -324,8 +330,6 @@ function validateAllInputs() {
   const paymentSelected = cardOption.checked || invoiceOption.checked;
 
   const personalDataAccepted = personalDataCheckbox.checked;
-
-  // console.log(`All inputs valid: ${allInputsValid && paymentSelected && personalDataAccepted}`);
 
   return allInputsValid && paymentSelected && personalDataAccepted;
 }
