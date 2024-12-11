@@ -1,6 +1,31 @@
+header {
+  justify-content: space-around;
+  h1 {
+    font-size: pxToRem(42);
+  }
+}
+
+
 .product-section {
     .product-container {
         grid-template-columns: repeat(3, 1fr);
+
+        .single-product {
+          font-size: pxToRem(18);
+
+          h2 {
+            font-family: $medium-font;
+            font-size: pxToRem(18);
+          }
+
+          button {
+            font-size: pxToRem(18);
+          }
+        
+          input {
+            font-size: pxToRem(18);
+          }
+        }
       }
 }
 

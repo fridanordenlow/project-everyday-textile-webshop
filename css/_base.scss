@@ -3,7 +3,7 @@ html {
 }
 
 body {
-  background-color: $secondary-bg-color;
+  background-color: $primary-bg-color;
   height: 100%;
 }
 
@@ -12,13 +12,12 @@ main {
   flex-direction: column; 
   justify-content: center; 
   align-items: center; 
-  // font-family: "Libre Baskerville", serif;
   font-family: $small-font;
   margin-top: 10px;
   max-width: 1000px; 
   width: 100%; 
   padding: 0 30px; // Add horizontal padding for spacing
-  margin-left: auto; // Center horizontally
+  margin-left: auto;
   margin-right: auto;
 }
 
@@ -27,56 +26,62 @@ header {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 80px;
+  height: auto;
   color: black;
-  border-bottom: 2px solid black;
+  background-color: $secondary-bg-color;
+  // border-bottom: $border-size;
+  padding: 15px;
   margin-bottom: 15px;
 
   h1 {
     font-family: $header-font;
     font-style: italic;
-    font-size: pxToRem(38);
+    font-size: pxToRem(30);
     font-weight: 700;
+    padding: 15x 0 15px 0;
+    // color: rgb(75, 75, 75);
     // text-transform: uppercase;
   }
 
-  .cart-link {
-    text-decoration: none;
-    color: inherit;
-    
-    &:link,
-    &:visited {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    &:hover,
-    &:focus {
-      text-decoration: none;
-      background-color: $button-hover-bg;
-      color: $button-hover-color;
-    }
-
-    &:active {
-      color: inherit;
-    }
-  }
-
+  
   .cart-icon-container {
     position: relative;
+
+    .cart-link {
+      text-decoration: none;
+      color: inherit;
+      
+      &:link,
+      &:visited {
+        text-decoration: none;
+        color: inherit;
+      }
+  
+      &:hover,
+      &:focus {
+        text-decoration: none;
+        background-color: $button-hover-bg;
+        color: $button-hover-color;
+      }
+  
+      &:active {
+        color: inherit;
+      }
+    }
 
     .cart-count {
       position: absolute;
       top: -10px;
       right: -10px;
-      background-color: white;
+      background-color: rgb(255, 204, 213);
       color: black;
       border-radius: 50%;
       min-width: 20px;
       height: 20px;
       padding: 2px;
-      font-size: pxToRem(14);
-      font-weight: 900;
+      font-family: $small-font;
+      font-size: pxToRem(16);
+      font-weight: 700;
       display: inline-flex;
       justify-content: center;
       align-items: center;
@@ -94,12 +99,12 @@ header {
   flex-wrap: wrap; 
   gap: 0.5rem; 
   padding-bottom: 10px;
-  border-bottom: 2px solid black;
+  // font-size: pxToRem(16);
+  // border-bottom: 2px solid black;
 
   // Reset button
   button {
     border: none;
-    border-radius: 0; 
     padding: $button-padding; 
     background-color: $button-bg; 
     color: $button-color; 
@@ -109,6 +114,9 @@ header {
                 color $button-transition, 
                 box-shadow $button-transition;
   
+    &.reset {
+      border-radius: $general-border-radius; 
+    }            
   
     &:hover {
       background-color: $button-hover-bg;
@@ -116,14 +124,15 @@ header {
     }
   
     &:focus {
-      outline: none;
+      outline: 2px solid rgba(0, 0, 0, 0.5);
       box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
     }
   }
   
   .dropdown {
     position: relative;
-    background-color: #fff;
+    background-color: $button-bg;
+    // background-color: #fff;
   
     .dropdown-button {
       padding: $button-padding;
@@ -131,7 +140,7 @@ header {
       color: $button-color;
       text-align: center;
       cursor: pointer;
-      border-radius: $general-border-radius;
+      // border-radius: $general-border-radius;
       transition: background-color $button-transition, color $button-transition;
 
       &:hover {
@@ -140,8 +149,9 @@ header {
       }
   
       &:focus {
+        // border-radius: none;
         outline: 2px solid rgba(0, 0, 0, 0.5);
-        outline-offset: 2px;
+        // outline-offset: 2px;
         box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
       }
     }
@@ -204,10 +214,11 @@ header {
       align-items: center;
       justify-content: space-between;
       gap: 5px;
-      padding: 10px;
-      // border: 2px solid black;
+      padding: 10px 10px 20px 10px;
+      // border: $border-size;
       background-color: $secondary-bg-color;
-      // border-radius: $general-border-radius;
+      border-radius: $general-border-radius;
+      font-size: pxToRem(16);
 
       h2 {
         font-family: $medium-font;
@@ -216,9 +227,12 @@ header {
     
       button {
         width: 30px;
+        // height: 30px;
         border: none;
         border-radius: $general-border-radius;
         font-size: pxToRem(18);
+        font-weight: 500;
+        background-color: white;
 
         &:hover {
           background-color: $button-hover-bg;
@@ -229,14 +243,33 @@ header {
       input {
         text-align: center;
         width: 40px;
+        // height: 30px;
         border: none;
         border-radius: $general-border-radius;
         font-size: pxToRem(18);
+        font-weight: 400;
       }
+
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap; /* Prevent the text from wrapping */
+        border: 0;
+    }
+    
     }
   }
 
 }
+
+////////
+
+
 
 .cart-and-order-section {
   display: flex;
@@ -247,7 +280,8 @@ header {
   padding: 20px;
   margin-bottom: 20px;
   background-color: $secondary-bg-color;
-  // border: 2px solid black;
+  border-radius: $general-border-radius;
+  // border: $border-size;
 
   button {
     width: fit-content;
@@ -276,27 +310,6 @@ header {
     }
   }
 
-
-  // button {
-  //   width: 150px;
-  //   padding: 5px 10px;
-  //   background-color: white;
-  //   color: black;
-  //   border: none;
-  //   border-radius: $general-border-radius;
-  //   cursor: pointer;
-  
-  //   &:hover {
-  //     background-color: #859c84;
-  //   }
-
-  //   &:disabled {
-  //     background-color: #ccc; /* Light gray background */
-  //     color: #666; /* Darker gray text */
-  //     cursor: not-allowed; /* Change cursor to indicate it's not clickable */
-  //   }
-  // }
-
   .cart-view,
   .order-view {
     display: flex;
@@ -304,44 +317,35 @@ header {
     justify-content: space-between;
     flex-grow: 1;
     height: 100%;
+    font-size: pxToRem(18);
   }
 
   .hidden {
     display: none;
   }
-  
-  // .cart-view {
-  //   .cart-line {
-  //     width: 100%;
-  //     border-bottom: 2px solid black;
-  //     margin: 10px;
-  //   }
-  //   // button {
-  //   //   align-self: flex-start;
-  //   // }
-  // }
 
   .order-view {
     form {
       display: flex;
       flex-direction: column;
-      row-gap: 5px;
+      row-gap: 3px;
     
 
       label {
         display: flex;
         flex-direction: column;
-        margin-bottom: 10px;
+        margin-top: 10px;
 
-        .input-field-and-msg {
-          // display: flex;
-          // gap: 5px;
-          // align-items: center;
+      }
+      
+      .input-field-and-msg {
+        display: flex;
+        gap: 5px;
+        // align-items: center;
 
-          .error-message {
-            margin-top: 5px;
-            font-style: italic;
-          }
+        .error-message {
+          margin-top: 5px;
+          font-style: italic;
         }
       }
 
@@ -358,8 +362,8 @@ header {
       }
 
       input[type="radio"]:disabled + span {
-        color: #aaa; /* Change text color to gray */
-        cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+        color: #aaa; 
+        cursor: not-allowed; 
       }
       
       .payment-options {
@@ -370,11 +374,10 @@ header {
         border-radius: 5px;
       
         .selector {
-          // margin-bottom: 15px;
-      
           label {
             display: inline-block;
             margin-right: 20px;
+            margin-bottom: 0;
           }
         }
       
@@ -386,26 +389,16 @@ header {
             display: block;
             margin-bottom: 5px;
           }
-      
-          // Didn't change anything?
-          // input {
-          //   width: $input-width; 
-          //   padding: 6px;
-          //   border: 1px solid #ccc;
-          //   border-radius: $general-border-radius;
-          // }
         }
       
         .card {
-          label:nth-child(2) {
+          .date-and-cvc {
+            label {
+              margin-top: 10px;
+            }
             input {
-              width: 15%;
-              display: inline-block;
-              margin-right: 5px;
-      
-              &:first-child {
-                margin-right: 5%;
-              }
+              width: 60px;
+              padding: 5px;
             }
           }
         }
@@ -423,10 +416,29 @@ header {
     }
   }
 
+  .cart-view {
+
+    .cart-summary {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+    }
+    
+    .cart-shipping {
+      font-style: italic;
+    }
+
+    .cart-total {
+      font-weight: 700;
+    }
+  }
+
+
   .checkbox-container {
     display: flex;
     flex-direction: column; 
     gap: 10px; 
+    padding-bottom: 10px;
   
     .checkbox-label {
       display: flex;
@@ -440,6 +452,8 @@ header {
       }
     }
   }
+
+}
 
   // .checkbox-container {
   //   display: flex;
@@ -489,4 +503,4 @@ header {
   //   }
   // }
 
-}
+// }

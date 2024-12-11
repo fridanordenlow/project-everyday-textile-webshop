@@ -24,9 +24,11 @@ function printProductList() {
       <img src="${product.img.url}" alt="${product.img.alt}" width="${product.img.width}" height="${product.img.height}" loading="lazy">
       <h2>${product.name}</h2>
       <p>${(Math.round(product.price * priceIncrease * 2) / 2).toFixed(2).replace(/\.00$/, '')} kr</p>
-      <p>Rating: ${getRatingStars(product.rating)}</p>
+      <p>Rating:</p>
+      <span>${getRatingStars(product.rating)}</span>
       <div>
       <button class="decrease" id="decrease-${product.id}">-</button>
+      <label for="input-${product.id}" class="visually-hidden">Quantity for ${product.name}</label>
       <input type="number" min="0" value="${product.amount}" id="input-${product.id}">
       <button class="increase" id="increase-${product.id}">+</button>
       </div>
@@ -185,9 +187,9 @@ function updateAndPrintCart() {
   }
 
   if (orderProductAmount >= 15) {
-    cart.innerHTML += '<p>Shipping: 0 kr</p>';
+    cart.innerHTML += '<p class="cart-shipping">Shipping: 0 kr</p>';
   } else {
-    cart.innerHTML += `<p>Shipping: ${Math.round(25 + 0.1 * totalCartSum)} kr</p>`;
+    cart.innerHTML += `<p class="cart-shipping">Shipping: ${Math.round(25 + 0.1 * totalCartSum)} kr</p>`;
   }
 
   let formattedTotalCartSum = totalCartSum.toFixed(2);
@@ -195,7 +197,7 @@ function updateAndPrintCart() {
     formattedTotalCartSum = formattedTotalCartSum.slice(0, -3);
   }
 
-  cart.innerHTML += `<div>Total sum: ${formattedTotalCartSum} kr</div>`;
+  cart.innerHTML += `<div class="cart-total">Total sum: ${formattedTotalCartSum} kr</div>`;
   cart.innerHTML += `<div>${msg}</div>`;
 
   updatePaymentOptions(totalCartSum);

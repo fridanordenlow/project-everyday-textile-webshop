@@ -1,5 +1,5 @@
 
-# Textile Memorbilia Webshop
+# Everyday Textile Memorbilia Webshop
 
 A fictional webshop application for textiles, built with vanilla JavaScript. This project includes functionalities for listing products, sorting and filtering, managing a shopping cart, and placing orders through a form.
 

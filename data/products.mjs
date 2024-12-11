@@ -1,7 +1,7 @@
 const productList = [
   {
     id: 0,
-    name: 'Red Striped Kitchen Towel',
+    name: 'Red Kitchen Towel',
     price: 250,
     rating: 5,
     amount: 0,
@@ -43,7 +43,7 @@ const productList = [
   },
   {
     id: 3,
-    name: 'Green Checkered Kitchen Towel',
+    name: 'Green Kitchen Towel',
     price: 195,
     rating: 3.5,
     amount: 0,
@@ -113,7 +113,7 @@ const productList = [
   },
   {
     id: 8,
-    name: 'Blue Checkered Kitchen Towel',
+    name: 'Blue Kitchen Towel',
     price: 175,
     rating: 4,
     amount: 0,

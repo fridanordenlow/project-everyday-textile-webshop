@@ -1,5 +1,9 @@
-// .product-section {
-//     .product-container {
-//         grid-template-columns: repeat(4, 1fr);
-//       }
-// }
+main {
+    max-width: 1300px;
+}
+
+.product-section {
+    .product-container {
+        grid-template-columns: repeat(4, 1fr);
+      }
+}

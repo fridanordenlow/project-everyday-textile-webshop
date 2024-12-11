@@ -3,36 +3,34 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Everyday Textile Webshop</title>
+    <title>Everyday Textile Memorabilia</title>
     <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lobster&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lobster&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
   </head>
   <body>
+    <header>
+      <span></span>
+      <!-- <i class="fa-solid fa-bars fa-2x" aria-hidden="true"></i> -->
+      <h1>Everyday Textile Memorabilia</h1>
+      <div id="cartIcon" class="cart-icon-container">
+        <a href="#cartView" class="cart-link" aria-label="Go to cart.">
+          <i class="fa-solid fa-basket-shopping fa-2x"></i>
+        </a>
+        <span id="cartProductCount" class="cart-count"></span>
+      </div>
+      <!-- <i class="fa-solid fa-bars fa-2x" aria-hidden="true"></i> -->
+    </header>
     <main>
-      <!-- Ändra id's från camelCase till namn-namn eller ej? Vad är bäst praxis för id's?-->
-      <header>
-        <h1>Textile Memorabilia</h1>
-        <div id="cartIcon" class="cart-icon-container">
-          <a href="#cartView" class="cart-link" aria-label="Go to cart.">
-            <i class="fa-solid fa-basket-shopping fa-2x"></i>
-          </a>
-          <span id="cartProductCount" class="cart-count"></span>
-        </div>
-        <!-- <i class="fa-solid fa-bars fa-2x" aria-hidden="true"></i> -->
-      </header>
       <div class="product-section">
         <div class="sorting-and-filtering-container">
           <!-- <h2>Our products:</h2> -->
           <div id="sortingDropdown" class="dropdown">
-            <button id="sortingDropdownBtn" class="dropdown-button">
+            <button id="sortingDropdownBtn" class="dropdown-button"  aria-label="Dropdown menu for sorting options">
               Sort by
               <i class="fa-solid fa-caret-down" aria-hidden="true"></i>
-              <!-- <i class="fa-solid fa-square-caret-down" aria-hidden="true"></i>
-              <i class="fa-regular fa-square-caret-down" aria-hidden="true"></i> -->
             </button>
             <div class="dropdown-content">
               <button id="sortByName">Name</button>
@@ -42,7 +40,7 @@
             </div>
           </div>
           <div id="categoryDropdown" class="dropdown">
-            <button id="categoryDropdownBtn" class="dropdown-button">
+            <button id="categoryDropdownBtn" class="dropdown-button"  aria-label="Dropdown menu for filtering by category">
               Filter by category
               <i class="fa-solid fa-caret-down" aria-hidden="true"></i>
             </button>
@@ -52,7 +50,7 @@
               <button id="filterKitchen">Kitchen</button>
             </div>
           </div>
-          <button id="resetSortFiltBtn">Reset</button>
+          <button id="resetSortFiltBtn" class="reset">Reset</button>
         </div>
         <div id="productList" class="product-container">
           <!-- Content from JS -->
@@ -64,7 +62,7 @@
           <div>
             <h3>Cart</h3>
             <!-- <div class="cart-line"></div> -->
-            <div id="cartSummary">
+            <div id="cartSummary" class="cart-summary">
               <!-- Content from JS -->
             </div>
           </div>
@@ -144,15 +142,15 @@
                 <label for="cardInput">Card number</label>
                 <input type="number" id="cardInput" placeholder="4701322211111234">
       
-                <label for="expiryDateYear">Expiry date</label>
-                <div class="expiry-date">
+                <div class="date-and-cvc">
+                  <label for="expiryDateYear">Expiry date</label>
                   <input type="number" placeholder="YY" id="expiryDateYear">
                   <span>/</span>
                   <input type="number" placeholder="MM" id="expiryDateMonth">
+                  <label for="cvc">CVC</label>
+                  <input type="number" placeholder="123" id="cvc">
                 </div>
       
-                <label for="cvc">CVC</label>
-                <input type="number" placeholder="123" id="cvc">
               </div>
       
               <div class="invoice hidden" id="invoice">

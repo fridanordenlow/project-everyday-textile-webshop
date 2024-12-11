@@ -1,28 +1,36 @@
 /* Font variables */
 
-// $sans-small-font: "Source Sans 3", sans-serif;
-$header-font: "Lobster", sans-serif;
+// $header-font: "Playfair Display", serif;
+$header-font: "Cedarville Cursive", cursive;
 $medium-font: "Libre Baskerville", serif;
-$small-font: "Roboto", sans-serif;
+$small-font:  "Source Sans 3", sans-serif;
 
+// "Lobster", sans-serif;
 
 /* Colors */
-$primary-bg-color: rgb(157, 143, 147);
-$secondary-bg-color: rgb(222, 222, 222);
+$primary-bg-color: white;
+// $primary-bg-color: rgb(222, 222, 222);
+// $primary-bg-color: rgb(157, 143, 147);
+$secondary-bg-color: rgb(215, 225, 234);
+// Nice blå rgb(190, 209, 216);
+
 
 /* General sizing */
 $input-width: 220px;
 $general-border-radius: 5px;
+$border-size: 2px solid black;
 
 /* Variables for buttons */
-$button-bg: #fff; /* Default button background color */
-$button-color: #000; /* Default button text color */
-$button-hover-bg: #ccc; /* Hover background color */
-$button-hover-color: #333; /* Hover text color */
-$button-disabled-bg: #e0e0e0; /* Disabled background color */
-$button-disabled-color: #999; /* Disabled text color */
-$button-padding: 0.5rem 1rem; /* Default button padding */
-$button-transition: 0.3s ease; /* Transition for hover and focus */
+$button-bg: rgb(210, 225, 234);
+// $button-bg: rgb(209, 225, 230);
+// $button-bg: #fff; 
+$button-color: #000; 
+$button-hover-bg: #ccc; 
+$button-hover-color: #333;
+$button-disabled-bg: #e0e0e0;
+$button-disabled-color: #999; 
+$button-padding: 0.5rem 1rem; 
+$button-transition: 0.3s ease; 
 
 /* Dark mode variables */
 $dark-mode-dark: #121212;
