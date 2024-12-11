@@ -16,6 +16,7 @@ A fictional webshop application for textiles, built with vanilla JavaScript. Thi
 - Responsive Design: Optimized for various screen sizes.
 
 
+
 ## Authors
 
 - [@fridanordenlow](https://www.github.com/fridanordenlow)
@@ -34,6 +35,17 @@ A fictional webshop application for textiles, built with vanilla JavaScript. Thi
 
 https://medieinstitutet.github.io/fed24d-js-intro-inl-1-webshop-fridanordenlow/
 
+## Lighthouse Accessibility Analysis
+
+![lighthouse_accessibility_analysis_webshop](https://github.com/user-attachments/assets/2ad2e955-262d-4b61-aeb2-9929f9b4c695)
+
 
 
 ## Validation Reports
+
+**HTML:**
+<img width="1351" alt="html_validation_webshop" src="https://github.com/user-attachments/assets/be4c4986-aeb5-4c73-b578-7ab86e6dae1f" />
+
+**CSS:**
+<img width="1374" alt="css_validation_webshop" src="https://github.com/user-attachments/assets/2c03c1ec-c605-4065-8326-14898a3405ed" />
+
