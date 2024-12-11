@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Everyday Textile Webshop</title>
-    <link rel="stylesheet" href="css/style.css" type="text/css" />
+    <link rel="stylesheet" href="css/style.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,7 +24,7 @@
         </div>
         <!-- <i class="fa-solid fa-bars fa-2x" aria-hidden="true"></i> -->
       </header>
-      <section class="product-section">
+      <div class="product-section">
         <div class="sorting-and-filtering-container">
           <!-- <h2>Our products:</h2> -->
           <div id="sortingDropdown" class="dropdown">
@@ -57,7 +57,7 @@
         <div id="productList" class="product-container">
           <!-- Content from JS -->
         </div>
-      </section>
+      </div>
 
       <section id="cartAndOrderSection" class="cart-and-order-section">
         <div id="cartView" class="cart-view">
@@ -73,126 +73,124 @@
 
         <div id="orderView" class="order-view hidden">
           <form id="form">
-            <h3>Order form</h4>
-            <div id="timerMessage">      
+            <h3>Order form</h3>
+            <span id="timerMessage"></span>
+      
+            <label for="firstName">First name</label>
+            <div class="input-field-and-msg">
+              <input type="text" id="firstName" value="Kalle" required>
+              <span class="error-message" id="firstNameError"></span>
             </div>
-            <label>
-              <span>First name</span>
-              <div class="input-field-and-msg">
-                <input type="text" id="firstName" value="Kalle" required>
-                <div class="error-message"></div>
-              </div>
-            </label>
-            <label>
-              <span>Last name</span>
-              <div class="input-field-and-msg">
-                <input type="text" id="lastName" value="Anka" required>
-                <div class="error-message"></div>
-              </div>
-            </label>
-            <label>
-              <span>Street address</span>
-              <div class="input-field-and-msg">
-                <input type="text" id="streetAddress" value="Ankeborgsgatan 15" required>
-                <div class="error-message"></div>
-              </div>
-            </label>
-            <label>
-              <span>Zip code</span>
-              <div class="input-field-and-msg">
-                <input type="text" id="zipCode" value="21571" required>
-                <div class="error-message"></div>
-              </div>
-            </label>
-            <label>
-              <span>City</span>
-              <div class="input-field-and-msg">
-                <input type="text" id="city" value="Ankeborg" required>
-                <div class="error-message"></div>
-              </div>
-            </label>
-            <label>
-              <span>Phone number</span>
-              <div class="input-field-and-msg">
-                <input type="number" id="phone" value="0735766215" required>
-                <div class="error-message"></div>
-              </div>
-            </label>
-            <label>
-              <span>E-mail</span>
-              <div class="input-field-and-msg">
-                <input type="email" id="email" value="kalle.anka@mail.se" required>
-                <div class="error-message"></div>
-              </div>
-            </label>
-            <label>
-              <span>Discount code</span>
-              <div class="input-field-and-msg">
-                <input type="text">
-                <div class="error-message"></div>
-              </div>
-            </label>
+      
+            <label for="lastName">Last name</label>
+            <div class="input-field-and-msg">
+              <input type="text" id="lastName" value="Anka" required>
+              <span class="error-message" id="lastNameError"></span>
+            </div>
+      
+            <label for="streetAddress">Street address</label>
+            <div class="input-field-and-msg">
+              <input type="text" id="streetAddress" value="Ankeborgsgatan 15" required>
+              <span class="error-message" id="streetAddressError"></span>
+            </div>
+      
+            <label for="zipCode">Zip code</label>
+            <div class="input-field-and-msg">
+              <input type="text" id="zipCode" value="21571" required>
+              <span class="error-message" id="zipCodeError"></span>
+            </div>
+      
+            <label for="city">City</label>
+            <div class="input-field-and-msg">
+              <input type="text" id="city" value="Ankeborg" required>
+              <span class="error-message" id="cityError"></span>
+            </div>
+      
+            <label for="phone">Phone number</label>
+            <div class="input-field-and-msg">
+              <input type="number" id="phone" value="0735766215" required>
+              <span class="error-message" id="phoneError"></span>
+            </div>
+      
+            <label for="email">E-mail</label>
+            <div class="input-field-and-msg">
+              <input type="email" id="email" value="kalle.anka@mail.se" required>
+              <span class="error-message" id="emailError"></span>
+            </div>
+      
+            <label for="discountCode">Discount code</label>
+            <div class="input-field-and-msg">
+              <input type="text" id="discountCode">
+              <span class="error-message" id="discountCodeError"></span>
+            </div>
+      
             <div class="payment-options">
               <div class="selector">
-                <label>
-                  <input type="radio" name="payment-option" value="card" checked>
-                  <span>Card</span>
+                <label for="paymentCard">
+                  <input type="radio" id="paymentCard" name="payment-option" value="card" checked>
+                  Card
                 </label>
-                <label>
-                  <input type="radio" name="payment-option" value="invoice">
-                  <span>Invoice</span>
-                  <div id="invoiceMessage" class="invoice-message hidden">
-                    <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> 
-                    Invoice not an option on orders above 800 kr</div>
+                <label for="paymentInvoice">
+                  <input type="radio" id="paymentInvoice" name="payment-option" value="invoice">
+                  Invoice
                 </label>
+                <span id="invoiceMessage" class="invoice-message hidden">
+                  <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> 
+                  Invoice not an option on orders above 800 kr
+                </span>
               </div>
+      
               <div class="card">
-                <label>
-                  <span>Card number</span>
-                  <input type="number" id="card-input" placeholder="4701322211111234">
-                </label>
-                <label>
-                  <span>Expiry date</span>
-                  <input type="number" placeholder="YY" id="year">/
-                  <input type="number" placeholder="MM" id="month">
-                </label>
-                <label>
-                  <span>CVC</span>
-                  <input type="number" placeholder="123">
-                </label>
+                <label for="cardInput">Card number</label>
+                <input type="number" id="cardInput" placeholder="4701322211111234">
+      
+                <label for="expiryDateYear">Expiry date</label>
+                <div class="expiry-date">
+                  <input type="number" placeholder="YY" id="expiryDateYear">
+                  <span>/</span>
+                  <input type="number" placeholder="MM" id="expiryDateMonth">
+                </div>
+      
+                <label for="cvc">CVC</label>
+                <input type="number" placeholder="123" id="cvc">
               </div>
+      
               <div class="invoice hidden" id="invoice">
-                <label>
-                  <span>Personal ID</span>
-                  <div class="error-message"></div>
-                  <input type="text" name="personal-id" id="personalID" value="890201-3286">
-                </label>
+                <label for="personalID">Personal ID</label>
+                <input type="text" name="personal-id" id="personalID" value="890201-3286">
+                <span class="error-message" id="personalIDError"></span>
               </div>
             </div>
+      
             <div class="checkbox-container">
-              <label class="checkbox-label">
-                <input type="checkbox" required>
+              <label class="checkbox-label" for="privacyPolicy">
+                <input type="checkbox" id="privacyPolicy" required>
                 <span class="custom-checkbox"></span>
-                <span>I have read and agree to the processing of my personal data as stated in our privacy policy.</span>
+                I have read and agree to the processing of my personal data as stated in our privacy policy.
               </label>
-              <label class="checkbox-label">
-                <input type="checkbox" checked>
+      
+              <label class="checkbox-label" for="subscribeNewsletter">
+                <input type="checkbox" id="subscribeNewsletter" checked>
                 <span class="custom-checkbox"></span>
-                <span>Yes, I want to subscribe to newsletters!</span>
+                Yes, I want to subscribe to newsletters!
               </label>
             </div>
+      
             <div class="button-container">
               <button type="button" id="backToCartBtn">Return to Cart</button>
               <button type="submit" id="submitBtn" disabled>Place Order</button>
-              <button type="reset" id="resetBtn">
-                <i class="fa-solid fa-trash" aria-label="Clear cart and reset form"></i>
+              <button type="reset" id="resetBtn" aria-label="Clear cart and reset form">
+                <i class="fa-solid fa-trash" aria-hidden="true"></i>
               </button>
-              <!-- <button type="reset" id="resetBtn">Clear Order</button> -->
             </div>
+          </form>
         </div>
+
       </section>
 
     </main>
+    
+    <!-- <script src="script.mjs" defer></script> -->
     <script type="module" src="script.mjs" defer></script>
   </body>
 </html>
