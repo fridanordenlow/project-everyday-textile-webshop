@@ -3,6 +3,7 @@ import pluginJs from '@eslint/js';
 import prettierPlugin from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
 import templatePlugin from 'eslint-plugin-template';
+// import eslintPluginPrettier from 'eslint-plugin-prettier'; Behöver jag den här??
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
