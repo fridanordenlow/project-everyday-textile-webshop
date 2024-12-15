@@ -16,7 +16,7 @@ main {
   margin-top: 10px;
   max-width: 1000px; 
   width: 100%; 
-  padding: 0 30px; // Add horizontal padding for spacing
+  padding: 0 20px; // Add horizontal padding for spacing
   margin-left: auto;
   margin-right: auto;
 }
@@ -30,8 +30,8 @@ header {
   color: black;
   background-color: $secondary-bg-color;
   // border-bottom: $border-size;
-  padding: 15px;
-  margin-bottom: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
 
   h1 {
     font-family: $header-font;
@@ -98,7 +98,7 @@ header {
   display: flex; 
   flex-wrap: wrap; 
   gap: 0.5rem; 
-  padding-bottom: 10px;
+  // padding-bottom: 10px;
   // font-size: pxToRem(16);
   // border-bottom: 2px solid black;
 
@@ -267,9 +267,8 @@ header {
 
 }
 
-////////
-
-
+// -------------------------------
+// -------------------------------
 
 .cart-and-order-section {
   display: flex;
@@ -455,52 +454,63 @@ header {
 
 }
 
-  // .checkbox-container {
-  //   display: flex;
-  //   flex-direction: column; 
-  //   gap: 10px; 
-  
-  //   .checkbox-label {
-  //     display: flex;
-  //     flex-direction: row;
-  //     cursor: pointer; 
-  
-  //     // Hide the default checkbox
-  //     input[type="checkbox"] {
-  //       display: none; // Hides the default checkbox
-  //     }
-  
-  //     // Custom checkbox appearance
-  //     span.custom-checkbox {
-  //       display: inline-block;
-  //       width: 20px; // Width of the custom checkbox
-  //       height: 20px; // Height of the custom checkbox
-  //       border: 1px solid #333; // Border color
-  //       border-radius: 4px; // Rounded corners
-  //       position: relative;
-  //       margin-right: 10px; // Space between checkbox and text
-  //       background-color: white; // Background color of the checkbox
-  //       cursor: pointer; // Pointer cursor for better UX
-  //     }
-  
-  //     // Checked state styling
-  //     input[type="checkbox"]:checked + span.custom-checkbox {
-  //       background-color: #4CAF50; // Change background color when checked
-  //     }
-  
-  //     // Optional checkmark styling when checked
-  //     input[type="checkbox"]:checked + span.custom-checkbox::after {
-  //       content: '';
-  //       position: absolute;
-  //       left: 5px;
-  //       top: 1px;
-  //       width: 5px;
-  //       height: 10px;
-  //       border: solid white; // Checkmark color
-  //       border-width: 0 2px 2px 0;
-  //       transform: rotate(45deg);
-  //     }
-  //   }
-  // }
+// -------------------------------
+// -------------------------------
 
-// }
+footer {
+  // width: 100%;
+  color: black;
+  text-align: center;
+  padding: 20px;
+  // font-size: pxToRem(16);
+
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+
+    p {
+      margin: 0;
+      font-size: pxToRem(16);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 15px;
+
+      .footer-icons {
+        color: black; 
+        text-decoration: none; 
+        font-size: pxToRem(30); 
+        display: inline-flex; 
+        align-items: center;
+        justify-content: center;
+        transition: color 0.3s ease;
+
+        // &::before,
+        // &::after {
+        //   content: none;
+        // }
+
+        &:hover,
+        &:focus {
+          color: rgb(215, 225, 234);
+        }
+
+        &:visited {
+          color: black; 
+        }
+
+        // &:active {
+        //   color: darken(rgb(215, 225, 234), 10%); 
+        // }
+
+        i {
+          pointer-events: none;
+          font-size: pxToRem(20);
+        }
+      }
+    }
+  }
+}
