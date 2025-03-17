@@ -31,9 +31,9 @@ A fictional webshop application for textiles, built with vanilla JavaScript. Thi
 
 
 
-## Demo
+## Live Demo
 
-https://medieinstitutet.github.io/fed24d-js-intro-inl-1-webshop-fridanordenlow/
+[Everyday Textile Memorabilia Webshop](https://fridanordenlow.github.io/project-everyday-textile-webshop/)
 
 ## Lighthouse Accessibility Analysis
 
