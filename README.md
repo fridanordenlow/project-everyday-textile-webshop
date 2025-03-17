@@ -1,8 +1,14 @@
 
 # Everyday Textile Memorbilia Webshop
 
-A fictional webshop application for textiles, built with vanilla JavaScript. This project includes functionalities for listing products, sorting and filtering, managing a shopping cart, and placing orders through a form.
+A fictional webshop application for textiles, built with vanilla JavaScript. This project includes functionalities such as listing products, sorting and filtering, managing a shopping cart, and placing orders through a form.
 
+The webshop is inspired by my master’s thesis at Konstfack, [*The Everyday Performing Textiles*](https://www.diva-portal.org/smash/get/diva2:1562581/FULLTEXT01.pdf), where I explored the emotional and functional significance of everyday textiles in our homes. The products available in this shop are vintage textile pieces from that project, each one connected to the everyday life in a home.
+
+
+## Live Demo
+
+[Everyday Textile Memorabilia Webshop](https://fridanordenlow.github.io/project-everyday-textile-webshop/)
 
 
 ## Features
@@ -16,11 +22,9 @@ A fictional webshop application for textiles, built with vanilla JavaScript. Thi
 - Responsive Design: Optimized for various screen sizes.
 
 
-
 ## Authors
 
 - [@fridanordenlow](https://www.github.com/fridanordenlow)
-
 
 
 ## Tech Stack
@@ -30,15 +34,9 @@ A fictional webshop application for textiles, built with vanilla JavaScript. Thi
 **Server:** Node.js
 
 
-
-## Live Demo
-
-[Everyday Textile Memorabilia Webshop](https://fridanordenlow.github.io/project-everyday-textile-webshop/)
-
 ## Lighthouse Accessibility Analysis
 
 ![lighthouse_accessibility_analysis_webshop](https://github.com/user-attachments/assets/2ad2e955-262d-4b61-aeb2-9929f9b4c695)
-
 
 
 ## Validation Reports
